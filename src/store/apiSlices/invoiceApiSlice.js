@@ -40,9 +40,7 @@ const invocesApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: { ...credentials }
             }),
-            invalidatesTags: (result, error, id) => [
-                { type: 'Invoices', id: id }
-            ]
+            invalidatesTags: ['Invoices', 'Stores', 'Dashboard']
         }),
 
         updateInvoice: builder.mutation({
@@ -51,9 +49,7 @@ const invocesApiSlice = apiSlice.injectEndpoints({
                 method: 'PUT',
                 body: { ...credentials }
             }),
-            invalidatesTags: (result, error, id) => [
-                { type: 'Invoices', id: id }
-            ]
+            invalidatesTags: ['Invoices', 'Stores', 'Dashboard']
         }),
 
         deleteInvoice: builder.mutation({
@@ -61,9 +57,7 @@ const invocesApiSlice = apiSlice.injectEndpoints({
                 url: `/admin/invoices/${id}`,
                 method: 'DELETE'
             }),
-            invalidatesTags: (result, error, id) => [
-                { type: 'Invoices', id: id }
-            ]
+            invalidatesTags: ['Invoices', 'Stores', 'Dashboard']
         })
 
     })

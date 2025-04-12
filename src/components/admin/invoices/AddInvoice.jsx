@@ -9,7 +9,8 @@ import { useGetAllStoresQuery } from '../../../store/apiSlices/storesApiSlice'
 import { ImSpinner9 } from 'react-icons/im'
 
 function AddInvoice() {
-	const [createInvoice, { isLoading }] = useCreateInvoiceMutation()
+	const [createInvoice, { isLoading, isError, error }] =
+		useCreateInvoiceMutation()
 	const {
 		data: stores,
 		isLoading: fetchingStores,
@@ -38,6 +39,7 @@ function AddInvoice() {
 		onSubmit: async values => {
 			try {
 				const { data } = await createInvoice(values)
+				if (isError) return toast.error(error?.data?.message)
 				if (data?.success) {
 					toast.success(data?.message)
 					formik.resetForm()
