@@ -40,8 +40,10 @@ function Navbar() {
 	}
 
 	return (
-		<div className='bg-white z-50 w-full relative shadow-lg shadow-black/50 flex items-center justify-between  p-5'>
-			<h1 className='capitalize md:text-xl'>{handleTitle()}</h1>
+		<div className='md:bg-white bg-primary z-50 w-full relative shadow-lg shadow-black/50 flex items-center justify-between  p-5'>
+			<h1 className='capitalize md:text-xl text-white md:text-black'>
+				{handleTitle()}
+			</h1>
 			<div className='flex gap-5'>
 				<div className='md:flex gap-2 hidden items-center'>
 					{user?.role === 'admin' ? (
