@@ -139,22 +139,23 @@ function AddTransaction() {
 								<p className='text-pr-red text-xs'>{formik.errors.amount}</p>
 							)}
 						</div>
+						<div className='flex flex-col'>
+							<label htmlFor='date' className='capitalize text-sm'>
+								date
+							</label>
+							<DatePicker
+								type='text'
+								name='date'
+								id='date'
+								onChange={value => handleDate(value)}
+								value={dayjs(formik.values.date)}
+							/>
+							{formik.touched.date && (
+								<p className='text-pr-red text-xs'>{formik.errors.date}</p>
+							)}
+						</div>
 					</div>
-					<div className='flex flex-col'>
-						<label htmlFor='date' className='capitalize text-sm'>
-							date
-						</label>
-						<DatePicker
-							type='text'
-							name='date'
-							id='date'
-							onChange={value => handleDate(value)}
-							value={dayjs(formik.values.date)}
-						/>
-						{formik.touched.date && (
-							<p className='text-pr-red text-xs'>{formik.errors.date}</p>
-						)}
-					</div>
+
 					<div className='grid grid-cols-2 gap-2'>
 						<button
 							type='button'
