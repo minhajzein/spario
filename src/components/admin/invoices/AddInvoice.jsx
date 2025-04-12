@@ -70,7 +70,7 @@ function AddInvoice() {
 			>
 				<form onSubmit={formik.handleSubmit} className='flex flex-col gap-2'>
 					<div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
-						<div className='flex flex-col col-span-2'>
+						<div className='flex flex-col md:col-span-2'>
 							<label htmlFor='store' className='capitalize text-sm'>
 								store
 							</label>
