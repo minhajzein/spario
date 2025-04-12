@@ -6,6 +6,7 @@ import Layout from '../components/layout/Layout'
 import Stores from '../components/admin/stores/Stores'
 import Executives from '../components/admin/manage-executives/Executives'
 import Invoices from '../components/admin/invoices/Invoices'
+import Transactions from '../components/admin/transactions/Transactions'
 
 function AdminRoutes() {
 	return (
@@ -17,6 +18,7 @@ function AdminRoutes() {
 						<Route path='stores' element={<Stores />} />
 						<Route path='executives' element={<Executives />} />
 						<Route path='invoices' element={<Invoices />} />
+						<Route path='transactions' element={<Transactions />} />
 						<Route path='*' element={<PageNotFound />} />
 					</Route>
 				</Route>

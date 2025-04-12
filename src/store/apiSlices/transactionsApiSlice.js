@@ -41,7 +41,7 @@ const transactionsApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: { ...credentials }
             }),
-            invalidatesTags: ['Transactions', 'Store_Transactions', 'Stores_Executive']
+            invalidatesTags: ['Transactions', 'Store', 'Store_Transactions', 'Stores_Executive']
         }),
 
         updateTransaction: builder.mutation({
@@ -50,7 +50,7 @@ const transactionsApiSlice = apiSlice.injectEndpoints({
                 method: 'PUT',
                 body: { ...credentials }
             }),
-            invalidatesTags: ['Transactions', 'Store_Transactions', 'Stores_Executive']
+            invalidatesTags: ['Transactions', 'Store', 'Store_Transactions', 'Stores_Executive']
         }),
 
         deleteTransaction: builder.mutation({
@@ -58,7 +58,7 @@ const transactionsApiSlice = apiSlice.injectEndpoints({
                 url: `/executive/transactions/${id}`,
                 method: 'DELETE'
             }),
-            invalidatesTags: ['Transactions', 'Store_Transactions', 'Stores_Executive']
+            invalidatesTags: ['Transactions', 'Store', 'Store_Transactions', 'Stores_Executive']
         })
 
     })
