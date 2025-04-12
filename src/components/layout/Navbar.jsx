@@ -57,12 +57,15 @@ function Navbar() {
 				</div>
 				<button
 					onClick={sendLogout}
-					className='rounded-xl border text-pr-red cursor-pointer text-theme-red border-theme-red px-5'
+					className='rounded-xl md:border text-pr-red cursor-pointer text-theme-red border-pr-red md:px-5'
 				>
 					{isLoading ? (
 						<Loading3QuartersOutlined className='animate-spin' />
 					) : (
-						'Logout'
+						<span>
+							<h1 className='hidden md:block'>Logout</h1>
+							<img src='/images/logout.png' alt='' />
+						</span>
 					)}
 				</button>
 			</div>
