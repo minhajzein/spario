@@ -6,6 +6,7 @@ import * as Yup from 'yup'
 import { useCreateInvoiceMutation } from '../../../store/apiSlices/invoiceApiSlice'
 import { toast } from 'react-toastify'
 import { useGetAllStoresQuery } from '../../../store/apiSlices/storesApiSlice'
+import { ImSpinner9 } from 'react-icons/im'
 
 function AddInvoice() {
 	const [createInvoice, { isLoading }] = useCreateInvoiceMutation()
@@ -106,7 +107,7 @@ function AddInvoice() {
 								Amount
 							</label>
 							<Input
-								type='text'
+								type='number'
 								name='amount'
 								id='amount'
 								onChange={formik.handleChange}
@@ -188,7 +189,7 @@ function AddInvoice() {
 							{isLoading ? (
 								<ImSpinner9 className='m-auto animate-spin' />
 							) : (
-								'add transaction'
+								'add invoice'
 							)}
 						</button>
 					</div>

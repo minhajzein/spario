@@ -8,6 +8,8 @@ import {
 import usePersist from '../../hooks/usePersist'
 import { useLogoutMutation } from '../../store/apiSlices/authApiSlice'
 import { useSelector } from 'react-redux'
+import AddInvoice from '../admin/invoices/AddInvoice'
+import AddTransaction from '../executive/transactions/AddTransaction'
 
 function Navbar() {
 	const { pathname } = useLocation()
@@ -47,6 +49,9 @@ function Navbar() {
 					) : (
 						<h1>Welcome {user?.username}</h1>
 					)}
+				</div>
+				<div className='md:flex gap-2 hidden items-center'>
+					{user?.role === 'admin' ? <AddInvoice /> : <AddTransaction />}
 				</div>
 				<button
 					onClick={sendLogout}
