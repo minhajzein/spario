@@ -22,6 +22,12 @@ const adminNavItems = [
 		path: '/admin/executives',
 	},
 	{
+		title: 'Invoices',
+		icon: '/images/transactions-icon.png',
+		activeIcon: '/images/active-transactions.png',
+		path: '/admin/invoices',
+	},
+	{
 		title: 'Transactions',
 		icon: '/images/transactions-icon.png',
 		activeIcon: '/images/active-transactions.png',

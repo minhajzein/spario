@@ -5,6 +5,7 @@ import Private from '../components/admin/Private'
 import Layout from '../components/layout/Layout'
 import Stores from '../components/admin/stores/Stores'
 import Executives from '../components/admin/manage-executives/Executives'
+import Invoices from '../components/admin/invoices/Invoices'
 
 function AdminRoutes() {
 	return (
@@ -14,7 +15,8 @@ function AdminRoutes() {
 					<Route element={<Layout />}>
 						<Route path='/' element={<AdminDashboard />} />
 						<Route path='stores' element={<Stores />} />
-						<Route path='executives' element={<Executives/>} />
+						<Route path='executives' element={<Executives />} />
+						<Route path='invoices' element={<Invoices />} />
 						<Route path='*' element={<PageNotFound />} />
 					</Route>
 				</Route>
