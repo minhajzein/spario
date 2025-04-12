@@ -9,7 +9,7 @@ function StoreRow({ storeId }) {
 
 	if (store) {
 		return (
-			<tr className='bg-slate-200 border-b border-black'>
+			<tr className='bg-white border-b border-black'>
 				<td className='p-3 border-r border-black text-center'>
 					{store.storeName}
 				</td>
@@ -22,13 +22,13 @@ function StoreRow({ storeId }) {
 				<td className='p-3 border-r border-black text-center'>
 					{store.executive.username}
 				</td>
-				<td className='p-3 border-r border-black text-center'>
+				<td className='p-3 text-primary border-r border-black text-center'>
 					{store.totalOutstanding}
 				</td>
-				<td className='p-3 border-r border-black text-center'>
+				<td className='p-3 text-pr-green border-r border-black text-center'>
 					{store.paidAmount}
 				</td>
-				<td className='p-3 border-r border-black text-center'>
+				<td className='p-3 text-pr-red border-r border-black text-center'>
 					{store.balance}
 				</td>
 				<td className='p-3 text-center'></td>
