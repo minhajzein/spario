@@ -64,7 +64,7 @@ function Navbar() {
 					) : (
 						<span>
 							<h1 className='hidden md:block'>Logout</h1>
-							<img src='/images/logout.png' alt='' />
+							<img className='md:hidden' src='/images/logout.png' alt='' />
 						</span>
 					)}
 				</button>

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 import AddTransaction from '../executive/transactions/AddTransaction'
+import AddInvoice from '../admin/invoices/AddInvoice'
 
 const adminNavItems = [
 	{
@@ -62,7 +63,9 @@ function Footer() {
 	}
 	return (
 		<div className='sticky flex flex-col bg-transparent md:hidden gap-2 items-end w-full top-full'>
-			{user.role === 'executive' && <AddTransaction />}
+			<div className='absolute bottom-full right-2 mb-2'>
+				{user.role === 'executive' ? <AddTransaction /> : <AddInvoice />}
+			</div>
 			<div
 				className={`w-full grid ${
 					navItems.length === 3 ? 'grid-cols-3' : 'grid-cols-4'

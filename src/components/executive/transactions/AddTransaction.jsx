@@ -70,7 +70,7 @@ function AddTransaction() {
 			<button
 				type='button'
 				onClick={handleModal}
-				className='flex md:hidden cursor-pointer absolute bottom-full right-2 mb-2  text-xs text-white p-3 rounded-full bg-pr-red gap-1 items-center'
+				className='flex cursor-pointer text-xs text-white p-3 rounded-full bg-pr-red gap-1 items-center'
 			>
 				+Add Transaction
 			</button>
