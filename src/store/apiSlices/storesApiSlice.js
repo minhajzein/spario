@@ -41,10 +41,7 @@ const storesApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: { ...credentials }
             }),
-            invalidatesTags: (result, error, { id }) => [
-                { type: 'Stores', id },
-                { type: 'Stores', id: 'LIST' }
-            ],
+            invalidatesTags: ['Stores', 'Dashboard', 'Executives'],
         }),
 
         updateStore: builder.mutation({
@@ -53,9 +50,7 @@ const storesApiSlice = apiSlice.injectEndpoints({
                 method: 'PUT',
                 body: { ...credentials }
             }),
-            invalidatesTags: (result, error, id) => [
-                { type: 'Stores', id: id }
-            ]
+            invalidatesTags: ['Stores', 'Dashboard', 'Executives'],
         }),
 
         deleteStore: builder.mutation({
@@ -63,9 +58,7 @@ const storesApiSlice = apiSlice.injectEndpoints({
                 url: `/admin/stores/${id}`,
                 method: 'DELETE'
             }),
-            invalidatesTags: (result, error, id) => [
-                { type: 'Stores', id: id }
-            ]
+            invalidatesTags: ['Stores', 'Dashboard', 'Executives'],
         })
 
     })
