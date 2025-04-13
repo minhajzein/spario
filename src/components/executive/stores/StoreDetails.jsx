@@ -26,10 +26,16 @@ function StoreDetails() {
 			: null
 		content = (
 			<div className='w-full flex flex-col gap-3'>
-				<div className='flex items-center p-3 bg-white rounded-lg gap-3'>
-					<h1>{store?.storeName}</h1>
-					<h1>{store?.ownerName}</h1>
-					<h1>{store?.contactNumber}</h1>
+				<div className='flex items-center p-3 bg-white rounded-lg'>
+					<h1 className='capitalize border-r p-2'>
+						Store Name: {store?.storeName}
+					</h1>
+					<h1 className='capitalize border-r p-2'>
+						Owner Name: {store?.ownerName}
+					</h1>
+					<h1 className='capitalize p-2'>
+						Contact Number: {store?.contactNumber}
+					</h1>
 				</div>
 				<div className='max-w-full overflow-auto'>
 					<table className='w-full   bg-white rounded'>
@@ -53,10 +59,10 @@ function StoreDetails() {
 								<td className='border-l'></td>
 								<td className='border-y text-end font-bold p-3'>Total:</td>
 								<td className='p-3 border text-primary text-end font-bold'>
-									{store.totalOutstanding}
+									{store?.totalOutstanding}
 								</td>
 								<td className='p-3 border text-pr-green text-end font-bold'>
-									{store.paidAmount}
+									{store?.paidAmount}
 								</td>
 							</tr>
 							<tr className='border'>
@@ -66,7 +72,7 @@ function StoreDetails() {
 									Total Balance:
 								</td>
 								<td className='p-3 border text-pr-red text-end font-bold'>
-									{store.balance}/-
+									{store?.balance}/-
 								</td>
 							</tr>
 						</tbody>
