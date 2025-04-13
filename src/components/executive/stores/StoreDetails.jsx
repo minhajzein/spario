@@ -25,9 +25,11 @@ function StoreDetails() {
 			  ))
 			: null
 		content = (
-			<div className='w-full flex flex-col gap-5'>
-				<div>
+			<div className='w-full flex flex-col gap-3'>
+				<div className='flex items-center p-3 bg-white rounded-lg gap-3'>
 					<h1>{store?.storeName}</h1>
+					<h1>{store?.ownerName}</h1>
+					<h1>{store?.contactNumber}</h1>
 				</div>
 				<div className='max-w-full overflow-auto'>
 					<table className='w-full   bg-white rounded'>
@@ -39,21 +41,29 @@ function StoreDetails() {
 								<th className='p-2 border-r border-gray-300 text-gray-500'>
 									Description
 								</th>
-								<th className='p-2 border-r border-gray-300 text-gray-500'>
+								<th className='p-2 border-r text-pr-red border-gray-300'>
 									Debit
 								</th>
-								<th className='p-2 text-gray-500'>Credit</th>
+								<th className='p-2 text-pr-green'>Credit</th>
 							</tr>
 						</thead>
 						<tbody>
 							{tableContent}
 							<tr>
-								<td className='border text-end font-bold p-3'>Total:</td>
+								<td className='border-l'></td>
+								<td className='border-y text-end font-bold p-3'>Total:</td>
 								<td className='p-3 border text-primary text-end font-bold'>
-									{store.totalOutstanding}/-
+									{store.totalOutstanding}
 								</td>
 								<td className='p-3 border text-pr-green text-end font-bold'>
-									{store.paidAmount}/-
+									{store.paidAmount}
+								</td>
+							</tr>
+							<tr className='border'>
+								<td></td>
+								<td></td>
+								<td className='border-y text-end font-bold p-3'>
+									Total Balance:
 								</td>
 								<td className='p-3 border text-pr-red text-end font-bold'>
 									{store.balance}/-

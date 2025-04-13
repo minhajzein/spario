@@ -16,10 +16,10 @@ function StoreTransactionsRow({ transactionId }) {
 			<td className='p-3 border-r border-black text-center'>
 				{transaction.description}
 			</td>
-			<td className='p-3 text-pr-red border-r border-black text-center'>
+			<td className='p-3 text-pr-red border-r border-black text-end'>
 				{transaction.entry === 'debit' ? transaction.amount : '-----'}
 			</td>
-			<td className='p-3 text-pr-green border-r border-black text-center'>
+			<td className='p-3 text-pr-green border-r border-black text-end'>
 				{transaction.entry === 'credit' ? transaction.amount : '-----'}
 			</td>
 		</tr>
