@@ -16,7 +16,7 @@ const executiveTransactionsSlice = apiSlice.injectEndpoints({
                 }
             }),
             transformResponse: async (responseData, meta, args) => {
-                const loadedTransactions = await responseData.map(transaction => {
+                const loadedTransactions = await responseData?.map(transaction => {
                     transaction.id = transaction._id
                     return transaction
                 })

@@ -29,7 +29,7 @@ function Stores() {
 					/>
 					<button
 						onClick={handleModal}
-						className='flex min-w-max items-center text-xs md:text-sm py-1 cursor-pointer gap-1 px-4 text-white bg-pr-red rounded-lg shadow-lg shadow-black/50'
+						className='flex min-w-max items-center text-xs md:text-sm cursor-pointer gap-1 p-3 text-white bg-pr-red rounded-full shadow-lg shadow-black/50'
 					>
 						<img src='/images/active-store.png' alt='' />
 						<h1 className='whitespace-nowrap overflow-hidden text-ellipsis'>

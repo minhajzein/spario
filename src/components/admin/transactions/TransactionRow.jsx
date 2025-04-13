@@ -14,6 +14,9 @@ function TransactionRow({ transactionId }) {
 					{transaction.store.storeName}
 				</td>
 				<td className='p-3 border-r border-black text-center'>
+					{transaction.executive.username}
+				</td>
+				<td className='p-3 border-r border-black text-center'>
 					{dayjs(transaction.date).format('DD-MM-YYYY')}
 				</td>
 				<td

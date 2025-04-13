@@ -5,6 +5,7 @@ import PageNotFound from '../components/404/PageNotFound'
 import Private from '../components/executive/Private'
 import Stores from '../components/executive/stores/Stores'
 import Transactions from '../components/executive/transactions/Transactions'
+import StoreDetails from '../components/executive/stores/StoreDetails'
 
 function ExecutiveRoutes() {
 	return (
@@ -14,7 +15,8 @@ function ExecutiveRoutes() {
 					<Route element={<Layout />}>
 						<Route path='/' element={<Dashboard />} />
 						<Route path='stores' element={<Stores />} />
-						<Route path='transactions' element={<Transactions/> } />
+						<Route path='stores/:id' element={<StoreDetails />} />
+						<Route path='transactions' element={<Transactions />} />
 						<Route path='*' element={<PageNotFound />} />
 					</Route>
 				</Route>

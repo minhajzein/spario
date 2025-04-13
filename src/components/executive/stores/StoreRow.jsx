@@ -1,5 +1,7 @@
 import { useSelector } from 'react-redux'
 import { makeExecutiveStoreSelectors } from '../../../store/apiSlices/querySlices/storeByExecutive'
+import { Link } from 'react-router-dom'
+import { TbEyeSearch } from 'react-icons/tb'
 
 function StoreRow({ storeId }) {
 	const executiveId = useSelector(state => state.user.user._id)
@@ -11,9 +13,14 @@ function StoreRow({ storeId }) {
 		return (
 			<tr className='bg-white border-b border-black'>
 				<td className='p-3 border-r border-black text-center'>
-					{store.storeName}
+					<Link
+						to={`/stores/${store._id}`}
+						className='text-blue-500  capitalize duration-300 hover:underline hover:text-blue-700'
+					>
+						{store.storeName}
+					</Link>
 				</td>
-				<td className='p-3 border-r border-black text-center'>
+				<td className='p-3 border-r capitalize border-black text-center'>
 					{store.ownerName}
 				</td>
 				<td className='p-3 border-r border-black text-center'>
@@ -28,7 +35,11 @@ function StoreRow({ storeId }) {
 				<td className='p-3 text-pr-red border-r border-black text-center'>
 					{store.balance}
 				</td>
-				<td className='p-3 text-center'></td>
+				<td className='p-3 flex gap-2'>
+					<Link className='text-xl' to={`/stores/${storeId}`}>
+						<TbEyeSearch />
+					</Link>
+				</td>
 			</tr>
 		)
 	} else return null

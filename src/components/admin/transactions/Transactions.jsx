@@ -37,6 +37,9 @@ function Transactions() {
 									Store Name
 								</th>
 								<th className='p-2 border-r border-gray-300 text-gray-500'>
+									Executive
+								</th>
+								<th className='p-2 border-r border-gray-300 text-gray-500'>
 									Date
 								</th>
 								<th className='p-2 border-r border-gray-300 text-gray-500'>

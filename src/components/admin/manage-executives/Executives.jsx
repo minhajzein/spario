@@ -33,7 +33,7 @@ function Executives() {
 					/>
 					<button
 						onClick={handleModal}
-						className='flex min-w-max items-center text-xs md:text-sm py-2 cursor-pointer gap-1 px-4 text-white bg-pr-red rounded-lg shadow-lg shadow-black/50'
+						className='flex min-w-max items-center text-xs md:text-sm p-3 cursor-pointer gap-1 text-white bg-pr-red rounded-full shadow-lg shadow-black/50'
 					>
 						<img src='/images/active-executives.png' alt='' />
 						<h1 className='whitespace-nowrap overflow-hidden text-ellipsis'>

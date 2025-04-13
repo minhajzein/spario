@@ -8,7 +8,7 @@ const storeTransactionsApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getStoreTransactions: builder.query({
             query: (storeId) => ({
-                url: `/transactions/${storeId}`,
+                url: `/executive/transactions/store/${storeId}`,
                 validateStatus: (response, result) => {
                     return response.status === 200 && !result.isError
                 }
@@ -50,5 +50,5 @@ export const makeStoreTransactionsSelectors = storeId => {
         storesResult => storesResult?.data ?? initialState
     );
 
-    return storesAdapter.getSelectors(state => selectStoresData(state));
+    return storeTransactionsAdapter.getSelectors(state => selectStoresData(state));
 };

@@ -9,7 +9,7 @@ function TransactionRow({ transactionId }) {
 	if (transaction) {
 		return (
 			<tr className='bg-slate-200 border-b border-black'>
-				<td className='p-3 border-r border-black text-center'>
+				<td className='p-3 border-r capitalize border-black text-center'>
 					{transaction.store.storeName}
 				</td>
 				<td className='p-3 border-r border-black text-center'>
@@ -18,7 +18,7 @@ function TransactionRow({ transactionId }) {
 				<td
 					className={`${
 						transaction.entry === 'debit' ? 'text-pr-red' : 'text-pr-green'
-					} p-3 border-r border-black text-center`}
+					} p-3 border-r border-black capitalize text-center`}
 				>
 					{transaction.entry}
 				</td>
