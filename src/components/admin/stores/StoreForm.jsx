@@ -152,7 +152,7 @@ function StoreForm({ isOpen, store, setIsOpen }) {
 							}
 							options={
 								isSuccess
-									? Object.values(routes?.entities).map(route => ({
+									? Object?.values(routes?.entities).map(route => ({
 											label: route.route,
 											value: route.route,
 									  }))

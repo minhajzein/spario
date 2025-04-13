@@ -19,9 +19,6 @@ function StoreRow({ storeId }) {
 				<td className='p-3 border-r border-black text-center'>
 					{store.contactNumber}
 				</td>
-				<td className='p-3 border-r border-black text-center'>
-					{store.executive.username}
-				</td>
 				<td className='p-3 text-primary border-r border-black text-center'>
 					{store.totalOutstanding}
 				</td>

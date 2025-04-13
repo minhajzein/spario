@@ -42,9 +42,7 @@ function Stores() {
 								<th className='p-2 border-r border-gray-300 text-gray-500'>
 									Contact
 								</th>
-								<th className='p-2 border-r border-gray-300 text-gray-500'>
-									Executive
-								</th>
+
 								<th className='p-2 border-r border-gray-300 text-gray-500'>
 									Debit
 								</th>
