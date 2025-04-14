@@ -9,7 +9,7 @@ function StoreTrasnsactionTile({ transactionId }) {
 	const transaction = useSelector(state => selectById(state, transactionId))
 	if (transaction) {
 		return (
-			<div className='bg-white border-y border-gray-400 grid grid-cols-3'>
+			<div className='bg-white border-b border-gray-400 grid grid-cols-3'>
 				<div className='p-2'>
 					<h1 className='font-semibold'>
 						{dayjs(transaction.date).format('DD/MM/YYYY')}
