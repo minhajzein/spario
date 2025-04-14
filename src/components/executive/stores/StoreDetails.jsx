@@ -4,6 +4,7 @@ import StoreTransactionsRow from './StoreTransactionsRow'
 import { makeExecutiveStoreSelectors } from '../../../store/apiSlices/querySlices/storeByExecutive'
 import Loading from '../../loading/Loading'
 import { useSelector } from 'react-redux'
+import StoreTrasnsactionTile from './StoreTrasnsactionTile'
 
 function StoreDetails() {
 	const executiveId = useSelector(state => state.user.user._id)
@@ -24,6 +25,16 @@ function StoreDetails() {
 					/>
 			  ))
 			: null
+
+		const tileContent = ids?.length
+			? ids.map(transactionId => (
+					<StoreTrasnsactionTile
+						key={transactionId}
+						transactionId={transactionId}
+					/>
+			  ))
+			: null
+
 		content = (
 			<div className='w-full flex flex-col gap-3'>
 				<div className='flex items-center p-3 bg-white rounded-lg'>
@@ -37,7 +48,7 @@ function StoreDetails() {
 						Contact Number: {store?.contactNumber}
 					</h1>
 				</div>
-				<div className='max-w-full overflow-auto'>
+				<div className='max-w-full hidden md:block overflow-auto'>
 					<table className='w-full   bg-white rounded'>
 						<thead className='border-b-2 border-black'>
 							<tr>
@@ -77,6 +88,32 @@ function StoreDetails() {
 							</tr>
 						</tbody>
 					</table>
+				</div>
+				<div className='flex flex-col md:hidden'>
+					{tileContent}
+					<div className='bg-white border-y border-gray-400 p-2 grid grid-cols-3'>
+						<div className='font-bold text-end'>Totals:</div>
+						<div className='flex items-center justify-end'>
+							<h1 className='text-primary text-end font-bold'>
+								{store.totalOutstanding}
+							</h1>
+						</div>
+						<div className='flex items-center justify-end'>
+							<h1 className='text-pr-green text-end font-bold'>
+								{store.paidAmount}
+							</h1>
+						</div>
+					</div>
+					<div className='bg-white border-y border-gray-400 p-2 grid grid-cols-3'>
+						<div className='col-span-2 text-pr-red font-bold text-end'>
+							Total Balance:
+						</div>
+						<div className='flex items-center justify-end'>
+							<h1 className='text-pr-red text-end font-bold'>
+								{store.balance}
+							</h1>
+						</div>
+					</div>
 				</div>
 			</div>
 		)

@@ -12,7 +12,7 @@ function StoreTile({ storeId }) {
 	const store = useSelector(state => selectById(state, storeId))
 	if (store) {
 		return (
-			<div className='w-full bg-white grid p-2 border-y grid-cols-4'>
+			<div className='w-full bg-white grid p-2 border-y border-gray-400 grid-cols-4'>
 				<div className='flex flex-col col-span-2 capitalize'>
 					<h1 className='font-semibold text-xl text-ellipsis whitespace-nowrap overflow-hidden'>
 						{store.storeName}
