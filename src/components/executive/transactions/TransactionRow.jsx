@@ -9,7 +9,7 @@ function TransactionRow({ transactionId }) {
 	const transaction = useSelector(state => selectById(state, transactionId))
 	if (transaction) {
 		return (
-			<tr className='bg-slate-200 border-b border-black'>
+			<tr className='bg-white border-b border-black'>
 				<td className='p-3 border-r capitalize border-black text-center'>
 					<Link
 						to={`/stores/${transaction.store._id}`}
