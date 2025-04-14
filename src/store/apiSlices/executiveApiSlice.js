@@ -22,7 +22,7 @@ const executiveApiSlice = apiSlice.injectEndpoints({
                 })
                 return executivesAdapter.setAll(initialState, loadedExecutives)
             },
-            keepUnusedDataFor: Number.MAX_VALUE,
+            keepUnusedDataFor: 5,
             providesTags: (result, error, arg) => {
                 if (result?.ids) {
                     return [
@@ -44,6 +44,19 @@ const executiveApiSlice = apiSlice.injectEndpoints({
             }),
             keepUnusedDataFor: 5,
             providesTags: ['Route_Executives']
+        }),
+
+        getExecutiveById: builder.query({
+            query: (id) => ({
+                url: `/admin/executives/${id}`,
+                validateStatus: (response, result) => {
+                    return response.status === 200 && !result.isError
+                }
+            }),
+            keepUnusedDataFor: 5,
+            providesTags: (result, error, arg) => {
+                return [{ type: 'Executives', id: arg }]
+            }
         }),
 
         createExecutive: builder.mutation({
@@ -77,6 +90,7 @@ const executiveApiSlice = apiSlice.injectEndpoints({
 
 export const {
     useGetAllExecutivesQuery,
+    useGetExecutiveByIdQuery,
     useCreateExecutiveMutation,
     useUpdateExecutiveMutation,
     useDeleteExecutiveMutation

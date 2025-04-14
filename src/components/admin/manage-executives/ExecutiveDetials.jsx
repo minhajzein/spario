@@ -1,8 +1,4 @@
-import { useSelector } from 'react-redux'
-import {
-	selectExecutiveById,
-	useGetAllExecutivesQuery,
-} from '../../../store/apiSlices/executiveApiSlice'
+import { useGetExecutiveByIdQuery } from '../../../store/apiSlices/executiveApiSlice'
 import { useParams } from 'react-router-dom'
 import { useGetAllStoresByExecutiveQuery } from '../../../store/apiSlices/querySlices/storeByExecutive'
 import { Input } from 'antd'
@@ -11,7 +7,8 @@ import Loading from '../../loading/Loading'
 
 function ExecutiveDetials() {
 	const { id } = useParams()
-	const executive = useSelector(state => selectExecutiveById(state, id))
+	const { data: executive, isLoading: fetchingExecutive } =
+		useGetExecutiveByIdQuery(id)
 	const {
 		data: stores,
 		isSuccess,
@@ -68,7 +65,9 @@ function ExecutiveDetials() {
 		)
 	}
 
-	return (
+	return fetchingExecutive ? (
+		<Loading />
+	) : (
 		<div className='flex flex-col gap-3'>
 			<h1 className='text-2xl font-semibold'>Executive Details</h1>
 			<div className='flex items-center p-3 bg-white rounded-lg'>
