@@ -3,6 +3,7 @@ import { useGetAllTransactionsByExecutiveQuery } from '../../../store/apiSlices/
 import Loading from '../../loading/Loading'
 import TransactionRow from './TransactionRow'
 import { Input } from 'antd'
+import TransactionTile from './TransactionTile'
 
 function Transactions() {
 	const executiveId = useSelector(state => state.user.user._id)
@@ -21,6 +22,11 @@ function Transactions() {
 					<TransactionRow key={transactionId} transactionId={transactionId} />
 			  ))
 			: null
+		const tileContent = ids?.length
+			? ids.map(transactionId => (
+					<TransactionTile key={transactionId} transactionId={transactionId} />
+			  ))
+			: null
 		content = (
 			<div className='flex flex-col w-full gap-3'>
 				<div className='w-full flex gap-3'>
@@ -31,7 +37,7 @@ function Transactions() {
 						placeholder='Search for transactions'
 					/>
 				</div>
-				<div className='max-w-full overflow-auto'>
+				<div className='max-w-full hidden md:block overflow-auto'>
 					<table className='w-full   bg-white rounded'>
 						<thead className='border-b-2 border-black'>
 							<tr>
@@ -57,6 +63,7 @@ function Transactions() {
 						<tbody>{tableContent}</tbody>
 					</table>
 				</div>
+				<div className='flex flex-col md:hidden'>{tileContent}</div>
 			</div>
 		)
 	}
