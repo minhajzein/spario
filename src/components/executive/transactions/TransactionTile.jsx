@@ -13,8 +13,8 @@ function TransactionTile({ transactionId }) {
 			<div
 				className={`${
 					transaction.entry === 'debit'
-						? 'text-pr-red bg-pr-red/10'
-						: 'text-pr-green bg-pr-green/10'
+						? 'text-pr-red bg-pr-red/5'
+						: 'text-pr-green bg-pr-green/5'
 				} grid grid-cols-3 border-b`}
 			>
 				<div className='p-2 capitalize flex flex-col'>

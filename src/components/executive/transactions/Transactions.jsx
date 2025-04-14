@@ -63,7 +63,9 @@ function Transactions() {
 						<tbody>{tableContent}</tbody>
 					</table>
 				</div>
-				<div className='flex flex-col md:hidden'>{tileContent}</div>
+				<div className='flex flex-col bg-white rounded md:hidden'>
+					{tileContent}
+				</div>
 			</div>
 		)
 	}
