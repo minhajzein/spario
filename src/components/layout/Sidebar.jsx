@@ -69,7 +69,7 @@ function Sidebar() {
 	}
 
 	return (
-		<div className='w-[250px] hidden gap-16 md:flex items-center flex-col bg-white p-5'>
+		<div className='w-[250px] hidden gap-8 md:flex items-center flex-col bg-white p-5'>
 			<h1 className='uppercase text-2xl text-[#2E2CAF] font-bold'>spario</h1>
 			<div className='flex flex-col gap-4'>
 				{navItems.map(nav => (

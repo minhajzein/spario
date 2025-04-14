@@ -8,8 +8,9 @@ import { toast } from 'react-toastify'
 import { ImSpinner9 } from 'react-icons/im'
 
 function StoreForm({ isOpen, store, setIsOpen }) {
-	const { data: routes } = useGetAllRoutesQuery()
 	const { data: executives, isSuccess } = useGetAllExecutivesQuery()
+	const { data: routes, isSuccess: routeFetchingSuccess } =
+		useGetAllRoutesQuery()
 	const [createStore, { isLoading }] = useCreateStoreMutation()
 
 	const handleCancel = () => setIsOpen(false)
@@ -151,7 +152,7 @@ function StoreForm({ isOpen, store, setIsOpen }) {
 									.includes(input.toLowerCase())
 							}
 							options={
-								isSuccess
+								routeFetchingSuccess && routes
 									? Object?.values(routes?.entities).map(route => ({
 											label: route.route,
 											value: route.route,
@@ -180,7 +181,7 @@ function StoreForm({ isOpen, store, setIsOpen }) {
 									.includes(input.toLowerCase())
 							}
 							options={
-								isSuccess
+								isSuccess && executives
 									? Object.values(executives?.entities).map(executive => ({
 											label: executive.username,
 											value: executive._id,

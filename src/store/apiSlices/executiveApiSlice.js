@@ -22,7 +22,7 @@ const executiveApiSlice = apiSlice.injectEndpoints({
                 })
                 return executivesAdapter.setAll(initialState, loadedExecutives)
             },
-            keepUnusedDataFor: 5,
+            keepUnusedDataFor: Number.MAX_VALUE,
             providesTags: (result, error, arg) => {
                 if (result?.ids) {
                     return [
