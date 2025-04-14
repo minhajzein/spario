@@ -27,8 +27,11 @@ function ExecutiveRow({ executiveId }) {
 					{executive.route}
 				</td>
 
-				<td className='p-3 text-center'>
-					<Link className='text-xl' to={`/admin/executives/${executiveId}`}>
+				<td className='p-3 flex items-center justify-center gap-3'>
+					<Link
+						className='text-xl text-blue-500 hover:text-blue-700'
+						to={`/admin/executives/${executiveId}`}
+					>
 						<TbEyeSearch />
 					</Link>
 				</td>

@@ -3,6 +3,7 @@ import { useGetAllStoresByExecutiveQuery } from '../../../store/apiSlices/queryS
 import { useSelector } from 'react-redux'
 import { Input } from 'antd'
 import StoreRow from './StoreRow'
+import StoreTile from './StoreTile'
 
 function Stores() {
 	const user = useSelector(state => state.user.user)
@@ -19,6 +20,9 @@ function Stores() {
 		const tableContent = ids?.length
 			? ids.map(storeId => <StoreRow key={storeId} storeId={storeId} />)
 			: null
+		const tileContent = ids?.length
+			? ids.map(storeId => <StoreTile key={storeId} storeId={storeId} />)
+			: null
 		content = (
 			<div className='flex flex-col w-full gap-3'>
 				<div className='w-full flex gap-3'>
@@ -29,7 +33,7 @@ function Stores() {
 						placeholder='Search for stores'
 					/>
 				</div>
-				<div className='max-w-full overflow-auto'>
+				<div className='max-w-full hidden md:block overflow-auto'>
 					<table className='w-full   bg-white rounded'>
 						<thead className='border-b-2 border-black'>
 							<tr>
@@ -58,6 +62,7 @@ function Stores() {
 						<tbody>{tableContent}</tbody>
 					</table>
 				</div>
+				<div className='w-full md:hidden flex flex-col'>{tileContent}</div>
 			</div>
 		)
 	}

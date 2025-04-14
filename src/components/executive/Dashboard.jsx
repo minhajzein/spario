@@ -19,7 +19,7 @@ function Dashboard() {
 					<div className='bg-white gap-2 flex rounded-lg p-4 md:flex-col'>
 						<div className='bg-[#9897D9] md:md:mt-6 flex rounded-full size-14 md:size-12'>
 							<img
-								className='size-4 m-auto'
+								className='size-4 m-auto object-contain'
 								src='/images/outstanding.png'
 								alt=''
 							/>
@@ -35,7 +35,11 @@ function Dashboard() {
 					</div>
 					<div className='bg-white gap-2 flex rounded-lg p-4 md:flex-col'>
 						<div className='bg-[#00900E]/30 md:md:mt-6 flex rounded-full size-14 md:size-12'>
-							<img className='size-4 m-auto' src='/images/paid.png' alt='' />
+							<img
+								className='size-4 m-auto object-contain'
+								src='/images/paid.png'
+								alt=''
+							/>
 						</div>
 						<div className='flex flex-col md:gap-2'>
 							<h3 className='text-ellipsis whitespace-nowrap overflow-hidden md:text-xs'>
@@ -48,7 +52,11 @@ function Dashboard() {
 					</div>
 					<div className='bg-white gap-2 flex rounded-lg p-4 md:flex-col'>
 						<div className='bg-[#EF6969] md:md:mt-6 flex rounded-full size-14 md:size-12'>
-							<img className='size-4 m-auto' src='/images/due.png' alt='' />
+							<img
+								className='size-4 m-auto object-contain'
+								src='/images/due.png'
+								alt=''
+							/>
 						</div>
 						<div className='flex flex-col md:gap-2'>
 							<h3 className='text-ellipsis whitespace-nowrap overflow-hidden md:text-xs'>
@@ -63,7 +71,7 @@ function Dashboard() {
 					<div className='bg-white gap-2 flex rounded-lg p-4 md:flex-col'>
 						<div className='bg-[#D2D1FF] md:md:mt-6 flex rounded-full size-14 md:size-12'>
 							<img
-								className='size-4 m-auto'
+								className='size-4 m-auto object-contain'
 								src='/images/active-store.png'
 								alt=''
 							/>
