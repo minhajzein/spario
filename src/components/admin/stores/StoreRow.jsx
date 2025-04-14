@@ -30,7 +30,6 @@ function StoreRow({ storeId }) {
 						{store.executive.username}
 					</td>
 				)}
-
 				<td className='p-3 text-primary border-r border-black text-center'>
 					{store.totalOutstanding}
 				</td>

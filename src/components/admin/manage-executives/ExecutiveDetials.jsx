@@ -4,6 +4,7 @@ import { useGetAllStoresByExecutiveQuery } from '../../../store/apiSlices/queryS
 import { Input } from 'antd'
 import StoreRow from '../stores/StoreRow'
 import Loading from '../../loading/Loading'
+import ExecutiveDashboard from './ExecutiveDashboard'
 
 function ExecutiveDetials() {
 	const { id } = useParams()
@@ -65,24 +66,14 @@ function ExecutiveDetials() {
 		)
 	}
 
-	return fetchingExecutive ? (
+	return fetchingExecutive || isLoading ? (
 		<Loading />
 	) : (
 		<div className='flex flex-col gap-3'>
-			<h1 className='text-2xl font-semibold'>Executive Details</h1>
-			<div className='flex items-center p-3 bg-white rounded-lg'>
-				<h1 className='capitalize border-r p-2'>
-					Executive Name: {executive?.username}
-				</h1>
-				<h1 className='capitalize border-r p-2'>
-					Contact Number: {executive?.phone}
-				</h1>
-				<h1 className='capitalize p-2 border-r'>Route: {executive?.route}</h1>
-				<h1 className='capitalize p-2'>
-					Total Stores: {stores && stores.ids.length}
-				</h1>
-			</div>
-			<div>{isLoading ? <Loading /> : content}</div>
+			<ExecutiveDashboard
+				dashboard={{ ...executive, totalStores: stores && stores.ids.length }}
+			/>
+			{content}
 		</div>
 	)
 }

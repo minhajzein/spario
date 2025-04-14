@@ -4,6 +4,7 @@ import Loading from '../../loading/Loading'
 import StoreRow from './StoreRow'
 import StoreForm from './StoreForm'
 import { Input } from 'antd'
+import StoreTile from './StoreTile'
 
 function Stores() {
 	const [isModalOpen, setIsModalOpen] = useState(false)
@@ -18,6 +19,11 @@ function Stores() {
 		const tableContent = ids?.length
 			? ids.map(storeId => <StoreRow key={storeId} storeId={storeId} />)
 			: null
+
+		const tileContent = ids?.length
+			? ids.map(storeId => <StoreTile key={storeId} storeId={storeId} />)
+			: null
+
 		content = (
 			<div className='flex flex-col w-full gap-3'>
 				<div className='w-full flex gap-3'>
@@ -37,7 +43,7 @@ function Stores() {
 						</h1>
 					</button>
 				</div>
-				<div className='max-w-full overflow-auto'>
+				<div className='max-w-full hidden md:block overflow-auto'>
 					<table className='w-full   bg-white rounded'>
 						<thead className='border-b-2 border-black'>
 							<tr>
@@ -68,7 +74,7 @@ function Stores() {
 						<tbody>{tableContent}</tbody>
 					</table>
 				</div>
-
+				<div className='flex flex-col md:hidden'>{tileContent}</div>
 				<StoreForm isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
 			</div>
 		)
