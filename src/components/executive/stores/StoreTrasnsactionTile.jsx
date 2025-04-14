@@ -9,8 +9,8 @@ function StoreTrasnsactionTile({ transactionId }) {
 	const transaction = useSelector(state => selectById(state, transactionId))
 	if (transaction) {
 		return (
-			<div className='bg-white border-y border-gray-400 p-2 grid grid-cols-3'>
-				<div>
+			<div className='bg-white border-y border-gray-400 grid grid-cols-3'>
+				<div className='p-2'>
 					<h1 className='font-semibold'>
 						{dayjs(transaction.date).format('DD/MM/YYYY')}
 					</h1>
@@ -18,13 +18,13 @@ function StoreTrasnsactionTile({ transactionId }) {
 						{transaction.description}
 					</p>
 				</div>
-				<div className='flex items-center justify-end'>
-					<h1 className='text-pr-red text-end font-bold'>
+				<div className='flex p-2 items-center bg-pr-red/10 justify-end'>
+					<h1 className='text-pr-red text-xl text-end font-semibold'>
 						{transaction.entry === 'debit' ? transaction.amount : '-----'}
 					</h1>
 				</div>
-				<div className='flex items-center justify-end'>
-					<h1 className='text-pr-green text-end font-bold'>
+				<div className='flex p-2 bg-pr-green/10 items-center justify-end'>
+					<h1 className='text-pr-green text-xl text-end font-semibold'>
 						{transaction.entry === 'credit' ? transaction.amount : '-----'}
 					</h1>
 				</div>
