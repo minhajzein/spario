@@ -83,6 +83,15 @@ const executiveApiSlice = apiSlice.injectEndpoints({
                 method: 'DELETE'
             }),
             invalidatesTags: ['Executives']
+        }),
+
+        changeStatus: builder.mutation({
+            query: (credentials) => ({
+                url: `/admin/executives/${credentials.id}`,
+                method: 'PATCH',
+                body: { ...credentials }
+            }),
+            invalidatesTags: ['Executives']
         })
 
     })
@@ -93,7 +102,8 @@ export const {
     useGetExecutiveByIdQuery,
     useCreateExecutiveMutation,
     useUpdateExecutiveMutation,
-    useDeleteExecutiveMutation
+    useDeleteExecutiveMutation,
+    useChangeStatusMutation
 } = executiveApiSlice
 
 

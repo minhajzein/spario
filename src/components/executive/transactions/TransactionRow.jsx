@@ -28,8 +28,8 @@ function TransactionRow({ transactionId }) {
 				>
 					{transaction.entry}
 				</td>
-				<td className='p-3 border-r border-black text-center'>
-					{transaction.description}
+				<td className='p-3 border-r border-black uppercase text-center'>
+					{transaction.type}
 				</td>
 				<td className='p-3 border-r border-black text-center'>
 					{transaction.amount}

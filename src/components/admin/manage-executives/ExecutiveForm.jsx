@@ -1,34 +1,19 @@
 import { Input, Modal, Select } from 'antd'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import {
-	useCreateRouteMutation,
-	useGetAllRoutesQuery,
-} from '../../../store/apiSlices/routeApiSlice'
-import { useState } from 'react'
 import { useCreateExecutiveMutation } from '../../../store/apiSlices/executiveApiSlice'
-import { CiCirclePlus } from 'react-icons/ci'
 import { toast } from 'react-toastify'
 import { ImSpinner9 } from 'react-icons/im'
 
 function ExecutiveForm({ isOpen, setIsOpen, executive }) {
 	const handleCancel = () => setIsOpen(false)
 	const [createExecutive, { isLoading }] = useCreateExecutiveMutation()
-	const {
-		data: routes,
-		isLoading: fetchingRoutes,
-		isSuccess,
-	} = useGetAllRoutesQuery()
-	const [createRoute, { isLoading: creatingRoute }] = useCreateRouteMutation()
-	const [searchValue, setSearchValue] = useState('')
-	const [showAddButton, setShowAddButton] = useState(false)
 
 	const formik = useFormik({
 		initialValues: {
 			username: executive?.username || '',
 			password: executive?.password || '',
 			phone: executive?.phone || '',
-			route: executive?.route || '',
 		},
 		validationSchema: Yup.object({
 			username: Yup.string().required(),
@@ -39,7 +24,6 @@ function ExecutiveForm({ isOpen, setIsOpen, executive }) {
 					'mobile number is not valid'
 				)
 				.required(),
-			route: Yup.string().required(),
 		}),
 		onSubmit: async values => {
 			try {
@@ -59,31 +43,6 @@ function ExecutiveForm({ isOpen, setIsOpen, executive }) {
 		formik.resetForm()
 	}
 
-	const addRoute = async () => {
-		try {
-			const { data } = await createRoute({ route: searchValue })
-			if (data?.success) {
-				toast.success(data?.message)
-				formik.setFieldValue('route', searchValue)
-				setShowAddButton(false)
-			} else {
-				toast.error(data?.message)
-			}
-		} catch (error) {
-			console.error(error)
-		}
-	}
-
-	const handleSearch = value => {
-		setSearchValue(value)
-		const routeArray = Object.values(routes?.entities)
-		const sameRoute = routeArray.find(
-			route => route.route.toLowerCase() === value.toLowerCase()
-		)
-		if (sameRoute) setShowAddButton(false)
-		else setShowAddButton(true)
-	}
-
 	return (
 		<Modal
 			open={isOpen}
@@ -95,7 +54,7 @@ function ExecutiveForm({ isOpen, setIsOpen, executive }) {
 				onSubmit={formik.handleSubmit}
 				className='flex flex-col w-full gap-2'
 			>
-				<div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
+				<div className='grid grid-cols-1  gap-2'>
 					<div className='flex flex-col'>
 						<label htmlFor='username' className='capitalize text-sm'>
 							username
@@ -139,53 +98,6 @@ function ExecutiveForm({ isOpen, setIsOpen, executive }) {
 						/>
 						{formik.touched.phone && (
 							<p className='text-pr-red text-xs'>{formik.errors.phone}</p>
-						)}
-					</div>
-					<div className='flex flex-col'>
-						<label htmlFor='route' className='capitalize text-sm'>
-							Route
-						</label>
-						<div className='flex gap-2'>
-							<Select
-								value={formik.values.route}
-								onChange={value => formik.setFieldValue('route', value)}
-								placeholder='Select a route'
-								className='w-full'
-								loading={fetchingRoutes}
-								onSearch={handleSearch}
-								showSearch
-								optionFilterProp='children'
-								filterOption={(input, option) =>
-									(option?.label ?? '')
-										.toLowerCase()
-										.includes(input.toLowerCase())
-								}
-								options={
-									isSuccess
-										? Object.values(routes?.entities).map(route => ({
-												label: route.route,
-												value: route.route,
-										  }))
-										: []
-								}
-							/>
-							{showAddButton && searchValue !== '' && (
-								<button
-									disabled={creatingRoute}
-									type='button'
-									title='Add new route'
-									onMouseDown={addRoute}
-									className='border border-pr-green cursor-pointer text-pr-green px-2 rounded'
-								>
-									<CiCirclePlus
-										className={`${createRoute && 'animate-spin'}`}
-									/>
-								</button>
-							)}
-						</div>
-
-						{formik.touched.route && (
-							<p className='text-pr-red text-xs'>{formik.errors.route}</p>
 						)}
 					</div>
 				</div>

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { selectExecutiveById } from '../../../store/apiSlices/executiveApiSlice'
 import { useSelector } from 'react-redux'
 import { TbEyeSearch } from 'react-icons/tb'
+import ChangeStatus from './ChangeStatus'
 
 function ExecutiveRow({ executiveId }) {
 	const executive = useSelector(state =>
@@ -23,10 +24,13 @@ function ExecutiveRow({ executiveId }) {
 				<td className='p-3 border-r border-black text-center'>
 					{executive.phone}
 				</td>
-				<td className='p-3 border-r border-black text-center'>
-					{executive.route}
+				<td
+					className={`${
+						executive.status === 'active' ? 'text-pr-green' : 'text-pr-red'
+					} p-3 border-r border-black capitalize text-center`}
+				>
+					{executive.status}
 				</td>
-
 				<td className='p-3 flex items-center justify-center gap-3'>
 					<Link
 						className='text-xl text-blue-500 hover:text-blue-700'
@@ -34,6 +38,7 @@ function ExecutiveRow({ executiveId }) {
 					>
 						<TbEyeSearch />
 					</Link>
+					<ChangeStatus status={executive.status} executiveId={executiveId} />
 				</td>
 			</tr>
 		)
