@@ -142,6 +142,7 @@ function AddInvoice() {
 							<DatePicker
 								type='text'
 								name='billDate'
+								allowClear={false}
 								id='billDate'
 								onChange={value =>
 									formik.setFieldValue(
@@ -162,6 +163,7 @@ function AddInvoice() {
 							<DatePicker
 								type='text'
 								name='dueDate'
+								allowClear={false}
 								id='dueDate'
 								onChange={value =>
 									formik.setFieldValue('dueDate', value ? value.toString() : '')

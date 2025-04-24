@@ -6,6 +6,8 @@ import Loading from '../../loading/Loading'
 import { useSelector } from 'react-redux'
 import StoreTrasnsactionTile from './StoreTrasnsactionTile'
 import StoreDashboard from './StoreDashboard'
+import storeLedger from '../../../utils/storeLedger'
+import dayjs from 'dayjs'
 
 function StoreDetails() {
 	const executiveId = useSelector(state => state.user.user._id)
@@ -13,6 +15,38 @@ function StoreDetails() {
 	const { id } = useParams()
 	const store = useSelector(state => selectById(state, id))
 	const { data, isLoading, isSuccess } = useGetStoreTransactionsQuery(id)
+
+	const generatePdf = () => {
+		try {
+			const tableData = Object.values(data?.entities).map(transaction => {
+				const column = {
+					date: dayjs(transaction.date).format('DD/MM/YYYY'),
+					description: transaction.description,
+					debit: transaction.entry === 'debit' ? transaction.amount : '-------',
+					credit:
+						transaction.entry === 'credit' ? transaction.amount : '-------',
+				}
+				return column
+			})
+
+			const columns = [
+				{ Title: 'Date', dataIndex: 'date', key: 'date' },
+				{ Title: 'Description', dataIndex: 'description', key: 'description' },
+				{ Title: 'Debit', dataIndex: 'debit', key: 'debit' },
+				{ Title: 'Credit', dataIndex: 'credit', key: 'credit' },
+			]
+			storeLedger(
+				tableData,
+				columns,
+				store.storeName,
+				store.totalOutstanding,
+				store.paidAmount,
+				store.balance
+			)
+		} catch (error) {
+			console.error(error)
+		}
+	}
 
 	let content
 
@@ -39,6 +73,12 @@ function StoreDetails() {
 		content = (
 			<div className='w-full flex flex-col gap-3'>
 				<StoreDashboard store={store} />
+				<button
+					onClick={generatePdf}
+					className='bg-pr-red rounded-full p-4 text-white'
+				>
+					Print
+				</button>
 				<div className='max-w-full hidden md:block overflow-auto'>
 					<table className='w-full   bg-white rounded'>
 						<thead className='border-b-2 border-black'>

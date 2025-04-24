@@ -9,6 +9,8 @@ import { useCreateTransactionMutation } from '../../../store/apiSlices/transacti
 import dayjs from 'dayjs'
 import { toast } from 'react-toastify'
 
+const types = ['cash', 'cheque', 'rtgs']
+
 function AddTransaction() {
 	const [createTransaction, { isLoading }] = useCreateTransactionMutation()
 
@@ -26,12 +28,14 @@ function AddTransaction() {
 			store: '',
 			amount: 0,
 			executive: user?._id,
+			type: '',
 			date: dayjs().toString(),
 			entry: 'credit',
 		},
 		validationSchema: Yup.object({
 			store: Yup.string().required(),
 			date: Yup.date().required(),
+			type: Yup.string().required(),
 			amount: Yup.number()
 				.moreThan(0)
 				.lessThan(balance + 1)
@@ -137,6 +141,32 @@ function AddTransaction() {
 							/>
 							{formik.touched.amount && (
 								<p className='text-pr-red text-xs'>{formik.errors.amount}</p>
+							)}
+						</div>
+						<div className='flex flex-col'>
+							<label htmlFor='type' className='capitalize text-sm'>
+								type
+							</label>
+							<Select
+								value={formik.values.type}
+								onChange={value => formik.setFieldValue('type', value)}
+								placeholder='Select a type'
+								className='w-full'
+								showSearch
+								optionFilterProp='children'
+								filterOption={(input, option) =>
+									(option?.label ?? '')
+										.toLowerCase()
+										.includes(input.toLowerCase())
+								}
+								options={types.map(type => ({
+									label: type,
+									value: type,
+								}))}
+							/>
+
+							{formik.touched.type && (
+								<p className='text-pr-red text-xs'>{formik.errors.type}</p>
 							)}
 						</div>
 						<div className='flex flex-col'>

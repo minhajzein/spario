@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { Input } from 'antd'
 import StoreRow from './StoreRow'
 import StoreTile from './StoreTile'
+import AddStore from '../../admin/stores/AddStore'
 
 function Stores() {
 	const user = useSelector(state => state.user.user)
@@ -32,6 +33,7 @@ function Stores() {
 						size='large'
 						placeholder='Search for stores'
 					/>
+					<AddStore />
 				</div>
 				<div className='max-w-full hidden md:block overflow-auto'>
 					<table className='w-full   bg-white rounded'>

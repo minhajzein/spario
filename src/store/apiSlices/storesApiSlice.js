@@ -41,7 +41,7 @@ const storesApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: { ...credentials }
             }),
-            invalidatesTags: ['Stores', 'Dashboard', 'Executives'],
+            invalidatesTags: ['Stores', 'Dashboard', 'Executives', 'Stores_Executive'],
         }),
 
         updateStore: builder.mutation({

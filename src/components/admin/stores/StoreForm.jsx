@@ -3,14 +3,14 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useCreateStoreMutation } from '../../../store/apiSlices/storesApiSlice'
 import { useGetAllExecutivesQuery } from '../../../store/apiSlices/executiveApiSlice'
-import { useGetAllRoutesQuery } from '../../../store/apiSlices/routeApiSlice'
 import { toast } from 'react-toastify'
 import { ImSpinner9 } from 'react-icons/im'
+import RouteInput from '../route-manage/RouteInput'
+import { useSelector } from 'react-redux'
 
 function StoreForm({ isOpen, store, setIsOpen }) {
+	const user = useSelector(state => state.user.user)
 	const { data: executives, isSuccess } = useGetAllExecutivesQuery()
-	const { data: routes, isSuccess: routeFetchingSuccess } =
-		useGetAllRoutesQuery()
 	const [createStore, { isLoading }] = useCreateStoreMutation()
 
 	const handleCancel = () => setIsOpen(false)
@@ -20,7 +20,7 @@ function StoreForm({ isOpen, store, setIsOpen }) {
 			storeName: store?.storeName || '',
 			ownerName: store?.ownerName || '',
 			contactNumber: store?.contactNumber || '',
-			executive: store?.executive || '',
+			executive: user.role === 'admin' ? store?.executive || '' : user._id,
 			route: store?.route || '',
 			openingBalance: 0,
 		},
@@ -134,61 +134,37 @@ function StoreForm({ isOpen, store, setIsOpen }) {
 							</p>
 						)}
 					</div>
-					<div className='flex flex-col'>
-						<label htmlFor='route' className='capitalize text-sm'>
-							Route
-						</label>
+					<RouteInput formik={formik} />
 
-						<Select
-							value={formik.values.route}
-							onChange={value => formik.setFieldValue('route', value)}
-							placeholder='Select a route'
-							className='w-full'
-							showSearch
-							optionFilterProp='children'
-							filterOption={(input, option) =>
-								(option?.label ?? '')
-									.toLowerCase()
-									.includes(input.toLowerCase())
-							}
-							options={
-								routeFetchingSuccess && routes
-									? Object?.values(routes?.entities).map(route => ({
-											label: route.route,
-											value: route.route,
-									  }))
-									: []
-							}
-						/>
-						{formik.touched.route && (
-							<p className='text-pr-red text-xs'>{formik.errors.route}</p>
-						)}
-					</div>
 					<div className='flex flex-col'>
 						<label htmlFor='executive' className='capitalize text-sm'>
 							executive
 						</label>
-						<Select
-							value={formik.values.executive}
-							onChange={value => formik.setFieldValue('executive', value)}
-							placeholder='Select a route'
-							className='w-full'
-							showSearch
-							optionFilterProp='children'
-							filterOption={(input, option) =>
-								(option?.label ?? '')
-									.toLowerCase()
-									.includes(input.toLowerCase())
-							}
-							options={
-								isSuccess && executives
-									? Object.values(executives?.entities).map(executive => ({
-											label: executive.username,
-											value: executive._id,
-									  }))
-									: []
-							}
-						/>
+						{user.role === 'admin' ? (
+							<Select
+								value={formik.values.executive}
+								onChange={value => formik.setFieldValue('executive', value)}
+								placeholder='Select a route'
+								className='w-full'
+								showSearch
+								optionFilterProp='children'
+								filterOption={(input, option) =>
+									(option?.label ?? '')
+										.toLowerCase()
+										.includes(input.toLowerCase())
+								}
+								options={
+									isSuccess && executives
+										? Object.values(executives?.entities).map(executive => ({
+												label: executive.username,
+												value: executive._id,
+										  }))
+										: []
+								}
+							/>
+						) : (
+							<Input value={user.username} disabled />
+						)}
 
 						{formik.touched.executive && (
 							<p className='text-pr-red text-xs'>{formik.errors.executive}</p>
