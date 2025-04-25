@@ -2,6 +2,7 @@ import { Input } from 'antd'
 import { useGetAllInvoicesQuery } from '../../../store/apiSlices/invoiceApiSlice'
 import Loading from '../../loading/Loading'
 import InvoiceRow from './InvoiceRow'
+import AddInvoice from './AddInvoice'
 
 function Invoices() {
 	const { data: invoices, isSuccess, isLoading } = useGetAllInvoicesQuery()
@@ -23,6 +24,7 @@ function Invoices() {
 						placeholder='Search for invoices'
 						size='large'
 					/>
+					<AddInvoice />
 				</div>
 				<div className='w-full overflow-auto'>
 					<table className='w-full bg-white rounded'>

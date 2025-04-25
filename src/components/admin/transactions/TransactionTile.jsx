@@ -30,7 +30,7 @@ function TransactionTile({ transactionId }) {
 				<div className={`p-2 capitalize text-start`}>
 					<h1 className='text-lg'>{transaction.entry}</h1>
 					<h1 className='text-xs text-ellipsis whitespace-nowrap overflow-hidden'>
-						{transaction.description}
+						{transaction.type}
 					</h1>
 				</div>
 				<div className='p-3 flex flex-col justify-end items-end'>
