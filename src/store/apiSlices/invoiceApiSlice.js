@@ -40,7 +40,7 @@ const invocesApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: { ...credentials }
             }),
-            invalidatesTags: ['Invoices', 'Stores', 'Dashboard']
+            invalidatesTags: ['Invoices', 'Stores', 'Dashboard', 'Store_Transactions', 'Stores_Executive']
         }),
 
         updateInvoice: builder.mutation({
