@@ -7,8 +7,10 @@ import { useCreateInvoiceMutation } from '../../../store/apiSlices/invoiceApiSli
 import { toast } from 'react-toastify'
 import { useGetAllStoresQuery } from '../../../store/apiSlices/storesApiSlice'
 import { ImSpinner9 } from 'react-icons/im'
+import { useSelector } from 'react-redux'
 
 function AddInvoice() {
+	const user = useSelector(state => state.user.user)
 	const [createInvoice, { isLoading, isError, error }] =
 		useCreateInvoiceMutation()
 	const {
@@ -53,6 +55,16 @@ function AddInvoice() {
 
 	const handleDiscard = () => formik.resetForm()
 
+	let filteredStores = []
+
+	if (isSuccess && user.role !== 'admin') {
+		filteredStores = Object.values(stores?.entities).filter(
+			store => store.executive._id === user._id
+		)
+	} else if (isSuccess && user.role === 'admin') {
+		filteredStores = Object.values(stores?.entities)
+	}
+
 	return (
 		<>
 			<button
@@ -92,7 +104,7 @@ function AddInvoice() {
 								}
 								options={
 									isSuccess
-										? Object.values(stores?.entities).map(store => ({
+										? filteredStores.map(store => ({
 												label: store.storeName,
 												value: store._id,
 										  }))

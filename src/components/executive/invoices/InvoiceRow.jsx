@@ -6,7 +6,6 @@ function InvoiceRow({ invoiceId }) {
 	const executiveId = useSelector(state => state.user.user._id)
 	const { selectById } = makeExecutiveInvoicesSelectors(executiveId)
 	const invoice = useSelector(state => selectById(state, invoiceId))
-	console.log(invoice)
 
 	if (invoice) {
 		return (

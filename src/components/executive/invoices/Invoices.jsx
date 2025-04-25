@@ -4,12 +4,13 @@ import { useGetInvoicesByExecutiveQuery } from '../../../store/apiSlices/querySl
 import { useSelector } from 'react-redux'
 import Loading from '../../loading/Loading'
 import InvoiceRow from './InvoiceRow'
+import { IoConstructOutline } from 'react-icons/io5'
+import InvoiceTile from './InvoiceTile'
 
 function Invoices() {
 	const executiveId = useSelector(state => state.user.user._id)
 	const { data: invoices, isLoading } =
 		useGetInvoicesByExecutiveQuery(executiveId)
-	console.log(invoices)
 
 	let content
 
@@ -18,6 +19,11 @@ function Invoices() {
 		const tableContent = ids?.length
 			? ids.map(invoiceId => (
 					<InvoiceRow key={invoiceId} invoiceId={invoiceId} />
+			  ))
+			: null
+		const tileContent = ids?.length
+			? ids.map(invoiceId => (
+					<InvoiceTile key={invoiceId} invoiceId={invoiceId} />
 			  ))
 			: null
 		content = (
@@ -31,7 +37,7 @@ function Invoices() {
 					/>
 					<AddInvoice />
 				</div>
-				<div className='w-full overflow-auto'>
+				<div className='w-full hidden md:block overflow-auto'>
 					<table className='w-full bg-white rounded'>
 						<thead className='border-b-2 border-black'>
 							<tr>
@@ -56,6 +62,7 @@ function Invoices() {
 						<tbody>{tableContent}</tbody>
 					</table>
 				</div>
+				<div className='flex flex-col gap-1 md:hidden'>{tileContent}</div>
 			</div>
 		)
 	}

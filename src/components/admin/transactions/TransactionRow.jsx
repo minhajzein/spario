@@ -26,10 +26,14 @@ function TransactionRow({ transactionId }) {
 				>
 					{transaction.entry}
 				</td>
-				<td className='p-3 border-r border-black text-center'>
-					{transaction.description}
+				<td className='p-3 border-r capitalize border-black text-center'>
+					{transaction.type}
 				</td>
-				<td className='p-3 border-r border-black text-center'>
+				<td
+					className={`p-3 border-r border-black text-center ${
+						transaction.entry === 'debit' ? 'text-pr-red' : 'text-pr-green'
+					}`}
+				>
 					{transaction.amount}
 				</td>
 				<td className='p-3 text-center'></td>
