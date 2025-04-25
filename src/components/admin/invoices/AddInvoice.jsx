@@ -57,7 +57,7 @@ function AddInvoice() {
 		<>
 			<button
 				onClick={handleModal}
-				className='flex min-w-max items-center opacity-50 md:opacity-100 hover:opacity-100 text-xs md:text-sm cursor-pointer gap-1 text-white bg-pr-red rounded-full p-3 shadow-lg shadow-black/50'
+				className='flex min-w-max items-center text-xs md:text-sm cursor-pointer gap-1 text-white bg-pr-red rounded-full p-3 shadow-lg shadow-black/50'
 			>
 				<img src='/images/active-transactions.png' alt='' />
 				<h1 className='whitespace-nowrap overflow-hidden text-ellipsis'>
