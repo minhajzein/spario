@@ -1,4 +1,4 @@
-import { createEntityAdapter } from "@reduxjs/toolkit";
+import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
 import apiSlice from "../../../apis/apiSlice";
 
 const invoiceAdapter = createEntityAdapter({})
@@ -19,7 +19,7 @@ const executiveInvoicesApiSlice = apiSlice.injectEndpoints({
                     store.id = store._id
                     return store
                 })
-                return storesAdapter.setAll(initialState, loadedInvoices)
+                return invoiceAdapter.setAll(initialState, loadedInvoices)
             },
             keepUnusedDataFor: 5,
             providesTags: (result, error, arg) => {
