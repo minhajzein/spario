@@ -3,30 +3,37 @@ import { useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 import AddTransaction from '../executive/transactions/AddTransaction'
 import AddInvoice from '../admin/invoices/AddInvoice'
+import { VscGraph } from 'react-icons/vsc'
+import { MdOutlineStorefront } from 'react-icons/md'
+import { HiOutlineUserGroup } from 'react-icons/hi'
+import { RiBillLine } from 'react-icons/ri'
+import { GrTransaction } from 'react-icons/gr'
+import { IoReturnDownBackOutline } from 'react-icons/io5'
 
 const adminNavItems = [
 	{
 		title: 'Dashboard',
-		icon: '/images/dashboard-icon.png',
-		activeIcon: '/images/active-dashboard.png',
+		icon: VscGraph,
 		path: '/admin',
 	},
 	{
 		title: 'Stores',
-		icon: '/images/store-icon.png',
-		activeIcon: '/images/active-store.png',
+		icon: MdOutlineStorefront,
 		path: '/admin/stores',
 	},
 	{
 		title: 'Executives',
-		icon: '/images/executives-icon.png',
-		activeIcon: '/images/active-executives.png',
+		icon: HiOutlineUserGroup,
 		path: '/admin/executives',
 	},
 	{
+		title: 'Invoices',
+		icon: RiBillLine,
+		path: '/admin/invoices',
+	},
+	{
 		title: 'Transactions',
-		icon: '/images/transactions-icon.png',
-		activeIcon: '/images/active-transactions.png',
+		icon: GrTransaction,
 		path: '/admin/transactions',
 	},
 ]
@@ -34,21 +41,28 @@ const adminNavItems = [
 const execNavItems = [
 	{
 		title: 'Dashboard',
-		icon: '/images/dashboard-icon.png',
-		activeIcon: '/images/active-dashboard.png',
+		icon: VscGraph,
 		path: '/',
 	},
 	{
 		title: 'Stores',
-		icon: '/images/store-icon.png',
-		activeIcon: '/images/active-store.png',
+		icon: MdOutlineStorefront,
 		path: '/stores',
 	},
 	{
+		title: 'Invoices',
+		icon: RiBillLine,
+		path: '/invoices',
+	},
+	{
 		title: 'Transactions',
-		icon: '/images/transactions-icon.png',
-		activeIcon: '/images/active-transactions.png',
+		icon: GrTransaction,
 		path: '/transactions',
+	},
+	{
+		title: 'Returns',
+		icon: IoReturnDownBackOutline,
+		path: '/returns',
 	},
 ]
 function Footer() {
@@ -77,14 +91,11 @@ function Footer() {
 						key={nav.title}
 						className='flex flex-col justify-center text-xs items-center'
 					>
-						<img
+						<nav.icon
 							className={`${
-								isActive(nav.path) && 'rounded-full bg-primary'
-							} h-8 px-4 py-2 object-contain`}
-							src={isActive(nav.path) ? nav.activeIcon : nav.icon}
-							alt=''
+								isActive(nav.path) ? 'text-primary' : 'text-black'
+							}`}
 						/>
-						{nav.title}
 					</Link>
 				))}
 			</div>

@@ -1,58 +1,71 @@
 import { useState } from 'react'
+import { GrTransaction } from 'react-icons/gr'
+import { HiOutlineUserGroup } from 'react-icons/hi'
+import { IoReturnDownBackOutline } from 'react-icons/io5'
+import { MdOutlineStorefront } from 'react-icons/md'
+import { RiBillLine } from 'react-icons/ri'
+import { VscGraph } from 'react-icons/vsc'
 import { useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 
 const adminNavItems = [
 	{
 		title: 'Dashboard',
-		icon: '/images/dashboard-icon.png',
-		activeIcon: '/images/active-dashboard.png',
+		icon: VscGraph,
 		path: '/admin',
 	},
 	{
 		title: 'Stores',
-		icon: '/images/store-icon.png',
-		activeIcon: '/images/active-store.png',
+		icon: MdOutlineStorefront,
 		path: '/admin/stores',
 	},
 	{
 		title: 'Executives',
-		icon: '/images/executives-icon.png',
-		activeIcon: '/images/active-executives.png',
+		icon: HiOutlineUserGroup,
 		path: '/admin/executives',
 	},
 	{
 		title: 'Invoices',
-		icon: '/images/transactions-icon.png',
-		activeIcon: '/images/active-transactions.png',
+		icon: RiBillLine,
 		path: '/admin/invoices',
 	},
 	{
 		title: 'Transactions',
-		icon: '/images/transactions-icon.png',
-		activeIcon: '/images/active-transactions.png',
+		icon: GrTransaction,
 		path: '/admin/transactions',
+	},
+	{
+		title: 'Returns',
+		icon: IoReturnDownBackOutline,
+		path: '/admin/returns',
 	},
 ]
 
 const execNavItems = [
 	{
 		title: 'Dashboard',
-		icon: '/images/dashboard-icon.png',
-		activeIcon: '/images/active-dashboard.png',
+		icon: VscGraph,
 		path: '/',
 	},
 	{
 		title: 'Stores',
-		icon: '/images/store-icon.png',
-		activeIcon: '/images/active-store.png',
+		icon: MdOutlineStorefront,
 		path: '/stores',
 	},
 	{
+		title: 'Invoices',
+		icon: RiBillLine,
+		path: '/invoices',
+	},
+	{
 		title: 'Transactions',
-		icon: '/images/transactions-icon.png',
-		activeIcon: '/images/active-transactions.png',
+		icon: GrTransaction,
 		path: '/transactions',
+	},
+	{
+		title: 'Returns',
+		icon: IoReturnDownBackOutline,
+		path: '/returns',
 	},
 ]
 
@@ -80,11 +93,10 @@ function Sidebar() {
 							isActive(nav.path) && 'bg-primary shadow-lg shadow-black/50'
 						} flex gap-1 items-center px-6 py-3 rounded-full cursor-pointer`}
 					>
-						{isActive(nav.path) ? (
-							<img src={nav.activeIcon} className='object-contain' alt='' />
-						) : (
-							<img src={nav.icon} className='object-contain' alt='' />
-						)}
+						<nav.icon
+							className={`${isActive(nav.path) ? 'text-white' : 'text-black'}`}
+						/>
+
 						<h1 className={`${isActive(nav.path) && 'text-white'} capitalize`}>
 							{nav.title}
 						</h1>
