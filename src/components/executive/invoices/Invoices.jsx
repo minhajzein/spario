@@ -4,7 +4,6 @@ import { useGetInvoicesByExecutiveQuery } from '../../../store/apiSlices/querySl
 import { useSelector } from 'react-redux'
 import Loading from '../../loading/Loading'
 import InvoiceRow from './InvoiceRow'
-import { IoConstructOutline } from 'react-icons/io5'
 import InvoiceTile from './InvoiceTile'
 
 function Invoices() {

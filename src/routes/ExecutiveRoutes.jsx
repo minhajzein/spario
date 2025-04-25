@@ -7,6 +7,7 @@ import Stores from '../components/executive/stores/Stores'
 import Transactions from '../components/executive/transactions/Transactions'
 import StoreDetails from '../components/executive/stores/StoreDetails'
 import Invoices from '../components/executive/invoices/Invoices'
+import Returns from '../components/executive/returns/Returns'
 
 function ExecutiveRoutes() {
 	return (
@@ -19,6 +20,7 @@ function ExecutiveRoutes() {
 						<Route path='stores/:id' element={<StoreDetails />} />
 						<Route path='transactions' element={<Transactions />} />
 						<Route path='invoices' element={<Invoices />} />
+						<Route path='returns' element={<Returns />} />
 						<Route path='*' element={<PageNotFound />} />
 					</Route>
 				</Route>

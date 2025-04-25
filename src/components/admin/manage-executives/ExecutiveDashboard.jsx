@@ -1,6 +1,7 @@
 import React from 'react'
 import { FaRegCircleUser, FaRoute } from 'react-icons/fa6'
 import { FiPhoneCall } from 'react-icons/fi'
+import { HiOutlineStatusOnline } from 'react-icons/hi'
 import { MdOutlineVerified, MdStorefront } from 'react-icons/md'
 import { PiWarningCircleBold } from 'react-icons/pi'
 
@@ -50,15 +51,15 @@ function ExecutiveDashboard({ dashboard }) {
 				</div>
 				<div className='bg-white gap-2 items-center flex rounded-lg p-4 md:flex-col'>
 					<div className='md:mt-4 size-12 p-4 flex bg-orange-300/30 rounded-full'>
-						<FaRoute className='text-orange-500 m-auto' />
+						<HiOutlineStatusOnline className='text-orange-500 m-auto' />
 					</div>
 					<div className='flex flex-col  md:items-center'>
 						<h3 className='text-ellipsis text-[10px] whitespace-nowrap overflow-hidden md:text-xs'>
-							Route
+							Status
 						</h3>
 
-						<h1 className='font-bold text-sm md:text-xl '>
-							{dashboard?.executive?.route}
+						<h1 className='font-bold text-sm capitalize md:text-xl '>
+							{dashboard?.executive?.status}
 						</h1>
 					</div>
 				</div>
