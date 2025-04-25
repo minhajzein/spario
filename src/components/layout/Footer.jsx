@@ -82,19 +82,19 @@ function Footer() {
 			</div>
 			<div
 				className={`w-full grid ${
-					navItems.length === 3 ? 'grid-cols-3' : 'grid-cols-4'
+					navItems.length === 3 ? 'grid-cols-3' : 'grid-cols-5'
 				} p-2 gap-2 bg-white`}
 			>
 				{navItems.map(nav => (
 					<Link
 						to={nav.path}
 						key={nav.title}
-						className='flex flex-col justify-center text-xs items-center'
+						className='flex flex-col justify-center py-3 text-xs items-center'
 					>
 						<nav.icon
 							className={`${
 								isActive(nav.path) ? 'text-primary' : 'text-black'
-							}`}
+							} text-2xl`}
 						/>
 					</Link>
 				))}
