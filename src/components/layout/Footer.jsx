@@ -77,9 +77,6 @@ function Footer() {
 	}
 	return (
 		<div className='sticky border-t border-gray-400 flex flex-col bg-transparent md:hidden gap-2 items-end w-full top-full'>
-			<div className='absolute bottom-full right-2 mb-2'>
-				{user.role === 'executive' ? <AddTransaction /> : <AddInvoice />}
-			</div>
 			<div
 				className={`w-full grid ${
 					navItems.length === 3 ? 'grid-cols-3' : 'grid-cols-5'

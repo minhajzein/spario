@@ -4,6 +4,7 @@ import Loading from '../../loading/Loading'
 import TransactionRow from './TransactionRow'
 import { Input } from 'antd'
 import TransactionTile from './TransactionTile'
+import AddTransaction from './AddTransaction'
 
 function Transactions() {
 	const executiveId = useSelector(state => state.user.user._id)
@@ -36,6 +37,7 @@ function Transactions() {
 						size='large'
 						placeholder='Search for transactions'
 					/>
+					<AddTransaction />
 				</div>
 				<div className='max-w-full hidden md:block overflow-auto'>
 					<table className='w-full   bg-white rounded'>
