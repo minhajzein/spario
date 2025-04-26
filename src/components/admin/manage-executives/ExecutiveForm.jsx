@@ -64,7 +64,7 @@ function ExecutiveForm({ isOpen, setIsOpen, executive }) {
 							name='username'
 							id='username'
 							onChange={formik.handleChange}
-							value={formik.values.username.toLowerCase()}
+							value={formik.values.username}
 						/>
 						{formik.touched.username && (
 							<p className='text-pr-red text-xs'>{formik.errors.username}</p>

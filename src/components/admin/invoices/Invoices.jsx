@@ -24,7 +24,9 @@ function Invoices() {
 						placeholder='Search for invoices'
 						size='large'
 					/>
-					<AddInvoice />
+					<div className='md:hidden'>
+						<AddInvoice />
+					</div>
 				</div>
 				<div className='w-full overflow-auto'>
 					<table className='w-full bg-white rounded'>
