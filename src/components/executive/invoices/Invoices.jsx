@@ -61,7 +61,7 @@ function Invoices() {
 						<tbody>{tableContent}</tbody>
 					</table>
 				</div>
-				<div className='flex flex-col gap-1 md:hidden'>{tileContent}</div>
+				<div className='flex flex-col  md:hidden'>{tileContent}</div>
 			</div>
 		)
 	}
