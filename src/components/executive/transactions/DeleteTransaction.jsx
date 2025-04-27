@@ -2,6 +2,7 @@ import { toast } from 'react-toastify'
 import { useDeleteTransactionMutation } from '../../../store/apiSlices/transactionsApiSlice'
 import { FaRegTrashAlt } from 'react-icons/fa'
 import { ImSpinner9 } from 'react-icons/im'
+import { Popconfirm } from 'antd'
 
 function DeleteTransaction({ id }) {
 	const [deleteTransact, { isLoading }] = useDeleteTransactionMutation()
@@ -18,13 +19,20 @@ function DeleteTransaction({ id }) {
 	}
 
 	return (
-		<button type='button' onClick={handleDelete} disabled={isLoading}>
-			{isLoading ? (
-				<ImSpinner9 className='animate-spin' />
-			) : (
-				<FaRegTrashAlt className='text-xl cursor-pointer text-pr-red' />
-			)}
-		</button>
+		<Popconfirm
+			title='Delete Transaction'
+			description='Are you sure to delete this transaction?'
+			onConfirm={handleDelete}
+			okText='Delete'
+		>
+			<button type='button' disabled={isLoading}>
+				{isLoading ? (
+					<ImSpinner9 className='animate-spin' />
+				) : (
+					<FaRegTrashAlt className='text-xl cursor-pointer text-pr-red' />
+				)}
+			</button>
+		</Popconfirm>
 	)
 }
 

@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Login from './components/auth/Login'
 import Public from './components/auth/Public'
 import Persist from './components/persist/Persist'
+import '@ant-design/v5-patch-for-react-19'
 
 function App() {
 	return (
