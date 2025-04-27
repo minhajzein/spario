@@ -12,9 +12,9 @@ function ExecutiveRow({ executiveId }) {
 	if (executive) {
 		return (
 			<tr className='bg-white border-b border-black'>
-				<td className='p-3 capitalize border-r border-black'>
+				<td className='p-3 border-r border-black'>
 					<Link
-						className='text-blue-500  capitalize duration-300 hover:underline hover:text-blue-700'
+						className='text-blue-500 duration-300 hover:underline hover:text-blue-700'
 						to={`/admin/executives/${executiveId}`}
 					>
 						{executive.username}

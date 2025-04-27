@@ -19,13 +19,7 @@ function TransactionRow({ transactionId }) {
 				<td className='p-3 border-r border-black text-center'>
 					{dayjs(transaction.date).format('DD/MM/YYYY')}
 				</td>
-				<td
-					className={`${
-						transaction.entry === 'debit' ? 'text-pr-red' : 'text-pr-green'
-					} p-3 border-r border-black text-center`}
-				>
-					{transaction.entry}
-				</td>
+
 				<td className='p-3 border-r capitalize border-black text-center'>
 					{transaction.type}
 				</td>
