@@ -24,6 +24,7 @@ function DeleteTransaction({ id }) {
 			description='Are you sure to delete this transaction?'
 			onConfirm={handleDelete}
 			okText='Delete'
+			placement='left'
 		>
 			<button type='button' disabled={isLoading}>
 				{isLoading ? (
