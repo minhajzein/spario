@@ -53,7 +53,8 @@ const apiSlice = createApi({
         'Store_Transactions',
         'Route_Executives',
         'Stores_Executive',
-        'Executive_Invoices'
+        'Executive_Invoices',
+        'Returns'
     ],
     endpoints: builder => ({})
 })
