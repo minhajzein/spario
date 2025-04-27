@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux'
 import { selectTransactionById } from '../../../store/apiSlices/transactionsApiSlice'
 import dayjs from 'dayjs'
 import DeleteTransaction from '../../executive/transactions/DeleteTransaction'
+import EditTransaction from '../../executive/transactions/EditTransaction'
 
 function TransactionRow({ transactionId }) {
 	const transaction = useSelector(state =>
@@ -31,7 +32,8 @@ function TransactionRow({ transactionId }) {
 				>
 					{transaction.amount}
 				</td>
-				<td className='p-3 text-center'>
+				<td className='p-3 flex gap-3 items-center justify-center text-center'>
+					<EditTransaction transaction={transaction} />
 					<DeleteTransaction id={transactionId} />
 				</td>
 			</tr>

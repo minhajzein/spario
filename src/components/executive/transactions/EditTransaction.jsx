@@ -9,13 +9,16 @@ import { ImSpinner9 } from 'react-icons/im'
 import { DatePicker, Input, Modal, Select } from 'antd'
 import { useUpdateTransactionMutation } from '../../../store/apiSlices/transactionsApiSlice'
 import { toast } from 'react-toastify'
+import { useGetAllStoresQuery } from '../../../store/apiSlices/storesApiSlice'
 
 const types = ['cash', 'cheque', 'rtgs']
 
 function EditTransaction({ transaction }) {
 	const [update, { isLoading }] = useUpdateTransactionMutation()
 	const user = useSelector(state => state.user.user)
-	const { data: stores, isSuccess } = useGetAllStoresByExecutiveQuery(user._id)
+	// const { data: stores, isSuccess } = useGetAllStoresByExecutiveQuery(user._id)
+	const { data: stores, isSuccess } = useGetAllStoresQuery()
+	const [filteredStores, setFilteredStores] = useState([])
 
 	const [balance, setBalance] = useState(0)
 
@@ -27,10 +30,8 @@ function EditTransaction({ transaction }) {
 		initialValues: {
 			store: transaction.store._id,
 			amount: transaction.amount,
-			executive: user?._id,
 			type: transaction.type,
 			date: transaction.date,
-			entry: 'credit',
 		},
 		enableReinitialize: true,
 		validationSchema: Yup.object({
@@ -64,6 +65,15 @@ function EditTransaction({ transaction }) {
 	}
 
 	useEffect(() => {
+		if (user.role === 'admin' && isSuccess)
+			setFilteredStores(Object.values(stores?.entities))
+		else if (user.role === 'executive' && isSuccess) {
+			setFilteredStores(
+				Object.values(stores?.entities).filter(
+					store => store.executive._id === user._id
+				)
+			)
+		}
 		if (formik.values.store !== '') {
 			const selected = stores?.entities?.[formik.values.store]
 			if (selected) setBalance(selected.balance)
@@ -72,7 +82,7 @@ function EditTransaction({ transaction }) {
 
 	return (
 		<>
-			<button type='button' onClick={handleModal}>
+			<button type='button' className='cursor-pointer' onClick={handleModal}>
 				<RiEditLine className='text-xl text-pr-green' />
 			</button>
 			<Modal
@@ -101,7 +111,7 @@ function EditTransaction({ transaction }) {
 											.toLowerCase()
 											.includes(input.toLowerCase())
 									}
-									options={Object.values(stores?.entities).map(store => ({
+									options={filteredStores.map(store => ({
 										label: store.storeName,
 										value: store._id,
 									}))}
