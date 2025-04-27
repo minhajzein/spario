@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
 import { RiEditLine } from 'react-icons/ri'
 import { FaRegTrashAlt } from 'react-icons/fa'
+import DeleteTransaction from '../../executive/transactions/DeleteTransaction'
 
 function TransactionTile({ transactionId }) {
 	const transaction = useSelector(state =>
@@ -35,7 +36,7 @@ function TransactionTile({ transactionId }) {
 				</div>
 				<div className='flex gap-3 justify-center items-center'>
 					<RiEditLine className='text-xl text-pr-green' />
-					<FaRegTrashAlt className='text-xl text-pr-red' />
+					<DeleteTransaction id={transactionId} />
 				</div>
 			</div>
 		)

@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux'
 import { makeExecutiveTransactionsSelectors } from '../../../store/apiSlices/querySlices/transactionsByExecutive'
 import dayjs from 'dayjs'
 import { Link } from 'react-router-dom'
+import DeleteTransaction from './DeleteTransaction'
 
 function TransactionRow({ transactionId }) {
 	const executiveId = useSelector(state => state.user.user._id)
@@ -34,7 +35,9 @@ function TransactionRow({ transactionId }) {
 				<td className='p-3 border-r border-black text-center'>
 					{transaction.amount}
 				</td>
-				<td className='p-3 text-center'></td>
+				<td className='p-3 text-center'>
+					<DeleteTransaction id={transactionId} />
+				</td>
 			</tr>
 		)
 	} else return null

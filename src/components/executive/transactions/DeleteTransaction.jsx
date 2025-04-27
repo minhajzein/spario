@@ -1,7 +1,31 @@
-import React from 'react'
+import { toast } from 'react-toastify'
+import { useDeleteTransactionMutation } from '../../../store/apiSlices/transactionsApiSlice'
+import { FaRegTrashAlt } from 'react-icons/fa'
+import { ImSpinner9 } from 'react-icons/im'
 
-function DeleteTransaction() {
-	return <button>DeleteTransaction</button>
+function DeleteTransaction({ id }) {
+	const [deleteTransact, { isLoading }] = useDeleteTransactionMutation()
+
+	const handleDelete = async () => {
+		try {
+			const { data } = await deleteTransact(id)
+			if (data?.success) {
+				toast.success(data.message)
+			} else toast.error(data?.message)
+		} catch (error) {
+			console.error(error)
+		}
+	}
+
+	return (
+		<button type='button' onClick={handleDelete} disabled={isLoading}>
+			{isLoading ? (
+				<ImSpinner9 className='animate-spin' />
+			) : (
+				<FaRegTrashAlt className='text-xl cursor-pointer text-pr-red' />
+			)}
+		</button>
+	)
 }
 
 export default DeleteTransaction

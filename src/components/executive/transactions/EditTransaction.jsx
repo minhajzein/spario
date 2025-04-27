@@ -1,19 +1,19 @@
-import { DatePicker, Input, Modal, Select } from 'antd'
 import { useFormik } from 'formik'
-import * as Yup from 'yup'
 import { useEffect, useState } from 'react'
-import { ImSpinner9 } from 'react-icons/im'
-import { useSelector } from 'react-redux'
+import { RiEditLine } from 'react-icons/ri'
 import { useGetAllStoresByExecutiveQuery } from '../../../store/apiSlices/querySlices/storeByExecutive'
-import { useCreateTransactionMutation } from '../../../store/apiSlices/transactionsApiSlice'
+import { useSelector } from 'react-redux'
+import * as Yup from 'yup'
 import dayjs from 'dayjs'
+import { ImSpinner9 } from 'react-icons/im'
+import { DatePicker, Input, Modal, Select } from 'antd'
+import { useUpdateTransactionMutation } from '../../../store/apiSlices/transactionsApiSlice'
 import { toast } from 'react-toastify'
 
 const types = ['cash', 'cheque', 'rtgs']
 
-function AddTransaction() {
-	const [createTransaction, { isLoading }] = useCreateTransactionMutation()
-
+function EditTransaction({ transaction }) {
+	const [update, { isLoading }] = useUpdateTransactionMutation()
 	const user = useSelector(state => state.user.user)
 	const { data: stores, isSuccess } = useGetAllStoresByExecutiveQuery(user._id)
 
@@ -25,13 +25,14 @@ function AddTransaction() {
 
 	const formik = useFormik({
 		initialValues: {
-			store: '',
-			amount: 0,
+			store: transaction.store._id,
+			amount: transaction.amount,
 			executive: user?._id,
-			type: '',
-			date: dayjs().toString(),
+			type: transaction.type,
+			date: transaction.date,
 			entry: 'credit',
 		},
+		enableReinitialize: true,
 		validationSchema: Yup.object({
 			store: Yup.string().required(),
 			date: Yup.date().required(),
@@ -43,7 +44,7 @@ function AddTransaction() {
 		}),
 		onSubmit: async values => {
 			try {
-				const { data } = await createTransaction(values)
+				const { data } = await update({ ...values, id: transaction._id })
 				if (data?.success) {
 					toast.success(data?.message)
 					formik.resetForm()
@@ -71,63 +72,61 @@ function AddTransaction() {
 
 	return (
 		<>
-			<button
-				type='button'
-				onClick={handleModal}
-				className='flex cursor-pointer whitespace-nowrap text-xs text-white p-3 rounded-full bg-pr-red gap-1 items-center'
-			>
-				+Add Transaction
+			<button type='button' onClick={handleModal}>
+				<RiEditLine className='text-xl text-pr-green' />
 			</button>
 			<Modal
 				open={isModalOpen}
 				onCancel={handleCancel}
 				footer={[]}
-				title='Add New Transaction'
+				title='Edit Transaction'
 			>
 				<form onSubmit={formik.handleSubmit} className='flex flex-col gap-2'>
 					<div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
-						<div className='flex flex-col'>
-							<label htmlFor='store' className='capitalize text-sm'>
-								store
-							</label>
-							<Select
-								value={formik.values.store}
-								onChange={value => formik.setFieldValue('store', value)}
-								placeholder='Select a store'
-								className='w-full'
-								showSearch
-								optionFilterProp='children'
-								filterOption={(input, option) =>
-									(option?.label ?? '')
-										.toLowerCase()
-										.includes(input.toLowerCase())
-								}
-								options={
-									isSuccess
-										? Object.values(stores?.entities).map(store => ({
-												label: store.storeName,
-												value: store._id,
-										  }))
-										: []
-								}
-							/>
+						{isSuccess && (
+							<div className='flex flex-col'>
+								<label htmlFor='store' className='capitalize text-sm'>
+									store
+								</label>
+								<Select
+									value={formik.values.store}
+									defaultValue={formik.values.store}
+									onChange={value => formik.setFieldValue('store', value)}
+									placeholder='Select a store'
+									className='w-full'
+									showSearch
+									optionFilterProp='children'
+									filterOption={(input, option) =>
+										(option?.label ?? '')
+											.toLowerCase()
+											.includes(input.toLowerCase())
+									}
+									options={Object.values(stores?.entities).map(store => ({
+										label: store.storeName,
+										value: store._id,
+									}))}
+								/>
 
-							{formik.touched.store && (
-								<p className='text-pr-red text-xs'>{formik.errors.store}</p>
-							)}
-						</div>
-						<div className='flex flex-col'>
-							<label htmlFor='balance' className='capitalize text-sm'>
-								Balance
-							</label>
-							<Input
-								type='text'
-								disabled
-								name='balance'
-								id='balance'
-								value={balance}
-							/>
-						</div>
+								{formik.touched.store && (
+									<p className='text-pr-red text-xs'>{formik.errors.store}</p>
+								)}
+							</div>
+						)}
+						{formik.values.store !== '' && (
+							<div className='flex flex-col'>
+								<label htmlFor='balance' className='capitalize text-sm'>
+									Balance
+								</label>
+								<Input
+									type='text'
+									disabled
+									name='balance'
+									id='balance'
+									value={balance}
+								/>
+							</div>
+						)}
+
 						<div className='flex flex-col'>
 							<label htmlFor='amount' className='capitalize text-sm'>
 								Amount
@@ -180,6 +179,7 @@ function AddTransaction() {
 								allowClear={false}
 								onChange={value => handleDate(value)}
 								value={dayjs(formik.values.date)}
+								defaultValue={dayjs(formik.values.date)}
 							/>
 							{formik.touched.date && (
 								<p className='text-pr-red text-xs'>{formik.errors.date}</p>
@@ -204,7 +204,7 @@ function AddTransaction() {
 							{isLoading ? (
 								<ImSpinner9 className='m-auto animate-spin' />
 							) : (
-								'add transaction'
+								'edit transaction'
 							)}
 						</button>
 					</div>
@@ -214,4 +214,4 @@ function AddTransaction() {
 	)
 }
 
-export default AddTransaction
+export default EditTransaction

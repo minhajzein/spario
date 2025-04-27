@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux'
 import { selectTransactionById } from '../../../store/apiSlices/transactionsApiSlice'
 import dayjs from 'dayjs'
+import DeleteTransaction from '../../executive/transactions/DeleteTransaction'
 
 function TransactionRow({ transactionId }) {
 	const transaction = useSelector(state =>
@@ -30,7 +31,9 @@ function TransactionRow({ transactionId }) {
 				>
 					{transaction.amount}
 				</td>
-				<td className='p-3 text-center'></td>
+				<td className='p-3 text-center'>
+					<DeleteTransaction id={transactionId} />
+				</td>
 			</tr>
 		)
 	} else return null
