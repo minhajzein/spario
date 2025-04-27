@@ -65,9 +65,9 @@ function EditTransaction({ transaction }) {
 	}
 
 	useEffect(() => {
-		if (user.role === 'admin' && isSuccess)
+		if (user.role === 'admin' && isSuccess) {
 			setFilteredStores(Object.values(stores?.entities))
-		else if (user.role === 'executive' && isSuccess) {
+		} else if (user.role === 'executive' && isSuccess) {
 			setFilteredStores(
 				Object.values(stores?.entities).filter(
 					store => store.executive._id === user._id
@@ -78,7 +78,7 @@ function EditTransaction({ transaction }) {
 			const selected = stores?.entities?.[formik.values.store]
 			if (selected) setBalance(selected.balance)
 		}
-	}, [formik.values.store])
+	}, [formik.values.store, isSuccess])
 
 	return (
 		<>
