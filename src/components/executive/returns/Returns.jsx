@@ -1,4 +1,5 @@
 import { Input } from 'antd'
+import AddReturn from './AddReturn'
 
 function Returns() {
 	return (
@@ -10,6 +11,7 @@ function Returns() {
 					placeholder='Search for Returns'
 					size='large'
 				/>
+				<AddReturn />
 			</div>
 		</div>
 	)

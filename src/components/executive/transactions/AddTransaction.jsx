@@ -8,6 +8,7 @@ import { useGetAllStoresByExecutiveQuery } from '../../../store/apiSlices/queryS
 import { useCreateTransactionMutation } from '../../../store/apiSlices/transactionsApiSlice'
 import dayjs from 'dayjs'
 import { toast } from 'react-toastify'
+import { GrTransaction } from 'react-icons/gr'
 
 const types = ['cash', 'cheque', 'rtgs']
 
@@ -74,9 +75,10 @@ function AddTransaction() {
 			<button
 				type='button'
 				onClick={handleModal}
-				className='flex cursor-pointer whitespace-nowrap text-xs text-white p-3 rounded-full bg-pr-red gap-1 items-center'
+				className='flex min-w-max items-center text-xs md:text-sm cursor-pointer gap-1 p-3 text-white bg-pr-red rounded-full shadow-lg shadow-black/50'
 			>
-				+Add Transaction
+				<GrTransaction />
+				Add Transaction
 			</button>
 			<Modal
 				open={isModalOpen}

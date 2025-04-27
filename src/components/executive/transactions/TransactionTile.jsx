@@ -14,13 +14,7 @@ function TransactionTile({ transactionId }) {
 
 	if (transaction) {
 		return (
-			<div
-				className={`${
-					transaction.entry === 'debit'
-						? 'text-pr-red bg-pr-red/5'
-						: 'text-pr-green bg-pr-green/5'
-				} grid grid-cols-3 border-b items-center`}
-			>
+			<div className={`grid grid-cols-3 border-b items-center`}>
 				<div className='p-2 capitalize flex flex-col'>
 					<Link
 						to={`/stores/${transaction.store._id}`}
@@ -32,10 +26,13 @@ function TransactionTile({ transactionId }) {
 						{dayjs(transaction.date).format('DD/MM/YYYY')}
 					</h1>
 				</div>
-				<div className='p-3 flex text-xl text-primary font-semibold justify-end items-center text-center'>
-					{transaction.amount}
+				<div className='p-3 flex flex-col items-end text-center'>
+					<h1 className='text-xl text-primary font-semibold '>
+						{transaction.amount}
+					</h1>
+					<h1 className='capitalize text-sm'>{transaction.type}</h1>
 				</div>
-				<div className='flex gap-3 justify-center items-center'>
+				<div className='flex gap-3 p-3 justify-end items-center'>
 					<EditTransaction transaction={transaction} />
 					<DeleteTransaction id={transactionId} />
 				</div>

@@ -13,13 +13,7 @@ function TransactionTile({ transactionId }) {
 	)
 	if (transaction) {
 		return (
-			<div
-				className={`${
-					transaction.entry === 'debit'
-						? 'text-pr-red bg-pr-red/5'
-						: 'text-pr-green bg-pr-green/5'
-				} grid grid-cols-3 border-b items-center`}
-			>
+			<div className={`grid grid-cols-3 border-b items-center`}>
 				<div className='p-2 capitalize flex flex-col'>
 					<Link
 						to={`/stores/${transaction.store._id}`}
@@ -33,11 +27,14 @@ function TransactionTile({ transactionId }) {
 				</div>
 				<div className='p-2 flex flex-col text-primary items-center'>
 					<h1 className='text-xl font-semibold'>{transaction.amount}</h1>
-					<h1 className='text-gray-500'>{transaction.executive.username}</h1>
+					<h1 className='text-gray-500 capitalize'>{transaction.type}</h1>
 				</div>
-				<div className='flex gap-3 justify-center items-center'>
-					<EditTransaction transaction={transaction} />
-					<DeleteTransaction id={transactionId} />
+				<div className='flex flex-col justify-end p-3 items-center'>
+					<h1 className='text-gray-500'>{transaction.executive.username}</h1>
+					<div className='flex gap-3 items-center'>
+						<EditTransaction transaction={transaction} />
+						<DeleteTransaction id={transactionId} />
+					</div>
 				</div>
 			</div>
 		)
