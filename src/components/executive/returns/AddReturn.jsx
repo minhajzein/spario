@@ -84,7 +84,7 @@ function AddReturn() {
 			>
 				<form onSubmit={formik.handleSubmit} className='flex flex-col gap-2'>
 					<div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
-						<div className='flex flex-col'>
+						<div className='flex flex-col col-span-full'>
 							<label htmlFor='store' className='capitalize text-sm'>
 								store
 							</label>

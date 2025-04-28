@@ -1,7 +1,6 @@
 import { useFormik } from 'formik'
 import { useEffect, useState } from 'react'
 import { RiEditLine } from 'react-icons/ri'
-import { useGetAllStoresByExecutiveQuery } from '../../../store/apiSlices/querySlices/storeByExecutive'
 import { useSelector } from 'react-redux'
 import * as Yup from 'yup'
 import dayjs from 'dayjs'
@@ -15,8 +14,8 @@ const types = ['cash', 'cheque', 'rtgs']
 
 function EditTransaction({ transaction }) {
 	const [update, { isLoading }] = useUpdateTransactionMutation()
+
 	const user = useSelector(state => state.user.user)
-	// const { data: stores, isSuccess } = useGetAllStoresByExecutiveQuery(user._id)
 	const { data: stores, isSuccess } = useGetAllStoresQuery()
 	const [filteredStores, setFilteredStores] = useState([])
 

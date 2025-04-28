@@ -1,11 +1,22 @@
-
 import { ImSpinner9 } from 'react-icons/im'
 import { useDeleteReturnMutation } from '../../../store/apiSlices/returnApiSlice'
 import { Popconfirm } from 'antd'
 import { FaRegTrashAlt } from 'react-icons/fa'
+import { toast } from 'react-toastify'
 
 function DeleteReturn({ returnId }) {
 	const [removeReturn, { isLoading }] = useDeleteReturnMutation()
+
+	const handleDelete = async () => {
+		try {
+			const { data } = await removeReturn(returnId)
+			if (data?.success) {
+				toast.success(data.message)
+			} else toast.error(data?.message)
+		} catch (error) {
+			console.error(error)
+		}
+	}
 
 	return (
 		<Popconfirm

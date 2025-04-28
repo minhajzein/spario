@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
 import { RiEditLine } from 'react-icons/ri'
 import { FaRegTrashAlt } from 'react-icons/fa'
+import DeleteReturn from './DeleteReturn'
+import UpdateReturn from './UpdateReturn'
 
 function ReturnRow({ returnId }) {
 	const executiveId = useSelector(state => state.user.user._id)
@@ -29,8 +31,8 @@ function ReturnRow({ returnId }) {
 				</td>
 				<td className='p-3 border-r border-black text-center'>{rtn.amount}</td>
 				<td className='p-3 flex gap-3 items-center justify-center text-center'>
-					<RiEditLine />
-					<FaRegTrashAlt />
+					<UpdateReturn rtn={rtn} />
+					<DeleteReturn returnId={returnId} />
 				</td>
 			</tr>
 		)

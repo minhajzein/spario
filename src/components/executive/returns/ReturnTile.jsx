@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { FaRegTrashAlt } from 'react-icons/fa'
 import dayjs from 'dayjs'
 import UpdateReturn from './UpdateReturn'
+import DeleteReturn from './DeleteReturn'
 
 function ReturnTile({ returnId }) {
 	const executiveId = useSelector(state => state.user.user._id)
@@ -29,8 +30,8 @@ function ReturnTile({ returnId }) {
 					<h1 className='capitalize text-sm'>{rtn.type}</h1>
 				</div>
 				<div className='flex gap-3 p-3 justify-end items-center'>
-					<UpdateReturn />
-					<FaRegTrashAlt />
+					<UpdateReturn rtn={rtn} />
+					<DeleteReturn returnId={returnId} />
 				</div>
 			</div>
 		)

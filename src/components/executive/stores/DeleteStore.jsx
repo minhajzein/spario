@@ -16,7 +16,8 @@ function DeleteStore({ storeId }) {
 		} catch (error) {
 			console.error(error)
 		}
-	}
+    }
+    
 	return (
 		<Popconfirm
 			title='Delete Store'
