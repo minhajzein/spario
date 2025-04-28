@@ -53,7 +53,7 @@ function Transactions() {
 									Entry
 								</th>
 								<th className='p-2 border-r border-gray-300 text-gray-500'>
-									Descriptoin
+									Type
 								</th>
 								<th className='p-2 border-r border-gray-300 text-gray-500'>
 									Amount

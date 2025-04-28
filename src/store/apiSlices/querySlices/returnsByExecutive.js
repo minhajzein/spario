@@ -42,7 +42,7 @@ export const {
 
 export const selectReturnsResult = (executiveId) => returnsByExecutiveApiSlice.endpoints.getReturnsByExecutive.select(executiveId)
 
-export const makeExecutiveInvoicesSelectors = executiveId => {
+export const makeExecutiveReturnsSelectors = executiveId => {
     const selectReturnsData = createSelector(
         selectReturnsResult(executiveId),
         returnsResult => returnsResult?.data ?? initialState

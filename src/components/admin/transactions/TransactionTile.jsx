@@ -32,8 +32,16 @@ function TransactionTile({ transactionId }) {
 				<div className='flex flex-col justify-end p-3 items-center'>
 					<h1 className='text-gray-500'>{transaction.executive.username}</h1>
 					<div className='flex gap-3 items-center'>
-						<EditTransaction transaction={transaction} />
-						<DeleteTransaction id={transactionId} />
+						{transaction.type.startsWith('return') ? (
+							<h1 className='text-[10px] px-4 capitalize text-gray-500 text-center'>
+								Manage from returns
+							</h1>
+						) : (
+							<>
+								<EditTransaction transaction={transaction} />
+								<DeleteTransaction id={transactionId} />
+							</>
+						)}
 					</div>
 				</div>
 			</div>

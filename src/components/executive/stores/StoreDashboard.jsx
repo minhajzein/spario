@@ -14,7 +14,7 @@ function StoreDashboard({ store }) {
 				<h1 className='capitalize text-[10px] md:text-xs text-gray-500 text-ellipsis overflow-hidden whitespace-nowrap'>
 					Store Name
 				</h1>
-				<h1 className='md:text-lg text-xs  capitalize font-semibold overflow-hidden text-ellipsis'>
+				<h1 className='md:text-lg text-xs  capitalize font-semibold overflow-hidden text-ellipsis whitespace-nowrap'>
 					{store?.storeName}
 				</h1>
 			</div>
@@ -25,7 +25,7 @@ function StoreDashboard({ store }) {
 				<h1 className='capitalize text-[10px] md:text-xs text-gray-500 text-ellipsis overflow-hidden whitespace-nowrap'>
 					Owner Name
 				</h1>
-				<h1 className='md:text-lg text-xs  capitalize font-semibold overflow-hidden text-ellipsis'>
+				<h1 className='md:text-lg text-xs  capitalize font-semibold overflow-hidden text-ellipsis whitespace-nowrap'>
 					{store?.ownerName}
 				</h1>
 			</div>

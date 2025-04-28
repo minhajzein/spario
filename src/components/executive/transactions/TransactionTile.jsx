@@ -2,8 +2,7 @@ import { useSelector } from 'react-redux'
 import { makeExecutiveTransactionsSelectors } from '../../../store/apiSlices/querySlices/transactionsByExecutive'
 import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
-import { RiEditLine } from 'react-icons/ri'
-import { FaRegTrashAlt } from 'react-icons/fa'
+
 import DeleteTransaction from './DeleteTransaction'
 import EditTransaction from './EditTransaction'
 
@@ -33,8 +32,16 @@ function TransactionTile({ transactionId }) {
 					<h1 className='capitalize text-sm'>{transaction.type}</h1>
 				</div>
 				<div className='flex gap-3 p-3 justify-end items-center'>
-					<EditTransaction transaction={transaction} />
-					<DeleteTransaction id={transactionId} />
+					{transaction.type.startsWith('return') ? (
+						<h1 className='text-[10px] px-4 capitalize text-gray-500 text-center'>
+							Manage from returns
+						</h1>
+					) : (
+						<>
+							<EditTransaction transaction={transaction} />
+							<DeleteTransaction id={transactionId} />
+						</>
+					)}
 				</div>
 			</div>
 		)

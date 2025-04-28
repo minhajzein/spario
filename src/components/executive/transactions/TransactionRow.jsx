@@ -37,8 +37,14 @@ function TransactionRow({ transactionId }) {
 					{transaction.amount}
 				</td>
 				<td className='p-3 flex gap-3 items-center justify-center text-center'>
-					<EditTransaction transaction={transaction} />
-					<DeleteTransaction id={transactionId} />
+					{transaction.type.startsWith('return') ? (
+						<h1 className='text-xs text-gray-500'>Manage from returns</h1>
+					) : (
+						<>
+							<EditTransaction transaction={transaction} />
+							<DeleteTransaction id={transactionId} />
+						</>
+					)}
 				</td>
 			</tr>
 		)

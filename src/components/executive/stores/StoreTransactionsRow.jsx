@@ -14,7 +14,7 @@ function StoreTransactionsRow({ transactionId }) {
 				{dayjs(transaction.date).format('DD/MM/YYYY')}
 			</td>
 			<td className='p-3 border-r border-black text-center'>
-				{transaction.description}
+				{transaction.type}
 			</td>
 			<td className='p-3 text-pr-red border-r border-black text-end'>
 				{transaction.entry === 'debit' ? transaction.amount : '-----'}

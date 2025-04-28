@@ -73,12 +73,6 @@ function StoreDetails() {
 		content = (
 			<div className='w-full flex flex-col gap-3'>
 				<StoreDashboard store={store} />
-				<button
-					onClick={generatePdf}
-					className='bg-pr-red rounded-full p-4 text-white'
-				>
-					Print
-				</button>
 				<div className='max-w-full hidden md:block overflow-auto'>
 					<table className='w-full   bg-white rounded'>
 						<thead className='border-b-2 border-black'>
