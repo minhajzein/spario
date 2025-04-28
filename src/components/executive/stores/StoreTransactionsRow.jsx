@@ -13,7 +13,7 @@ function StoreTransactionsRow({ transactionId }) {
 			<td className='p-3 border-r capitalize border-black text-center'>
 				{dayjs(transaction.date).format('DD/MM/YYYY')}
 			</td>
-			<td className='p-3 border-r border-black text-center'>
+			<td className='p-3 border-r capitalize border-black text-center'>
 				{transaction.type}
 			</td>
 			<td className='p-3 text-pr-red border-r border-black text-end'>

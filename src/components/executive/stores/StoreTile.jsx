@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { TbEyeSearch } from 'react-icons/tb'
 import { FaRegTrashAlt } from 'react-icons/fa'
 import { RiEditLine } from 'react-icons/ri'
+import DeleteStore from './DeleteStore'
 
 function StoreTile({ storeId }) {
 	const executiveId = useSelector(state => state.user.user._id)
@@ -40,7 +41,7 @@ function StoreTile({ storeId }) {
 						<TbEyeSearch />
 					</Link>
 					<RiEditLine className='text-xl text-pr-green' />
-					<FaRegTrashAlt className='text-xl text-pr-red' />
+					<DeleteStore storeId={storeId} />
 				</div>
 			</div>
 		)

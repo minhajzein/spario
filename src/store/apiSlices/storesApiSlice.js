@@ -50,7 +50,7 @@ const storesApiSlice = apiSlice.injectEndpoints({
                 method: 'PUT',
                 body: { ...credentials }
             }),
-            invalidatesTags: ['Stores', 'Dashboard', 'Executives'],
+            invalidatesTags: ['Stores', 'Dashboard', 'Executives', 'Stores_Executive'],
         }),
 
         deleteStore: builder.mutation({
@@ -58,7 +58,7 @@ const storesApiSlice = apiSlice.injectEndpoints({
                 url: `/admin/stores/${id}`,
                 method: 'DELETE'
             }),
-            invalidatesTags: ['Stores', 'Dashboard', 'Executives'],
+            invalidatesTags: ['Stores', 'Dashboard', 'Executives', 'Stores_Executive'],
         })
 
     })
