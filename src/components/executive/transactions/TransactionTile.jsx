@@ -29,7 +29,7 @@ function TransactionTile({ transactionId }) {
 					<h1 className='text-xl text-primary font-semibold '>
 						{transaction.amount}
 					</h1>
-					<h1 className='capitalize text-sm'>{transaction.type}</h1>
+					<h1 className='capitalize text-xs'>{transaction.type}</h1>
 				</div>
 				<div className='flex gap-3 p-3 justify-end items-center'>
 					{transaction.type.startsWith('return') ? (
