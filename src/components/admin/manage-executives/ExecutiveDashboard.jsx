@@ -17,7 +17,7 @@ function ExecutiveDashboard({ dashboard }) {
 						<h3 className='text-ellipsis text-[10px] whitespace-nowrap overflow-hidden md:text-xs'>
 							Executive Name
 						</h3>
-						<h1 className='font-semibold capitalize text-sm md:text-xl'>
+						<h1 className='font-semibold text-sm md:text-xl'>
 							{dashboard?.executive?.username}
 						</h1>
 					</div>

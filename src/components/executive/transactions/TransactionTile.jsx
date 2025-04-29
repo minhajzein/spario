@@ -6,9 +6,9 @@ import dayjs from 'dayjs'
 import DeleteTransaction from './DeleteTransaction'
 import EditTransaction from './EditTransaction'
 
-function TransactionTile({ transactionId }) {
-	const executiveId = useSelector(state => state.user.user._id)
+function TransactionTile({ transactionId, executiveId }) {
 	const { selectById } = makeExecutiveTransactionsSelectors(executiveId)
+
 	const transaction = useSelector(state => selectById(state, transactionId))
 
 	if (transaction) {

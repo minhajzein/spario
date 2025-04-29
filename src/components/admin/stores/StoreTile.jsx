@@ -12,12 +12,13 @@ function StoreTile({ storeId }) {
 		return (
 			<div className='w-full bg-white grid p-2 border-y border-gray-400 grid-cols-4'>
 				<div className='flex flex-col col-span-2 capitalize'>
-					<h1 className='font-semibold text-xl text-ellipsis whitespace-nowrap overflow-hidden'>
-						{store.storeName}
-					</h1>
-					<h1 className='text-gray-500 text-ellipsis whitespace-nowrap overflow-hidden'>
+					<h1 className='font-semibold text-xl truncate'>{store.storeName}</h1>
+					<Link
+						to={`/admin/stores/${storeId}`}
+						className='text-gray-500 text-ellipsis whitespace-nowrap overflow-hidden'
+					>
 						{store.ownerName}
-					</h1>
+					</Link>
 					<h1 className='text-gray-500 text-ellipsis whitespace-nowrap overflow-hidden'>
 						{store.contactNumber}
 					</h1>
@@ -34,14 +35,17 @@ function StoreTile({ storeId }) {
 					</h1>
 				</div>
 				<div className='flex flex-col justify-between items-end'>
+					<h1 className='text-gray-500 truncate'>{store.executive.username}</h1>
 					<Link
 						className='text-xl text-blue-500'
 						to={`/admin/stores/${storeId}`}
 					>
 						<TbEyeSearch />
 					</Link>
-					<RiEditLine className='text-xl text-pr-green' />
-					<FaRegTrashAlt className='text-xl text-pr-red' />
+					<div className='flex items-center gap-3'>
+						<RiEditLine className='text-xl text-pr-green' />
+						<FaRegTrashAlt className='text-xl text-pr-red' />
+					</div>
 				</div>
 			</div>
 		)

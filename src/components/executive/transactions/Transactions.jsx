@@ -1,10 +1,8 @@
 import { useSelector } from 'react-redux'
 import { useGetAllTransactionsByExecutiveQuery } from '../../../store/apiSlices/querySlices/transactionsByExecutive'
 import Loading from '../../loading/Loading'
-import TransactionRow from './TransactionRow'
-import { Input } from 'antd'
-import TransactionTile from './TransactionTile'
-import AddTransaction from './AddTransaction'
+import TransactionContent from './TransactionContent'
+import TransactionHeader from './TransactionHeader'
 
 function Transactions() {
 	const executiveId = useSelector(state => state.user.user._id)
@@ -18,56 +16,11 @@ function Transactions() {
 
 	if (isSuccess) {
 		const { ids } = transactions
-		const tableContent = ids?.length
-			? ids.map(transactionId => (
-					<TransactionRow key={transactionId} transactionId={transactionId} />
-			  ))
-			: null
-		const tileContent = ids?.length
-			? ids.map(transactionId => (
-					<TransactionTile key={transactionId} transactionId={transactionId} />
-			  ))
-			: null
+
 		content = (
 			<div className='flex flex-col w-full gap-3'>
-				<div className='w-full flex gap-3'>
-					<Input
-						type='search'
-						allowClear
-						size='large'
-						placeholder='Search for transactions'
-					/>
-					<AddTransaction />
-				</div>
-				<div className='max-w-full hidden md:block overflow-auto'>
-					<table className='w-full   bg-white rounded'>
-						<thead className='border-b-2 border-black'>
-							<tr>
-								<th className='p-2 border-r border-gray-300 text-gray-500'>
-									Store Name
-								</th>
-								<th className='p-2 border-r border-gray-300 text-gray-500'>
-									Date
-								</th>
-								<th className='p-2 border-r border-gray-300 text-gray-500'>
-									Entry
-								</th>
-								<th className='p-2 border-r border-gray-300 text-gray-500'>
-									Type
-								</th>
-								<th className='p-2 border-r border-gray-300 text-gray-500'>
-									Amount
-								</th>
-
-								<th className='p-2 text-gray-500'>Actions</th>
-							</tr>
-						</thead>
-						<tbody>{tableContent}</tbody>
-					</table>
-				</div>
-				<div className='flex flex-col bg-white rounded md:hidden'>
-					{tileContent}
-				</div>
+				<TransactionHeader />
+				<TransactionContent executiveId={executiveId} ids={ids} />
 			</div>
 		)
 	}

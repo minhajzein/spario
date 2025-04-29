@@ -5,10 +5,11 @@ import { Link } from 'react-router-dom'
 import DeleteTransaction from './DeleteTransaction'
 import EditTransaction from './EditTransaction'
 
-function TransactionRow({ transactionId }) {
-	const executiveId = useSelector(state => state.user.user._id)
+function TransactionRow({ transactionId, executiveId }) {
 	const { selectById } = makeExecutiveTransactionsSelectors(executiveId)
+
 	const transaction = useSelector(state => selectById(state, transactionId))
+
 	if (transaction) {
 		return (
 			<tr className='bg-white border-b border-black'>
@@ -21,7 +22,7 @@ function TransactionRow({ transactionId }) {
 					</Link>
 				</td>
 				<td className='p-3 border-r border-black text-center'>
-					{dayjs(transaction.date).format('DD-MM-YYYY')}
+					{dayjs(transaction.date).format('DD/MM/YYYY')}
 				</td>
 				<td
 					className={`${

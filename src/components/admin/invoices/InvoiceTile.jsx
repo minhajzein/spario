@@ -1,14 +1,12 @@
-import { useSelector } from 'react-redux'
-import { makeExecutiveInvoicesSelectors } from '../../../store/apiSlices/querySlices/invoicesByExecutive'
-import dayjs from 'dayjs'
 import { MdOutlineStorefront } from 'react-icons/md'
+import { selectInvoiceById } from '../../../store/apiSlices/invoiceApiSlice'
+import { useSelector } from 'react-redux'
+import dayjs from 'dayjs'
 import { RiEditLine } from 'react-icons/ri'
 import { FaRegTrashAlt } from 'react-icons/fa'
 
 function InvoiceTile({ invoiceId }) {
-	const executiveId = useSelector(state => state.user.user._id)
-	const { selectById } = makeExecutiveInvoicesSelectors(executiveId)
-	const invoice = useSelector(state => selectById(state, invoiceId))
+	const invoice = useSelector(state => selectInvoiceById(state, invoiceId))
 
 	if (invoice) {
 		return (

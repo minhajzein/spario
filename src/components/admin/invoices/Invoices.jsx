@@ -3,6 +3,7 @@ import { useGetAllInvoicesQuery } from '../../../store/apiSlices/invoiceApiSlice
 import Loading from '../../loading/Loading'
 import InvoiceRow from './InvoiceRow'
 import AddInvoice from './AddInvoice'
+import InvoiceTile from './InvoiceTile'
 
 function Invoices() {
 	const { data: invoices, isSuccess, isLoading } = useGetAllInvoicesQuery()
@@ -15,6 +16,13 @@ function Invoices() {
 					<InvoiceRow key={invoiceId} invoiceId={invoiceId} />
 			  ))
 			: null
+
+		const tileContent = ids?.length
+			? ids.map(invoiceId => (
+					<InvoiceTile key={invoiceId} invoiceId={invoiceId} />
+			  ))
+			: null
+
 		content = (
 			<div className='w-full flex flex-col gap-3'>
 				<div className='flex gap-3 items-center'>
@@ -28,7 +36,7 @@ function Invoices() {
 						<AddInvoice />
 					</div>
 				</div>
-				<div className='w-full overflow-auto'>
+				<div className='w-full hidden md:block overflow-auto'>
 					<table className='w-full bg-white rounded'>
 						<thead className='border-b-2 border-black'>
 							<tr>
@@ -53,6 +61,7 @@ function Invoices() {
 						<tbody>{tableContent}</tbody>
 					</table>
 				</div>
+				<div className='flex flex-col  md:hidden'>{tileContent}</div>
 			</div>
 		)
 	}
