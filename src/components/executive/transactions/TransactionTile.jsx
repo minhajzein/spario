@@ -2,7 +2,6 @@ import { useSelector } from 'react-redux'
 import { makeExecutiveTransactionsSelectors } from '../../../store/apiSlices/querySlices/transactionsByExecutive'
 import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
-
 import DeleteTransaction from './DeleteTransaction'
 import EditTransaction from './EditTransaction'
 

@@ -2,8 +2,6 @@ import { useSelector } from 'react-redux'
 import { selectTransactionById } from '../../../store/apiSlices/transactionsApiSlice'
 import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
-import { RiEditLine } from 'react-icons/ri'
-import { FaRegTrashAlt } from 'react-icons/fa'
 import DeleteTransaction from '../../executive/transactions/DeleteTransaction'
 import EditTransaction from '../../executive/transactions/EditTransaction'
 

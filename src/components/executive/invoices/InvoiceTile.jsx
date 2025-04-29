@@ -5,9 +5,9 @@ import { MdOutlineStorefront } from 'react-icons/md'
 import { RiEditLine } from 'react-icons/ri'
 import { FaRegTrashAlt } from 'react-icons/fa'
 
-function InvoiceTile({ invoiceId }) {
-	const executiveId = useSelector(state => state.user.user._id)
+function InvoiceTile({ invoiceId, executiveId }) {
 	const { selectById } = makeExecutiveInvoicesSelectors(executiveId)
+
 	const invoice = useSelector(state => selectById(state, invoiceId))
 
 	if (invoice) {

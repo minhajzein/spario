@@ -2,15 +2,14 @@ import { useSelector } from 'react-redux'
 import { makeExecutiveStoreSelectors } from '../../../store/apiSlices/querySlices/storeByExecutive'
 import { Link } from 'react-router-dom'
 import { TbEyeSearch } from 'react-icons/tb'
-import { FaRegTrashAlt } from 'react-icons/fa'
 import { RiEditLine } from 'react-icons/ri'
 import DeleteStore from './DeleteStore'
 
-function StoreTile({ storeId }) {
-	const executiveId = useSelector(state => state.user.user._id)
+function StoreTile({ storeId, executiveId }) {
 	const { selectById } = makeExecutiveStoreSelectors(executiveId)
 
 	const store = useSelector(state => selectById(state, storeId))
+
 	if (store) {
 		return (
 			<div className='w-full bg-white grid p-2 border-y border-gray-400 grid-cols-4'>

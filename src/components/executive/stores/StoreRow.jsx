@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom'
 import { TbEyeSearch } from 'react-icons/tb'
 import DeleteStore from './DeleteStore'
 
-function StoreRow({ storeId }) {
-	const executiveId = useSelector(state => state.user.user._id)
+function StoreRow({ storeId, executiveId }) {
 	const { selectById } = makeExecutiveStoreSelectors(executiveId)
 
 	const store = useSelector(state => selectById(state, storeId))
