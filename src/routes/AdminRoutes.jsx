@@ -9,6 +9,7 @@ import Invoices from '../components/admin/invoices/Invoices'
 import Transactions from '../components/admin/transactions/Transactions'
 import StoreDetails from '../components/admin/stores/StoreDetails'
 import ExecutiveDetials from '../components/admin/manage-executives/ExecutiveDetials'
+import Returns from '../components/admin/returns/Returns'
 
 function AdminRoutes() {
 	return (
@@ -23,6 +24,7 @@ function AdminRoutes() {
 						<Route path='executives/:id' element={<ExecutiveDetials />} />
 						<Route path='invoices' element={<Invoices />} />
 						<Route path='transactions' element={<Transactions />} />
+						<Route path='returns' element={<Returns />} />
 						<Route path='*' element={<PageNotFound />} />
 					</Route>
 				</Route>

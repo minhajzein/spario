@@ -1,14 +1,12 @@
-import { useSelector } from 'react-redux'
-import { makeExecutiveReturnsSelectors } from '../../../store/apiSlices/querySlices/returnsByExecutive'
+import UpdateReturn from '../../executive/returns/UpdateReturn'
+import DeleteReturn from '../../executive/returns/DeleteReturn'
+import { selectReturnById } from '../../../store/apiSlices/returnApiSlice'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import dayjs from 'dayjs'
-import DeleteReturn from './DeleteReturn'
-import UpdateReturn from './UpdateReturn'
 
 function ReturnRow({ returnId }) {
-	const executiveId = useSelector(state => state.user.user._id)
-	const { selectById } = makeExecutiveReturnsSelectors(executiveId)
-	const rtn = useSelector(state => selectById(state, returnId))
+	const rtn = useSelector(state => selectReturnById(state, returnId))
 
 	if (rtn) {
 		return (
@@ -20,6 +18,9 @@ function ReturnRow({ returnId }) {
 					>
 						{rtn.store.storeName}
 					</Link>
+				</td>
+				<td className='p-3 border-r border-black capitalize text-center'>
+					{rtn.executive.username}
 				</td>
 				<td className='p-3 border-r border-black text-center'>
 					{dayjs(rtn.date).format('DD/MM/YYYY')}

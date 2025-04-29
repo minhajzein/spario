@@ -36,6 +36,11 @@ const adminNavItems = [
 		icon: GrTransaction,
 		path: '/admin/transactions',
 	},
+	{
+		title: 'Returns',
+		icon: IoReturnDownBackOutline,
+		path: '/admin/returns',
+	},
 ]
 
 const execNavItems = [
@@ -79,7 +84,7 @@ function Footer() {
 		<div className='sticky border-t border-gray-400 flex flex-col bg-transparent md:hidden gap-2 items-end w-full top-full'>
 			<div
 				className={`w-full grid ${
-					navItems.length === 3 ? 'grid-cols-3' : 'grid-cols-5'
+					navItems.length === 6 ? 'grid-cols-6' : 'grid-cols-5'
 				} p-2 gap-2 bg-white`}
 			>
 				{navItems.map(nav => (
