@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import dayjs from 'dayjs'
 import { RiEditLine } from 'react-icons/ri'
 import { FaRegTrashAlt } from 'react-icons/fa'
+import DeleteInvoice from '../../executive/invoices/DeleteInvoice'
 
 function InvoiceTile({ invoiceId }) {
 	const invoice = useSelector(state => selectInvoiceById(state, invoiceId))
@@ -33,9 +34,9 @@ function InvoiceTile({ invoiceId }) {
 				<div className='flex flex-col items-end justify-between'>
 					<h1 className='text-sm text-pr-red/70'>total amount:</h1>
 					<h1 className='font-semibold text-pr-red'>{invoice.amount}</h1>
-					<div className='flex gap-2'>
+					<div className='flex gap-2=3 items-center'>
 						<RiEditLine className='text-pr-green' />
-						<FaRegTrashAlt className='text-pr-red' />
+						<DeleteInvoice invoiceId={invoiceId} />
 					</div>
 				</div>
 			</div>

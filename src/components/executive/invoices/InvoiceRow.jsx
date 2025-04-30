@@ -1,9 +1,10 @@
 import dayjs from 'dayjs'
 import { makeExecutiveInvoicesSelectors } from '../../../store/apiSlices/querySlices/invoicesByExecutive'
 import { useSelector } from 'react-redux'
+import DeleteInvoice from './DeleteInvoice'
+import EditInvoice from './EditInvoice'
 
-function InvoiceRow({ invoiceId }) {
-	const executiveId = useSelector(state => state.user.user._id)
+function InvoiceRow({ invoiceId, executiveId }) {
 	const { selectById } = makeExecutiveInvoicesSelectors(executiveId)
 	const invoice = useSelector(state => selectById(state, invoiceId))
 
@@ -21,7 +22,10 @@ function InvoiceRow({ invoiceId }) {
 					{dayjs(invoice.dueDate).format('DD/MM/YYYY')}
 				</td>
 				<td className='p-3 border-r border-black'>{invoice.amount}</td>
-				<td className='p-3 text-center'></td>
+				<td className='p-3 justify-center flex gap-3 items-center'>
+					<EditInvoice invoice={invoice} />
+					<DeleteInvoice invoiceId={invoiceId} />
+				</td>
 			</tr>
 		)
 	} else return null
