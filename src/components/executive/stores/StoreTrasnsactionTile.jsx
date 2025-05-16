@@ -11,7 +11,7 @@ function StoreTrasnsactionTile({ transactionId }) {
 		return (
 			<div className='bg-white border-b border-gray-400 grid grid-cols-3'>
 				<div className='p-2'>
-					<h1 className='font-semibold'>
+					<h1 className='font-semibold truncate'>
 						{dayjs(transaction.date).format('DD/MM/YYYY')}
 					</h1>
 					<p className='text-xs text-gray-500 text-ellipsis uppercase overflow-hidden whitespace-nowrap'>

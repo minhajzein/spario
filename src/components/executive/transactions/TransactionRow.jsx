@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom'
 import DeleteTransaction from './DeleteTransaction'
 import EditTransaction from './EditTransaction'
 
-function TransactionRow({ transactionId, executiveId }) {
-	const { selectById } = makeExecutiveTransactionsSelectors(executiveId)
+function TransactionRow({ transactionId, params }) {
+	const { selectById } = makeExecutiveTransactionsSelectors(params)
 
 	const transaction = useSelector(state => selectById(state, transactionId))
 

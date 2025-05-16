@@ -9,14 +9,17 @@ const initialState = transactionsAdapter.getInitialState()
 const executiveTransactionsSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getAllTransactionsByExecutive: builder.query({
-            query: (executiveId) => ({
-                url: `/executive/transactions/${executiveId}`,
-                validateStatus: (response, result) => {
-                    return response.status === 200 && !result.isError
+            query: ({ executiveId, store = '', date = '', fromDate = '', toDate = '', type = '' }) => {
+                const params = new URLSearchParams({ store, date, fromDate, toDate, type }).toString();
+                return {
+                    url: `/executive/transactions/${executiveId}?${params}`,
+                    validateStatus: (response, result) => {
+                        return response.status === 200 && !result.isError;
+                    }
                 }
-            }),
-            transformResponse: async (responseData, meta, args) => {
-                const loadedTransactions = await responseData?.map(transaction => {
+            },
+            transformResponse: (responseData, meta, args) => {
+                const loadedTransactions = responseData?.map(transaction => {
                     transaction.id = transaction._id
                     return transaction
                 })
@@ -41,12 +44,12 @@ export const {
     useGetAllTransactionsByExecutiveQuery
 } = executiveTransactionsSlice
 
-export const selectExecutiveTransactionResult = (executiveId) => executiveTransactionsSlice.endpoints.getAllTransactionsByExecutive.select(executiveId)
+export const selectExecutiveTransactionResult = (params) => executiveTransactionsSlice.endpoints.getAllTransactionsByExecutive.select(params)
 
 
-export const makeExecutiveTransactionsSelectors = executiveId => {
+export const makeExecutiveTransactionsSelectors = (params) => {
     const selectTransactionsData = createSelector(
-        selectExecutiveTransactionResult(executiveId),
+        selectExecutiveTransactionResult(params),
         transactionsResult => transactionsResult?.data ?? initialState
     );
 

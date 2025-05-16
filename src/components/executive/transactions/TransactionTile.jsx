@@ -5,8 +5,8 @@ import dayjs from 'dayjs'
 import DeleteTransaction from './DeleteTransaction'
 import EditTransaction from './EditTransaction'
 
-function TransactionTile({ transactionId, executiveId }) {
-	const { selectById } = makeExecutiveTransactionsSelectors(executiveId)
+function TransactionTile({ transactionId, params }) {
+	const { selectById } = makeExecutiveTransactionsSelectors(params)
 
 	const transaction = useSelector(state => selectById(state, transactionId))
 

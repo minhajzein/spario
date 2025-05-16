@@ -1,9 +1,9 @@
-import { FaRegTrashAlt } from 'react-icons/fa'
-import { RiEditLine } from 'react-icons/ri'
 import { TbEyeSearch } from 'react-icons/tb'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { selectStoreById } from '../../../store/apiSlices/storesApiSlice'
+import EditStore from './EditStore'
+import DeleteStore from '../../executive/stores/DeleteStore'
 
 function StoreTile({ storeId }) {
 	const store = useSelector(state => selectStoreById(state, storeId))
@@ -43,8 +43,8 @@ function StoreTile({ storeId }) {
 						<TbEyeSearch />
 					</Link>
 					<div className='flex items-center gap-3'>
-						<RiEditLine className='text-xl text-pr-green' />
-						<FaRegTrashAlt className='text-xl text-pr-red' />
+						<EditStore store={store} />
+						<DeleteStore storeId={storeId} />
 					</div>
 				</div>
 			</div>

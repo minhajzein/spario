@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { TbEyeSearch } from 'react-icons/tb'
 import { RiEditLine } from 'react-icons/ri'
 import DeleteStore from './DeleteStore'
+import EditStore from '../../admin/stores/EditStore'
 
 function StoreTile({ storeId, executiveId }) {
 	const { selectById } = makeExecutiveStoreSelectors(executiveId)
@@ -39,7 +40,7 @@ function StoreTile({ storeId, executiveId }) {
 					<Link className='text-xl text-blue-500' to={`/stores/${storeId}`}>
 						<TbEyeSearch />
 					</Link>
-					<RiEditLine className='text-xl text-pr-green' />
+					<EditStore store={store} />
 					<DeleteStore storeId={storeId} />
 				</div>
 			</div>

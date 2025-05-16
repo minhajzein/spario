@@ -3,28 +3,56 @@ import { useGetAllTransactionsByExecutiveQuery } from '../../../store/apiSlices/
 import Loading from '../../loading/Loading'
 import TransactionContent from './TransactionContent'
 import TransactionHeader from './TransactionHeader'
+import { useState } from 'react'
 
 function Transactions() {
 	const executiveId = useSelector(state => state.user.user._id)
+	const [store, setStore] = useState(null)
+	const [date, setDate] = useState(null)
+	const [fromDate, setFromDate] = useState(null)
+	const [toDate, setToDate] = useState(null)
+
 	const {
 		data: transactions,
 		isSuccess,
+		isFetching,
 		isLoading,
-	} = useGetAllTransactionsByExecutiveQuery(executiveId)
+	} = useGetAllTransactionsByExecutiveQuery({
+		executiveId,
+		store,
+		date,
+		fromDate,
+		toDate,
+	})
 
 	let content
 
 	if (isSuccess) {
 		const { ids } = transactions
-
 		content = (
-			<div className='flex flex-col w-full gap-3'>
-				<TransactionHeader />
-				<TransactionContent executiveId={executiveId} ids={ids} />
-			</div>
+			<TransactionContent
+				params={{ store, executiveId, date, fromDate, toDate }}
+				ids={ids}
+			/>
 		)
 	}
-	return isLoading ? <Loading /> : content
+
+	return (
+		<div className='flex flex-col w-full gap-3'>
+			<TransactionHeader
+				executiveId={executiveId}
+				setStore={setStore}
+				store={store}
+				date={date}
+				setDate={setDate}
+				fromDate={fromDate}
+				setFromDate={setFromDate}
+				toDate={toDate}
+				setToDate={setToDate}
+			/>
+			{isLoading || isFetching ? <Loading /> : content}
+		</div>
+	)
 }
 
 export default Transactions

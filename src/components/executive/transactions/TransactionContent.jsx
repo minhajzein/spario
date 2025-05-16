@@ -1,12 +1,12 @@
 import TransactionRow from './TransactionRow'
 import TransactionTile from './TransactionTile'
 
-function TransactionContent({ ids, executiveId }) {
+function TransactionContent({ ids, params }) {
 	const tableContent = ids?.length
 		? ids.map(transactionId => (
 				<TransactionRow
 					key={transactionId}
-					executiveId={executiveId}
+					params={params}
 					transactionId={transactionId}
 				/>
 		  ))
@@ -16,7 +16,7 @@ function TransactionContent({ ids, executiveId }) {
 		? ids.map(transactionId => (
 				<TransactionTile
 					key={transactionId}
-					executiveId={executiveId}
+					params={params}
 					transactionId={transactionId}
 				/>
 		  ))

@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom'
 import { ImSpinner9 } from 'react-icons/im'
 
 function Login() {
-	const [login, { isLoading }] = useLoginMutation()
+	const [login, { isLoading, isError, error }] = useLoginMutation()
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 	const [isShow, setIsShow] = useState(false)
@@ -29,6 +29,8 @@ function Login() {
 			try {
 				const { data } = await login(values)
 
+				if (isError) toast.error(error.data.message)
+				
 				if (data?.success) {
 					dispatch(setUser(data.user))
 					dispatch(setToken(data.token))

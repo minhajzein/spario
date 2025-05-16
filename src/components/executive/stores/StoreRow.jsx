@@ -3,6 +3,7 @@ import { makeExecutiveStoreSelectors } from '../../../store/apiSlices/querySlice
 import { Link } from 'react-router-dom'
 import { TbEyeSearch } from 'react-icons/tb'
 import DeleteStore from './DeleteStore'
+import EditStore from '../../admin/stores/EditStore'
 
 function StoreRow({ storeId, executiveId }) {
 	const { selectById } = makeExecutiveStoreSelectors(executiveId)
@@ -35,10 +36,11 @@ function StoreRow({ storeId, executiveId }) {
 				<td className='p-3 text-pr-red border-r border-black text-center'>
 					{store.balance}
 				</td>
-				<td className='p-3 flex gap-2'>
+				<td className='p-3 flex gap-3 justify-center'>
 					<Link className='text-xl' to={`/stores/${storeId}`}>
 						<TbEyeSearch />
 					</Link>
+					<EditStore store={store} />
 					<DeleteStore storeId={storeId} />
 				</td>
 			</tr>
