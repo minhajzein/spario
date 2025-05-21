@@ -9,8 +9,8 @@ function Transactions() {
 	const executiveId = useSelector(state => state.user.user._id)
 	const [store, setStore] = useState(null)
 	const [date, setDate] = useState(null)
-	const [fromDate, setFromDate] = useState(null)
-	const [toDate, setToDate] = useState(null)
+	const [fromDate, setFromDate] = useState('')
+	const [toDate, setToDate] = useState('')
 
 	const {
 		data: transactions,
