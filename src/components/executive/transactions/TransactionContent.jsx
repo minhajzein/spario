@@ -1,7 +1,6 @@
 import { Pagination } from 'antd'
 import TransactionRow from './TransactionRow'
 import TransactionTile from './TransactionTile'
-import { IoIosArrowDropright, IoIosArrowDroprightCircle } from 'react-icons/io'
 
 function TransactionContent({ ids, params, setPage, setPageSize, total }) {
 	const tableContent = ids?.length
@@ -63,6 +62,11 @@ function TransactionContent({ ids, params, setPage, setPageSize, total }) {
 					)}
 					showSizeChanger
 					pageSize={params.pageSize}
+					onShowSizeChange={(current, size) => {
+						setPage(current)
+						setPageSize(size)
+					}}
+					defaultCurrent={params.page}
 					onChange={(page, pageSize) => {
 						setPage(page)
 						setPageSize(pageSize)
