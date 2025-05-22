@@ -28,8 +28,14 @@ function TransactionHeader({
 
 	const [showRangeInput, setShowRangeInput] = useState(false)
 
+	const getStartOfDay = date => {
+		const d = new Date(date)
+		d.setHours(0, 0, 0, 0)
+		return d
+	}
+
 	const handleDateChange = value => {
-		const today = new Date()
+		const today = getStartOfDay(new Date())
 		let newDate = null
 		let newFromDate = null
 		let newToDate = null
