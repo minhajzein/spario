@@ -9,8 +9,8 @@ const initialState = transactionsAdapter.getInitialState()
 const executiveTransactionsSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getAllTransactionsByExecutive: builder.query({
-            query: ({ executiveId, store = '', date = '', fromDate = '', toDate = '', type = '' }) => {
-                const params = new URLSearchParams({ store, date, fromDate, toDate, type }).toString();
+            query: ({ executiveId, store = '', date = '', fromDate = '', toDate = '', type = '', page = '', limit = '' }) => {
+                const params = new URLSearchParams({ store, date, fromDate, toDate, type, page, limit }).toString();
                 return {
                     url: `/executive/transactions/${executiveId}?${params}`,
                     validateStatus: (response, result) => {
@@ -19,11 +19,14 @@ const executiveTransactionsSlice = apiSlice.injectEndpoints({
                 }
             },
             transformResponse: (responseData, meta, args) => {
-                const loadedTransactions = responseData?.map(transaction => {
+                const loadedTransactions = responseData?.transactions?.map(transaction => {
                     transaction.id = transaction._id
                     return transaction
                 })
-                return transactionsAdapter.setAll(initialState, loadedTransactions)
+                return {
+                    ...transactionsAdapter.setAll(initialState, loadedTransactions),
+                    total: responseData.total
+                }
             },
             keepUnusedDataFor: 5,
             providesTags: (result, error, arg) => {

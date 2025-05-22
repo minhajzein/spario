@@ -11,6 +11,8 @@ function Transactions() {
 	const [date, setDate] = useState(null)
 	const [fromDate, setFromDate] = useState('')
 	const [toDate, setToDate] = useState('')
+	const [page, setPage] = useState(1)
+	const [pageSize, setPageSize] = useState(10)
 
 	const {
 		data: transactions,
@@ -23,6 +25,8 @@ function Transactions() {
 		date,
 		fromDate,
 		toDate,
+		page,
+		limit: pageSize,
 	})
 
 	let content
@@ -31,7 +35,15 @@ function Transactions() {
 		const { ids } = transactions
 		content = (
 			<TransactionContent
-				params={{ store, executiveId, date, fromDate, toDate }}
+				params={{
+					store,
+					executiveId,
+					date,
+					fromDate,
+					toDate,
+					page,
+					limit: pageSize,
+				}}
 				ids={ids}
 			/>
 		)
@@ -49,6 +61,11 @@ function Transactions() {
 				setFromDate={setFromDate}
 				toDate={toDate}
 				setToDate={setToDate}
+				total={transactions?.total}
+				setPage={setPage}
+				page={page}
+				setPageSize={setPageSize}
+				pageSize={pageSize}
 			/>
 			{isLoading || isFetching ? <Loading /> : content}
 		</div>

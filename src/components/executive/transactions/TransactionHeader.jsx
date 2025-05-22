@@ -1,4 +1,4 @@
-import { DatePicker, Select } from 'antd'
+import { DatePicker, Pagination, Select } from 'antd'
 import AddTransaction from './AddTransaction'
 import { useGetAllStoresByExecutiveQuery } from '../../../store/apiSlices/querySlices/storeByExecutive'
 import dayjs from 'dayjs'
@@ -22,6 +22,11 @@ function TransactionHeader({
 	setToDate,
 	fromDate,
 	setFromDate,
+	total,
+	setPage,
+	page,
+	setPageSize,
+	pageSize,
 }) {
 	const { data: stores, isSuccess } =
 		useGetAllStoresByExecutiveQuery(executiveId)
@@ -137,8 +142,23 @@ function TransactionHeader({
 					</>
 				)}
 			</div>
-			<div className='md:hidden'>
-				<AddTransaction />
+			<div className='flex items-center justify-between w-full'>
+				<Pagination
+					total={total}
+					showTotal={total => (
+						<h1 className='truncate'>Total {total} Transactions</h1>
+					)}
+					showSizeChanger
+					pageSize={pageSize}
+					onChange={(page, pageSize) => {
+						setPage(page)
+						setPageSize(pageSize)
+					}}
+					size='small'
+				/>
+				<div className='md:hidden'>
+					<AddTransaction />
+				</div>
 			</div>
 		</div>
 	)
