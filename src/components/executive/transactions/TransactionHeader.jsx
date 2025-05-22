@@ -34,33 +34,37 @@ function TransactionHeader({
 		return d
 	}
 
+	const getEndOfDay = date => {
+		const d = new Date(date)
+		d.setHours(23, 59, 59, 999)
+		return d
+	}
+
 	const handleDateChange = value => {
-		const today = getStartOfDay(new Date())
+		const todayStart = getStartOfDay(new Date())
+		const todayEnd = getEndOfDay(new Date())
+
 		let newDate = null
 		let newFromDate = null
 		let newToDate = null
 
 		switch (value) {
 			case 'today':
-				setShowRangeInput(false)
-				newDate = today
+				newDate = todayStart
 				break
 			case 'yesterday':
-				setShowRangeInput(false)
-				newDate = new Date(today)
-				newDate.setDate(today.getDate() - 1)
+				newDate = new Date(todayStart)
+				newDate.setDate(todayStart.getDate() - 1)
 				break
 			case 'last 7 days':
-				setShowRangeInput(false)
-				newFromDate = new Date(today)
-				newFromDate.setDate(today.getDate() - 6)
-				newToDate = today
+				newFromDate = new Date(todayStart)
+				newFromDate.setDate(todayStart.getDate() - 6)
+				newToDate = todayEnd // Important!
 				break
 			case 'last 30 days':
-				setShowRangeInput(false)
-				newFromDate = new Date(today)
-				newFromDate.setDate(today.getDate() - 29)
-				newToDate = today
+				newFromDate = new Date(todayStart)
+				newFromDate.setDate(todayStart.getDate() - 29)
+				newToDate = todayEnd
 				break
 			case 'custom':
 				setDate('custom')
