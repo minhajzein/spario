@@ -5,18 +5,17 @@ import dayjs from 'dayjs'
 import { useState } from 'react'
 
 const daysOptions = [
-	'today',
-	'yesterday',
-	'last 7 days',
-	'last 30 days',
-	'custom',
+	'Today',
+	'Yesterday',
+	'Last 7 Days',
+	'LLast 30 Days',
+	'Custom',
 ]
 
 function TransactionHeader({
 	executiveId,
 	store,
 	setStore,
-	date,
 	setDate,
 	toDate,
 	setToDate,
@@ -49,24 +48,28 @@ function TransactionHeader({
 		let newToDate = null
 
 		switch (value) {
-			case 'today':
+			case 'Today':
+				setShowRangeInput(false)
 				newDate = todayStart
 				break
-			case 'yesterday':
+			case 'Yesterday':
+				setShowRangeInput(false)
 				newDate = new Date(todayStart)
 				newDate.setDate(todayStart.getDate() - 1)
 				break
-			case 'last 7 days':
+			case 'Last 7 Days':
+				setShowRangeInput(false)
 				newFromDate = new Date(todayStart)
 				newFromDate.setDate(todayStart.getDate() - 6)
 				newToDate = todayEnd // Important!
 				break
-			case 'last 30 days':
+			case 'Last 30 Days':
+				setShowRangeInput(false)
 				newFromDate = new Date(todayStart)
 				newFromDate.setDate(todayStart.getDate() - 29)
 				newToDate = todayEnd
 				break
-			case 'custom':
+			case 'Custom':
 				setDate('custom')
 				setFromDate(null)
 				setToDate(null)
