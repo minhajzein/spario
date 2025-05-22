@@ -44,6 +44,9 @@ function Transactions() {
 					page,
 					limit: pageSize,
 				}}
+				setPage={setPage}
+				setPageSize={setPageSize}
+				total={transactions?.total}
 				ids={ids}
 			/>
 		)
@@ -61,11 +64,6 @@ function Transactions() {
 				setFromDate={setFromDate}
 				toDate={toDate}
 				setToDate={setToDate}
-				total={transactions?.total}
-				setPage={setPage}
-				page={page}
-				setPageSize={setPageSize}
-				pageSize={pageSize}
 			/>
 			{isLoading || isFetching ? <Loading /> : content}
 		</div>

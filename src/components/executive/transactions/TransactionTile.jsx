@@ -12,7 +12,7 @@ function TransactionTile({ transactionId, params }) {
 
 	if (transaction) {
 		return (
-			<div className={`grid grid-cols-3 border-b items-center`}>
+			<div className={`grid grid-cols-3 border-b items-center w-full`}>
 				<div className='p-2 capitalize flex flex-col'>
 					<Link
 						to={`/stores/${transaction.store._id}`}

@@ -22,11 +22,6 @@ function TransactionHeader({
 	setToDate,
 	fromDate,
 	setFromDate,
-	total,
-	setPage,
-	page,
-	setPageSize,
-	pageSize,
 }) {
 	const { data: stores, isSuccess } =
 		useGetAllStoresByExecutiveQuery(executiveId)
@@ -142,23 +137,8 @@ function TransactionHeader({
 					</>
 				)}
 			</div>
-			<div className='flex items-center justify-between w-full'>
-				<Pagination
-					total={total}
-					showTotal={total => (
-						<h1 className='truncate'>Total {total} Transactions</h1>
-					)}
-					showSizeChanger
-					pageSize={pageSize}
-					onChange={(page, pageSize) => {
-						setPage(page)
-						setPageSize(pageSize)
-					}}
-					size='small'
-				/>
-				<div className='md:hidden'>
-					<AddTransaction />
-				</div>
+			<div className='md:hidden'>
+				<AddTransaction />
 			</div>
 		</div>
 	)
