@@ -1,4 +1,4 @@
-import { DatePicker, Pagination, Select } from 'antd'
+import { DatePicker, Input, Pagination, Select } from 'antd'
 import AddTransaction from './AddTransaction'
 import { useGetAllStoresByExecutiveQuery } from '../../../store/apiSlices/querySlices/storeByExecutive'
 import dayjs from 'dayjs'
@@ -21,6 +21,7 @@ function TransactionHeader({
 	setToDate,
 	fromDate,
 	setFromDate,
+	total,
 }) {
 	const { data: stores, isSuccess } =
 		useGetAllStoresByExecutiveQuery(executiveId)
@@ -86,7 +87,7 @@ function TransactionHeader({
 
 	return (
 		<div className='flex flex-col gap-2 bg-white rounded-lg p-2 items-end'>
-			<div className='w-full grid grid-cols-2 md:grid-cols-4 items-end gap-2 bg-white rounded-lg'>
+			<div className='w-full grid grid-cols-2 md:grid-cols-5 items-end gap-2 bg-white rounded-lg'>
 				<Select
 					value={store}
 					onChange={value => setStore(value)}
@@ -139,9 +140,12 @@ function TransactionHeader({
 						/>
 					</>
 				)}
-			</div>
-			<div className='md:hidden'>
-				<AddTransaction />
+				<div className='text-center flex'>
+					<Input value={`Total ${total} Entries`} disabled />
+				</div>
+				<div className='md:hidden'>
+					<AddTransaction />
+				</div>
 			</div>
 		</div>
 	)

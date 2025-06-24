@@ -75,7 +75,7 @@ function AddTransaction() {
 			<button
 				type='button'
 				onClick={handleModal}
-				className='flex min-w-max items-center text-xs md:text-sm cursor-pointer gap-1 p-3 text-white bg-pr-red rounded-full shadow-lg shadow-black/50'
+				className='flex min-w-max items-center text-[12px] md:text-sm cursor-pointer gap-1 p-[8px] w-full md:w-auto justify-center text-white bg-pr-red rounded md:rounded-full md:shadow-lg shadow-black/50'
 			>
 				<GrTransaction />
 				Add Transaction

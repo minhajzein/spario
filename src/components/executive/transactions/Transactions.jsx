@@ -64,6 +64,7 @@ function Transactions() {
 				setFromDate={setFromDate}
 				toDate={toDate}
 				setToDate={setToDate}
+				total={transactions?.total}
 			/>
 			{isLoading || isFetching ? <Loading /> : content}
 		</div>
