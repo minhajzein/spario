@@ -10,8 +10,6 @@ import { ImSpinner9 } from 'react-icons/im'
 import dayjs from 'dayjs'
 import { toast } from 'react-toastify'
 
-const types = ['cash', 'cheque', 'rtgs']
-
 function AddReturn() {
 	const [createReturn, { isLoading }] = useCreateReturnMutation()
 
@@ -22,10 +20,11 @@ function AddReturn() {
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const handleCancel = () => setIsModalOpen(false)
 	const handleModal = () => setIsModalOpen(true)
+
 	const formik = useFormik({
 		initialValues: {
 			store: '',
-			amount: 0,
+			amount: '',
 			executive: user?._id,
 			type: '',
 			date: dayjs().toString(),
@@ -54,7 +53,10 @@ function AddReturn() {
 		},
 	})
 
-	const handleDiscard = () => formik.resetForm()
+	const handleDiscard = () => {
+		formik.resetForm()
+		setBalance(0)
+	}
 
 	const handleDate = value => {
 		formik.setFieldValue('date', value ? value.toString() : '')
@@ -66,6 +68,7 @@ function AddReturn() {
 			if (selected) setBalance(selected.balance)
 		}
 	}, [formik.values.store])
+
 	return (
 		<>
 			<button
@@ -131,7 +134,7 @@ function AddReturn() {
 								Amount
 							</label>
 							<Input
-								type='text'
+								type='number'
 								name='amount'
 								id='amount'
 								onChange={formik.handleChange}
@@ -143,26 +146,15 @@ function AddReturn() {
 						</div>
 						<div className='flex flex-col'>
 							<label htmlFor='type' className='capitalize text-sm'>
-								type
+								Reference No
 							</label>
-							<Select
+							<Input
+								type='text'
+								name='type'
+								id='type'
+								onChange={formik.handleChange}
 								value={formik.values.type}
-								onChange={value => formik.setFieldValue('type', value)}
-								placeholder='Select a type'
-								className='w-full'
-								showSearch
-								optionFilterProp='children'
-								filterOption={(input, option) =>
-									(option?.label ?? '')
-										.toLowerCase()
-										.includes(input.toLowerCase())
-								}
-								options={types.map(type => ({
-									label: type,
-									value: type,
-								}))}
 							/>
-
 							{formik.touched.type && (
 								<p className='text-pr-red text-xs'>{formik.errors.type}</p>
 							)}

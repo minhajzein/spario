@@ -4,21 +4,38 @@ import { MdOutlineVerified, MdStorefront } from 'react-icons/md'
 import { PiWarningCircleBold } from 'react-icons/pi'
 import { RiMoneyRupeeCircleLine } from 'react-icons/ri'
 import { GiPayMoney } from 'react-icons/gi'
+import { IoIosInformationCircle, IoIosPrint } from 'react-icons/io'
+import { Popover } from 'antd'
+import StoreInfo from './StoreInfo'
 
 function StoreDashboard({ store }) {
+	const content = <StoreInfo store={store} />
 	return (
-		<div className='grid grid-cols-3 gap-2 md:gap-3 md:grid-cols-6 rounded-lg'>
-			<div className='p-2 md:p-3 gap-3 col-span-full  bg-white rounded items-center shadow flex'>
-				<div className='p-4 flex bg-amber-300/30 rounded-full'>
-					<MdStorefront className='text-amber-500 m-auto' />
+		<div className='grid grid-cols-3 gap-2 md:gap-3 rounded-lg'>
+			<div className='col-span-full p-2 md:p-3 bg-white justify-between rounded items-center shadow flex'>
+				<div className='flex gap-3'>
+					<div className='p-4 flex bg-amber-300/30 rounded-full'>
+						<MdStorefront className='text-amber-500 m-auto' />
+					</div>
+					<div className='flex flex-col justify-evenly'>
+						<h1 className='capitalize text-[10px] md:text-xs text-gray-500 text-ellipsis overflow-hidden whitespace-nowrap'>
+							Store Name
+						</h1>
+						<h1 className='md:text-xl text-xs  capitalize font-semibold  text-ellipsis overflow-hidden'>
+							{store?.storeName}
+						</h1>
+					</div>
 				</div>
-				<div className='flex flex-col justify-evenly'>
-					<h1 className='capitalize text-[10px] md:text-xs text-gray-500 text-ellipsis overflow-hidden whitespace-nowrap'>
-						Store Name
-					</h1>
-					<h1 className='md:text-xl text-xs  capitalize font-semibold  text-ellipsis overflow-hidden'>
-						{store?.storeName}
-					</h1>
+				<div className='flex gap-3 items-center flex-col md:flex-row'>
+					<Popover
+						title='Store Information'
+						trigger='click'
+						content={content}
+						placement='leftTop'
+					>
+						<IoIosInformationCircle className='text-[18px] cursor-pointer text-amber-600' />
+					</Popover>
+					<IoIosPrint className='text-[18px] cursor-pointer text-primary' />
 				</div>
 			</div>
 			<div className='p-2 md:p-5  bg-white gap-1 rounded items-start shadow flex flex-col'>

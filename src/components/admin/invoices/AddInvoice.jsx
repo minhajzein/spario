@@ -26,7 +26,7 @@ function AddInvoice() {
 	const formik = useFormik({
 		initialValues: {
 			store: '',
-			amount: 0,
+			amount: '',
 			billDate: dayjs().toString(),
 			dueDate: dayjs().toString(),
 			reference: '',
@@ -116,6 +116,22 @@ function AddInvoice() {
 								<p className='text-pr-red text-xs'>{formik.errors.store}</p>
 							)}
 						</div>
+
+						<div className='flex flex-col col-span-2'>
+							<label htmlFor='reference' className='capitalize text-sm'>
+								reference
+							</label>
+							<Input
+								type='text'
+								name='reference'
+								id='reference'
+								onChange={formik.handleChange}
+								value={formik.values.reference}
+							/>
+							{formik.touched.reference && (
+								<p className='text-pr-red text-xs'>{formik.errors.reference}</p>
+							)}
+						</div>
 						<div className='flex flex-col'>
 							<label htmlFor='amount' className='capitalize text-sm'>
 								Amount
@@ -131,22 +147,6 @@ function AddInvoice() {
 								<p className='text-pr-red text-xs'>{formik.errors.amount}</p>
 							)}
 						</div>
-						<div className='flex flex-col'>
-							<label htmlFor='reference' className='capitalize text-sm'>
-								reference
-							</label>
-							<Input
-								type='text'
-								name='reference'
-								id='reference'
-								onChange={formik.handleChange}
-								value={formik.values.reference}
-							/>
-							{formik.touched.reference && (
-								<p className='text-pr-red text-xs'>{formik.errors.reference}</p>
-							)}
-						</div>
-
 						<div className='flex flex-col'>
 							<label htmlFor='billDate' className='capitalize text-sm'>
 								bill Date
@@ -168,26 +168,7 @@ function AddInvoice() {
 								<p className='text-pr-red text-xs'>{formik.errors.billDate}</p>
 							)}
 						</div>
-						<div className='flex flex-col'>
-							<label htmlFor='dueDate' className='capitalize text-sm'>
-								due Date
-							</label>
-							<DatePicker
-								type='text'
-								name='dueDate'
-								allowClear={false}
-								id='dueDate'
-								onChange={value =>
-									formik.setFieldValue('dueDate', value ? value.toString() : '')
-								}
-								value={dayjs(formik.values.dueDate)}
-							/>
-							{formik.touched.dueDate && (
-								<p className='text-pr-red text-xs'>{formik.errors.dueDate}</p>
-							)}
-						</div>
 					</div>
-
 					<div className='grid grid-cols-2 gap-2'>
 						<button
 							type='button'

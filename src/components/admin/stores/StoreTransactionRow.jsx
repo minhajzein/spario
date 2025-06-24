@@ -9,12 +9,12 @@ function StoreTransactionRow({ transactionId }) {
 	const transaction = useSelector(state => selectById(state, transactionId))
 
 	return (
-		<tr className='bg-white border-b border-black'>
+		<tr className='bg-white border-b text-[16px] border-black'>
 			<td className='p-3 border-r capitalize border-black text-center'>
 				{dayjs(transaction.date).format('DD/MM/YYYY')}
 			</td>
 			<td className='p-3 border-r border-black text-center'>
-				{transaction.description}
+				{transaction.type}
 			</td>
 			<td className='p-3 text-pr-red border-r border-black text-end'>
 				{transaction.entry === 'debit' ? transaction.amount : '-----'}

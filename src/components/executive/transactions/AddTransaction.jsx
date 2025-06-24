@@ -27,7 +27,7 @@ function AddTransaction() {
 	const formik = useFormik({
 		initialValues: {
 			store: '',
-			amount: 0,
+			amount: '',
 			executive: user?._id,
 			type: '',
 			date: dayjs().toString(),
@@ -128,6 +128,7 @@ function AddTransaction() {
 								name='balance'
 								id='balance'
 								value={balance}
+								className='font-bold'
 							/>
 						</div>
 						<div className='flex flex-col'>
@@ -135,7 +136,7 @@ function AddTransaction() {
 								Amount
 							</label>
 							<Input
-								type='text'
+								type='number'
 								name='amount'
 								id='amount'
 								onChange={formik.handleChange}

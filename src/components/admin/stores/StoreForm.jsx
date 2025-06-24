@@ -22,7 +22,7 @@ function StoreForm({ isOpen, store, setIsOpen }) {
 			contactNumber: store?.contactNumber || '',
 			executive: user.role === 'admin' ? store?.executive || '' : user._id,
 			route: store?.route || '',
-			openingBalance: 0,
+			openingBalance: '',
 		},
 		enableReinitialize: true,
 		validationSchema: Yup.object({

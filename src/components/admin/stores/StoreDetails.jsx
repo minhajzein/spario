@@ -36,7 +36,7 @@ function StoreDetails() {
 			<div className='w-full flex flex-col gap-3'>
 				<StoreDashboard store={store} />
 				<div className='max-w-full hidden md:block overflow-auto'>
-					<table className='w-full   bg-white rounded'>
+					<table className='w-full text-[18px]  bg-white rounded'>
 						<thead className='border-b-2 border-black'>
 							<tr>
 								<th className='p-2 border-r border-gray-300 text-gray-500'>
