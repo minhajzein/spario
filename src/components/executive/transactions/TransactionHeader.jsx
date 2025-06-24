@@ -88,6 +88,12 @@ function TransactionHeader({
 	return (
 		<div className='flex flex-col gap-2 bg-white rounded-lg p-2 items-end'>
 			<div className='w-full grid grid-cols-2 md:grid-cols-5 items-end gap-2 bg-white rounded-lg'>
+				<div className='text-center flex'>
+					<Input value={`Total ${total} Entries`} disabled />
+				</div>
+				<div className='md:hidden'>
+					<AddTransaction />
+				</div>
 				<Select
 					value={store}
 					onChange={value => setStore(value)}
@@ -140,12 +146,6 @@ function TransactionHeader({
 						/>
 					</>
 				)}
-				<div className='text-center flex'>
-					<Input value={`Total ${total} Entries`} disabled />
-				</div>
-				<div className='md:hidden'>
-					<AddTransaction />
-				</div>
 			</div>
 		</div>
 	)

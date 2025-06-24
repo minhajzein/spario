@@ -28,7 +28,7 @@ function TransactionTile({ transactionId, params }) {
 					<h1 className='text-xl text-primary font-semibold '>
 						{transaction.amount}
 					</h1>
-					<h1 className='capitalize text-[10px] text-nowrap'>
+					<h1 className='capitalize text-[8px] text-nowrap'>
 						{transaction.type}
 					</h1>
 				</div>

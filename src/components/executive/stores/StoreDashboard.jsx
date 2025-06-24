@@ -46,7 +46,7 @@ function StoreDashboard({ store }) {
 					<h1 className='capitalize text-[10px] md:text-xs text-gray-500  text-ellipsis whitespace-nowrap overflow-hidden'>
 						Opening Balance
 					</h1>
-					<h1 className='md:text-lg text-xs  font-semibold whitespace-nowrap overflow-hidden text-ellipsis'>
+					<h1 className='md:text-lg text-[16px] text-cyan-500 font-semibold whitespace-nowrap overflow-hidden text-ellipsis'>
 						{store?.openingBalance}
 					</h1>
 				</div>
@@ -59,7 +59,7 @@ function StoreDashboard({ store }) {
 					<h1 className='capitalize text-[10px] md:text-xs text-gray-500  text-ellipsis whitespace-nowrap overflow-hidden'>
 						Balance amount
 					</h1>
-					<h1 className='md:text-lg text-xs  font-semibold whitespace-nowrap overflow-hidden text-ellipsis'>
+					<h1 className='md:text-lg text-[16px] text-pr-red  font-semibold whitespace-nowrap overflow-hidden text-ellipsis'>
 						{store?.balance}
 					</h1>
 				</div>

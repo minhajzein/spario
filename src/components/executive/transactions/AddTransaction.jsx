@@ -32,6 +32,7 @@ function AddTransaction() {
 			type: '',
 			date: dayjs().toString(),
 			entry: 'credit',
+			chequeNumber: '',
 		},
 		validationSchema: Yup.object({
 			store: Yup.string().required(),
@@ -41,9 +42,18 @@ function AddTransaction() {
 				.moreThan(0)
 				.lessThan(balance + 1)
 				.required(),
+			chequeNumber: Yup.string().when('type', {
+				is: val => val && val.toLowerCase().includes('cheque'),
+				then: schema => schema.required('Cheque number is required'),
+				otherwise: schema => schema.notRequired(),
+			}),
 		}),
 		onSubmit: async values => {
 			try {
+				values.type === 'cheque'
+					? (values.type = `cheque:${values.chequeNumber}`)
+					: (values.type = `${values.type}`)
+
 				const { data } = await createTransaction(values)
 				if (data?.success) {
 					toast.success(data?.message)
@@ -88,7 +98,7 @@ function AddTransaction() {
 			>
 				<form onSubmit={formik.handleSubmit} className='flex flex-col gap-2'>
 					<div className='grid grid-cols-1 md:grid-cols-2 gap-2'>
-						<div className='flex flex-col col-span-full'>
+						<div className='flex flex-col'>
 							<label htmlFor='store' className='capitalize text-sm'>
 								store
 							</label>
@@ -167,11 +177,30 @@ function AddTransaction() {
 									value: type,
 								}))}
 							/>
-
 							{formik.touched.type && (
 								<p className='text-pr-red text-xs'>{formik.errors.type}</p>
 							)}
 						</div>
+						{formik.values.type.includes('cheque') && (
+							<div className='flex flex-col'>
+								<label htmlFor='chequeNumber' className='capitalize text-sm'>
+									Cheque Number
+								</label>
+								<Input
+									type='text'
+									name='chequeNumber'
+									id='chequeNumber'
+									prefix='cheque:'
+									onChange={formik.handleChange}
+									value={formik.values.chequeNumber}
+								/>
+								{formik.touched.chequeNumber && (
+									<p className='text-pr-red text-xs'>
+										{formik.errors.chequeNumber}
+									</p>
+								)}
+							</div>
+						)}
 						<div className='flex flex-col'>
 							<label htmlFor='date' className='capitalize text-sm'>
 								date
