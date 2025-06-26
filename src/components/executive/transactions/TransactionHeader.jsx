@@ -96,7 +96,7 @@ function TransactionHeader({
 	return (
 		<div className='flex flex-col gap-2 bg-white rounded-lg p-2 items-end'>
 			<div className='w-full grid grid-cols-2 md:grid-cols-5 items-end gap-2 bg-white rounded-lg'>
-				<div className='text-center flex gap-2 items-center'>
+				<div className='text-center flex gap-2 h-full items-center'>
 					<Input value={`Total ${total} Entries`} disabled />
 					<div className='border h-full border-gray-500 rounded p-1'>
 						<BsDownload

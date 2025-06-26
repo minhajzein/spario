@@ -9,7 +9,9 @@ import handlePrint from '../../../utils/exportTransactions'
 function Transactions() {
 	const user = useSelector(state => state.user.user)
 
-	const [executiveId, setExecutiveId] = useState(null)
+	const [executiveId, setExecutiveId] = useState(
+		user.role === 'executive' ? user._id : null
+	)
 
 	const [store, setStore] = useState(null)
 	const [date, setDate] = useState(null)
@@ -61,9 +63,6 @@ function Transactions() {
 			/>
 		)
 	}
-	useEffect(() => {
-		user.role === 'executive' ? setExecutiveId(user._id) : setExecutiveId(null)
-	}, [])
 
 	return (
 		<div className='flex flex-col w-full gap-3'>
