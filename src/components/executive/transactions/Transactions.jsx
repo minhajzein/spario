@@ -7,7 +7,10 @@ import { useState } from 'react'
 import handlePrint from '../../../utils/exportTransactions'
 
 function Transactions() {
-	const executiveId = useSelector(state => state.user.user._id)
+	const user = useSelector(state => state.user.user)
+	const [executiveId, setExecutiveId] = useState(
+		user.role === 'executive' ? user._id : null
+	)
 	const [store, setStore] = useState(null)
 	const [date, setDate] = useState(null)
 	const [fromDate, setFromDate] = useState('')
@@ -34,7 +37,6 @@ function Transactions() {
 		setPage(null)
 		const transactionList = Object.values(transactions.entities)
 		handlePrint(transactionList)
-		setPageSize(10)
 	}
 
 	let content
@@ -72,8 +74,8 @@ function Transactions() {
 				setFromDate={setFromDate}
 				toDate={toDate}
 				setToDate={setToDate}
-				handleExport={handleExport}
 				total={transactions?.total}
+				handleExport={handleExport}
 			/>
 			{isLoading || isFetching ? <Loading /> : content}
 		</div>

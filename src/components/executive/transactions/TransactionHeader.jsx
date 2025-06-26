@@ -86,6 +86,12 @@ function TransactionHeader({
 		setFromDate(newFromDate)
 		setToDate(newToDate)
 	}
+	const options = isSuccess
+		? Object.values(stores?.entities).map(store => ({
+				label: store.storeName,
+				value: store._id,
+		  }))
+		: []
 
 	return (
 		<div className='flex flex-col gap-2 bg-white rounded-lg p-2 items-end'>
@@ -113,14 +119,7 @@ function TransactionHeader({
 					filterOption={(input, option) =>
 						(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
 					}
-					options={
-						isSuccess
-							? Object.values(stores?.entities).map(store => ({
-									label: store.storeName,
-									value: store._id,
-							  }))
-							: []
-					}
+					options={options}
 				/>
 				<Select
 					onChange={handleDateChange}
