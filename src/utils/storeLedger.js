@@ -35,6 +35,18 @@ const getSummary = (entries) => {
     return summary;
 };
 
+const getTotalDebitCredit = (entries) => {
+    let totalDebit = 0;
+    let totalCredit = 0;
+
+    entries.forEach((item) => {
+        if (item.entry === "debit") totalDebit += item.amount;
+        if (item.entry === "credit") totalCredit += item.amount;
+    });
+
+    return { totalDebit, totalCredit };
+};
+
 const handlePrint = (data, storeName) => {
     const doc = new jsPDF();
 
@@ -44,13 +56,16 @@ const handlePrint = (data, storeName) => {
     doc.setFont("helvetica", "normal");
 
     const ledgerData = formatLedgerData(data);
+    const { totalDebit, totalCredit } = getTotalDebitCredit(data);
 
     autoTable(doc, {
-        head: [["Date", "Debit", "Credit"]],
-        body: ledgerData.map((row) => [row.date, row.debit, row.credit]),
+        head: [["Date", "Description", "Debit", "Credit"]],
+        body: ledgerData.map((row) => [row.date, row.type, row.debit, row.credit]),
+        foot: [["Total", '', `Rs. ${totalDebit}`, `Rs. ${totalCredit}`]],
         theme: "striped",
         headStyles: { fillColor: [100, 100, 255] },
-        margin: { top: 20 },
+        footStyles: { fillColor: [230, 230, 230], textColor: 0, fontStyle: "bold" },
+        margin: { top: 25 },
     });
 
     const summary = getSummary(data);
