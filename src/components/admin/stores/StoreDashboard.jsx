@@ -1,24 +1,43 @@
 import { FaRegCircleUser } from 'react-icons/fa6'
-import { FiPhoneCall } from 'react-icons/fi'
 import { MdOutlineVerified, MdStorefront } from 'react-icons/md'
 import { PiWarningCircleBold } from 'react-icons/pi'
 import { RiMoneyRupeeCircleLine } from 'react-icons/ri'
 import { GiPayMoney } from 'react-icons/gi'
+import { Popover } from 'antd'
+import { IoIosInformationCircle, IoIosPrint } from 'react-icons/io'
+import StoreInfo from '../../executive/stores/StoreInfo'
 
-function StoreDashboard({ store }) {
+function StoreDashboard({ store, handleExport }) {
+	const content = <StoreInfo store={store} />
 	return (
-		<div className='grid grid-cols-3 gap-2 md:gap-3 md:grid-cols-6 rounded-lg'>
-			<div className='p-2 md:p-3 gap-3 col-span-full  bg-white rounded items-center shadow flex'>
-				<div className='p-4 flex bg-amber-300/30 rounded-full'>
-					<MdStorefront className='text-amber-500 m-auto' />
+		<div className='grid grid-cols-3 gap-2 md:gap-3 rounded-lg'>
+			<div className='col-span-full p-2 md:p-3 bg-white justify-between rounded items-center shadow flex'>
+				<div className='flex gap-3'>
+					<div className='p-4 flex bg-amber-300/30 rounded-full'>
+						<MdStorefront className='text-amber-500 m-auto' />
+					</div>
+					<div className='flex flex-col justify-evenly'>
+						<h1 className='capitalize text-[10px] md:text-xs text-gray-500 text-ellipsis overflow-hidden whitespace-nowrap'>
+							Store Name
+						</h1>
+						<h1 className='md:text-xl text-xs  capitalize font-semibold  text-ellipsis overflow-hidden'>
+							{store?.storeName}
+						</h1>
+					</div>
 				</div>
-				<div className='flex flex-col justify-evenly'>
-					<h1 className='capitalize text-[10px] md:text-xs text-gray-500 text-ellipsis overflow-hidden whitespace-nowrap'>
-						Store Name
-					</h1>
-					<h1 className='md:text-[20px] text-xs  capitalize font-semibold  text-ellipsis overflow-hidden'>
-						{store?.storeName}
-					</h1>
+				<div className='flex gap-3 items-center flex-col md:flex-row'>
+					<Popover
+						title='Store Information'
+						trigger='click'
+						content={content}
+						placement='leftTop'
+					>
+						<IoIosInformationCircle className='text-[18px] cursor-pointer text-amber-600' />
+					</Popover>
+					<IoIosPrint
+						onClick={() => handleExport()}
+						className='text-[18px] cursor-pointer text-primary'
+					/>
 				</div>
 			</div>
 			<div className='p-2 md:p-5  bg-white gap-1 rounded items-start shadow flex flex-col'>
@@ -33,17 +52,6 @@ function StoreDashboard({ store }) {
 				</h1>
 			</div>
 			<div className='p-2 md:p-5  bg-white gap-1 rounded items-start shadow flex flex-col'>
-				<div className='mt-4 p-4 flex bg-pink-300/30 rounded-full'>
-					<FiPhoneCall className='text-pink-500 m-auto' />
-				</div>
-				<h1 className='capitalize text-[10px] md:text-xs text-gray-500  text-ellipsis whitespace-nowrap overflow-hidden'>
-					Contact number
-				</h1>
-				<h1 className='md:text-[18px] text-xs  font-semibold whitespace-nowrap overflow-hidden text-ellipsis'>
-					{store?.contactNumber}
-				</h1>
-			</div>
-			<div className='p-2 md:p-5  bg-white gap-1 rounded items-start shadow flex flex-col'>
 				<div className='mt-4 p-4 flex bg-cyan-300/30 rounded-full'>
 					<GiPayMoney className='text-cyan-500 m-auto' />
 				</div>
@@ -52,28 +60,6 @@ function StoreDashboard({ store }) {
 				</h1>
 				<h1 className='md:text-[18px] text-xs  font-semibold whitespace-nowrap overflow-hidden text-ellipsis'>
 					{store?.openingBalance}
-				</h1>
-			</div>
-			<div className='p-2 md:p-5  bg-white gap-1 rounded items-start shadow flex flex-col'>
-				<div className='mt-4 p-4 flex bg-blue-300/30 rounded-full'>
-					<RiMoneyRupeeCircleLine className='text-primary m-auto' />
-				</div>
-				<h1 className='capitalize text-[10px] md:text-xs text-gray-500  text-ellipsis whitespace-nowrap overflow-hidden'>
-					Outstanding
-				</h1>
-				<h1 className='md:text-[18px] text-xs  font-semibold whitespace-nowrap overflow-hidden text-ellipsis'>
-					{store?.totalOutstanding}
-				</h1>
-			</div>
-			<div className='p-2 md:p-5  bg-white gap-1 rounded items-start shadow flex flex-col'>
-				<div className='mt-4 p-4 flex bg-pr-green/30 rounded-full'>
-					<MdOutlineVerified className='text-pr-green m-auto' />
-				</div>
-				<h1 className='capitalize text-[10px] md:text-xs text-gray-500  text-ellipsis whitespace-nowrap overflow-hidden'>
-					paid Amount
-				</h1>
-				<h1 className='md:text-[18px] text-xs  font-semibold whitespace-nowrap overflow-hidden text-ellipsis'>
-					{store?.paidAmount}
 				</h1>
 			</div>
 			<div className='p-2 md:p-5  bg-white gap-1 rounded items-start shadow flex flex-col'>

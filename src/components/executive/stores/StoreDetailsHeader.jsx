@@ -9,7 +9,7 @@ const daysOptions = [
 	'Custom',
 ]
 
-function StoreHeader({
+function StoreDetailsHeader({
 	setDate,
 	toDate,
 	setToDate,
@@ -117,4 +117,4 @@ function StoreHeader({
 	)
 }
 
-export default StoreHeader
+export default StoreDetailsHeader

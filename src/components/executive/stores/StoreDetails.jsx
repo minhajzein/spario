@@ -8,8 +8,8 @@ import StoreTrasnsactionTile from './StoreTrasnsactionTile'
 import StoreDashboard from './StoreDashboard'
 import { useState } from 'react'
 import { Pagination } from 'antd'
-import StoreHeader from './StoreHeader'
 import handlePrint from '../../../utils/storeLedger'
+import StoreDetailsHeader from './StoreDetailsHeader'
 
 function StoreDetails() {
 	const executiveId = useSelector(state => state.user.user._id)
@@ -22,6 +22,7 @@ function StoreDetails() {
 	const [toDate, setToDate] = useState('')
 	const [page, setPage] = useState(1)
 	const [limit, setLimit] = useState(10)
+
 	const { data, isLoading, isSuccess } = useGetStoreTransactionsQuery({
 		id,
 		date,
@@ -81,7 +82,7 @@ function StoreDetails() {
 			<div className='flex flex-col w-full gap-3'>
 				<StoreDashboard store={store} handleExport={handleExport} />
 				<div className='w-full flex flex-col'>
-					<StoreHeader
+					<StoreDetailsHeader
 						setDate={setDate}
 						fromDate={fromDate}
 						setFromDate={setFromDate}
