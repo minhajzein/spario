@@ -14,6 +14,11 @@ const formatLedgerData = (entries) => {
 const handlePrint = (data) => {
     const doc = new jsPDF();
 
+    doc.setFontSize(16);
+    doc.setFont("helvetica", "bold");
+    doc.text(`${dayjs().format("DD/MM/YYYY")} - Store Transactions`, 14, 15);
+    doc.setFont("helvetica", "normal");
+
     const ledgerData = formatLedgerData(data);
 
 
@@ -26,7 +31,7 @@ const handlePrint = (data) => {
         margin: { top: 25 },
     });
 
-    doc.save(`transactions.pdf`);
+    doc.save(`${dayjs().format("DD-MM-YYYY")}_transactions.pdf`);
 };
 
 export default handlePrint;
