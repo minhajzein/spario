@@ -6,10 +6,10 @@ import Layout from '../components/layout/Layout'
 import Stores from '../components/admin/stores/Stores'
 import Executives from '../components/admin/manage-executives/Executives'
 import Invoices from '../components/admin/invoices/Invoices'
-import Transactions from '../components/admin/transactions/Transactions'
 import StoreDetails from '../components/admin/stores/StoreDetails'
 import ExecutiveDetials from '../components/admin/manage-executives/ExecutiveDetials'
 import Returns from '../components/admin/returns/Returns'
+import Transactions from '../components/executive/transactions/Transactions'
 
 function AdminRoutes() {
 	return (
