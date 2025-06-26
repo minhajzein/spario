@@ -1,128 +1,86 @@
-import jsPDF from "jspdf"
-import { format } from 'date-fns'
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import dayjs from "dayjs";
 
-const getNestedValue = (obj, path) => {
-    if (!obj || !path) return undefined
+const formatLedgerData = (entries) => {
+    return entries.map((item) => ({
+        date: dayjs(item.date.$date).format("YYYY-MM-DD"),
+        debit: item.entry === "debit" ? item.amount : "",
+        credit: item.entry === "credit" ? item.amount : "",
+        type: item.type,
+    }));
+};
 
-    const keys = path.split('.')
-    let value = obj
+const getSummary = (entries) => {
+    const summary = {};
 
-    for (const key of keys) {
-        if (value && value.hasOwnProperty(key)) {
-            value = value[key]
-        } else {
-            return undefined
+    entries.forEach(({ type, amount }) => {
+        let normalizedType = type;
+
+        if (type.toLowerCase().startsWith("cheque")) {
+            normalizedType = "cheque";
         }
-    }
 
-    return value
-}
+        if (type.toLowerCase().startsWith("return")) {
+            normalizedType = "return";
+        }
 
+        if (type.toLowerCase().startsWith("invoice")) {
+            normalizedType = "invoice";
+        }
 
-const formatDate = timestamp => {
-    if (!timestamp) return 'Invalid Date'
-    try {
-        const date = new Date(timestamp)
-        return format(date, 'dd-MM-yyyy')
-    } catch (error) {
-        console.error('Error formatting date:', error)
-        return 'Invalid Date'
-    }
-}
+        summary[normalizedType] = (summary[normalizedType] || 0) + amount;
+    });
 
+    return summary;
+};
 
-const generatePDF = (data, columns, storeName, totalDebit, totalCredit, totalBalance) => {
-    const title = 'Store Ledger'
-    const doc = new jsPDF()
-    const modifiedColumns = columns.filter(
-        column =>
-            column.Header !== 'No' &&
-            column.Header !== 'Actions' &&
-            column.accessor !== 'actions'
-    )
-    const pdfData = data.map(row => {
-        return modifiedColumns.map(column => {
-            const accessor =
-                typeof column.accessor === 'string' ? column.accessor : ''
-            const value = getNestedValue(row, accessor)
+const handlePrint = (data, storeName) => {
+    const doc = new jsPDF();
 
-            if (column.Header === 'Channel') {
-                return `${row?.channel?.channel}`
-            }
-            return column.accessor === 'total' ? parseFloat(value) || 0 : value
-        })
-    })
+    doc.setFontSize(16);
+    doc.setFont("helvetica", "bold");
+    doc.text(`${storeName} - Store Ledger`, 14, 15);
+    doc.setFont("helvetica", "normal");
 
-    // Format date in the PDF
-    const formattedData = pdfData.map(row => {
-        const formattedRow = [...row]
-        // Assuming the date column is the last one in each row
-        const dateIndex = formattedRow.length - 1
-        formattedRow[dateIndex] = formatDate(formattedRow[dateIndex])
-        return formattedRow
-    })
+    const ledgerData = formatLedgerData(data);
 
-    // Calculate total amount
-    const totalAmount = formattedData.reduce((total, row) => {
-        const rowTotal = parseFloat(
-            row[modifiedColumns.findIndex(col => col.accessor === 'amount')]
-        )
-        return total + (isNaN(rowTotal) ? 0 : rowTotal)
-    }, 0)
-    let Heading = ''
-    if (title === 'Vendor') {
-        Heading = `Name: ${currentsupplier?.first_name + ' ' + currentsupplier?.last_name
-            }`
-    }
+    autoTable(doc, {
+        head: [["Date", "Debit", "Credit"]],
+        body: ledgerData.map((row) => [row.date, row.debit, row.credit]),
+        theme: "striped",
+        headStyles: { fillColor: [100, 100, 255] },
+        margin: { top: 20 },
+    });
 
-    const centerText = (doc, text, y) => {
-        const textWidth = doc.getTextWidth(text)
-        const pageWidth = doc.internal.pageSize.width
-        const x = (pageWidth - textWidth) / 2
-        doc.text(text, x, y)
-    }
+    const summary = getSummary(data);
+    const summaryY = doc.lastAutoTable.finalY + 10;
 
-    // Define document metadata
-    let heading
-    if (title && storeName) {
-        heading = `${title} of the store ${storeName}`
-    }
-    // Set background color
-    doc.setFillColor(0, 0, 0) // Light grey background
-    doc.rect(0, 0, doc.internal.pageSize.width, 15, 'FD') // Fill a rectangle
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.text("Summary", 14, summaryY);
+    doc.setFont("helvetica", "normal");
 
-    // Add the heading
-    doc.setFontSize(18)
-    doc.setTextColor(255, 255, 255)
-    centerText(doc, heading, 10)
+    let y = summaryY + 10;
 
-    const pageHeight = doc.internal.pageSize.height
-    const marginBottom = 10
-    const yPosition = pageHeight - marginBottom
+    Object.entries(summary).forEach(([type, total]) => {
+        const label = `Total in ${type.toUpperCase()}`.padEnd(25);
+        const line = `${label}: Rs ${total}`;
 
-    // Add some details below the heading
-    doc.setTextColor(0, 0, 0)
-    doc.setFontSize(12)
-    doc.text(Heading, 14, 28)
+        if (type.toLowerCase() === "cash") {
+            doc.setFont("helvetica", "bold");
+            doc.setTextColor(220, 20, 60); // red
+            doc.text(line, 14, y);
+            doc.setTextColor(0, 0, 0);
+            doc.setFont("helvetica", "normal");
+        } else {
+            doc.text(line, 14, y);
+        }
 
-    // Add some space before the table
-    const tableStartY = 30
-    // Add the table
-    doc.autoTable({
-        head: [modifiedColumns.map(column => column.Header)],
-        body: pdfData,
-        startY: tableStartY,
-    })
+        y += 8;
+    });
 
-    doc.text(
-        `Closing Balance:                ${totalDebit}/-      ${totalCredit}/-      ${totalBalance}/- `,
-        14,
-        yPosition
-    )
+    doc.save("store_ledger.pdf");
+};
 
-    // Save the PDF
-    doc.save(`${storeName}.pdf`)
-}
-
-
-export default generatePDF
+export default handlePrint;

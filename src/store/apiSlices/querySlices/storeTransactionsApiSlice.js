@@ -7,18 +7,24 @@ const initialState = storeTransactionsAdapter.getInitialState()
 const storeTransactionsApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getStoreTransactions: builder.query({
-            query: (storeId) => ({
-                url: `/executive/transactions/store/${storeId}`,
-                validateStatus: (response, result) => {
-                    return response.status === 200 && !result.isError
+            query: ({ id, store = '', date = '', fromDate = '', toDate = '', page = '', limit = '' }) => {
+                const params = new URLSearchParams({ store, date, fromDate, toDate, page, limit }).toString();
+                return {
+                    url: `/executive/transactions/store/${id}?${params}`,
+                    validateStatus: (response, result) => {
+                        return response.status === 200 && !result.isError
+                    }
                 }
-            }),
+            },
             transformResponse: async (responseData, meta, args) => {
-                const loadedTransaction = await responseData.map(transaction => {
+                const loadedTransactions = responseData?.transactions?.map(transaction => {
                     transaction.id = transaction._id
                     return transaction
                 })
-                return storeTransactionsAdapter.setAll(initialState, loadedTransaction)
+                return {
+                    ...storeTransactionsAdapter.setAll(initialState, loadedTransactions),
+                    total: responseData.total
+                }
             },
             keepUnusedDataFor: 5,
             providesTags: (result, error, arg) => {
@@ -41,12 +47,12 @@ export const {
 } = storeTransactionsApiSlice
 
 
-export const selectStoreTransactionResult = (storeId) => storeTransactionsApiSlice.endpoints.getStoreTransactions.select(storeId)
+export const selectStoreTransactionResult = (params) => storeTransactionsApiSlice.endpoints.getStoreTransactions.select(params)
 
 
-export const makeStoreTransactionsSelectors = storeId => {
+export const makeStoreTransactionsSelectors = params => {
     const selectStoresData = createSelector(
-        selectStoreTransactionResult(storeId),
+        selectStoreTransactionResult(params),
         storesResult => storesResult?.data ?? initialState
     );
 

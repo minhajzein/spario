@@ -1,14 +1,11 @@
-import { FaRegCircleUser } from 'react-icons/fa6'
-import { FiPhoneCall } from 'react-icons/fi'
-import { MdOutlineVerified, MdStorefront } from 'react-icons/md'
+import { MdStorefront } from 'react-icons/md'
 import { PiWarningCircleBold } from 'react-icons/pi'
-import { RiMoneyRupeeCircleLine } from 'react-icons/ri'
 import { GiPayMoney } from 'react-icons/gi'
 import { IoIosInformationCircle, IoIosPrint } from 'react-icons/io'
 import { Popover } from 'antd'
 import StoreInfo from './StoreInfo'
 
-function StoreDashboard({ store }) {
+function StoreDashboard({ store, handleExport }) {
 	const content = <StoreInfo store={store} />
 	return (
 		<div className='grid grid-cols-2 gap-2 md:gap-3 rounded-lg'>
@@ -35,7 +32,10 @@ function StoreDashboard({ store }) {
 					>
 						<IoIosInformationCircle className='text-[18px] cursor-pointer text-amber-600' />
 					</Popover>
-					<IoIosPrint className='text-[18px] cursor-pointer text-primary' />
+					<IoIosPrint
+						onClick={() => handleExport()}
+						className='text-[18px] cursor-pointer text-primary'
+					/>
 				</div>
 			</div>
 			<div className='p-2 md:p-5  bg-white gap-1 rounded items-center shadow flex'>

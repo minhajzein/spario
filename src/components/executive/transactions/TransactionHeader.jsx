@@ -1,4 +1,4 @@
-import { DatePicker, Input, Pagination, Select } from 'antd'
+import { DatePicker, Input, Select } from 'antd'
 import AddTransaction from './AddTransaction'
 import { useGetAllStoresByExecutiveQuery } from '../../../store/apiSlices/querySlices/storeByExecutive'
 import dayjs from 'dayjs'
@@ -8,7 +8,7 @@ const daysOptions = [
 	'Today',
 	'Yesterday',
 	'Last 7 Days',
-	'LLast 30 Days',
+	'Last 30 Days',
 	'Custom',
 ]
 
