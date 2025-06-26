@@ -3,14 +3,14 @@ import { useGetAllTransactionsByExecutiveQuery } from '../../../store/apiSlices/
 import Loading from '../../loading/Loading'
 import TransactionContent from './TransactionContent'
 import TransactionHeader from './TransactionHeader'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import handlePrint from '../../../utils/exportTransactions'
 
 function Transactions() {
 	const user = useSelector(state => state.user.user)
-	const [executiveId, setExecutiveId] = useState(
-		user.role === 'executive' ? user._id : null
-	)
+
+	const [executiveId, setExecutiveId] = useState(null)
+
 	const [store, setStore] = useState(null)
 	const [date, setDate] = useState(null)
 	const [fromDate, setFromDate] = useState('')
@@ -61,6 +61,9 @@ function Transactions() {
 			/>
 		)
 	}
+	useEffect(() => {
+		user.role === 'executive' ? setExecutiveId(user._id) : setExecutiveId(null)
+	}, [])
 
 	return (
 		<div className='flex flex-col w-full gap-3'>
