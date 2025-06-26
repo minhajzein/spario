@@ -3,6 +3,7 @@ import AddTransaction from './AddTransaction'
 import { useGetAllStoresByExecutiveQuery } from '../../../store/apiSlices/querySlices/storeByExecutive'
 import dayjs from 'dayjs'
 import { useState } from 'react'
+import { BsDownload } from 'react-icons/bs'
 
 const daysOptions = [
 	'Today',
@@ -22,6 +23,7 @@ function TransactionHeader({
 	fromDate,
 	setFromDate,
 	total,
+	handleExport,
 }) {
 	const { data: stores, isSuccess } =
 		useGetAllStoresByExecutiveQuery(executiveId)
@@ -88,8 +90,12 @@ function TransactionHeader({
 	return (
 		<div className='flex flex-col gap-2 bg-white rounded-lg p-2 items-end'>
 			<div className='w-full grid grid-cols-2 md:grid-cols-5 items-end gap-2 bg-white rounded-lg'>
-				<div className='text-center flex'>
+				<div className='text-center flex gap-1 items-center'>
 					<Input value={`Total ${total} Entries`} disabled />
+					<BsDownload
+						onClick={handleExport}
+						className='cursor-pointer text-pr-red'
+					/>
 				</div>
 				<div className='md:hidden'>
 					<AddTransaction />

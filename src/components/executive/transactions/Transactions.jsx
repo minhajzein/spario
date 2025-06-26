@@ -4,6 +4,7 @@ import Loading from '../../loading/Loading'
 import TransactionContent from './TransactionContent'
 import TransactionHeader from './TransactionHeader'
 import { useState } from 'react'
+import handlePrint from '../../../utils/exportTransactions'
 
 function Transactions() {
 	const executiveId = useSelector(state => state.user.user._id)
@@ -28,6 +29,13 @@ function Transactions() {
 		page,
 		limit: pageSize,
 	})
+
+	const handleExport = () => {
+		setPage(null)
+		const transactionList = Object.values(transactions.entities)
+		handlePrint(transactionList)
+		setPageSize(10)
+	}
 
 	let content
 
@@ -64,6 +72,7 @@ function Transactions() {
 				setFromDate={setFromDate}
 				toDate={toDate}
 				setToDate={setToDate}
+				handleExport={handleExport}
 				total={transactions?.total}
 			/>
 			{isLoading || isFetching ? <Loading /> : content}

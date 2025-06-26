@@ -1,4 +1,4 @@
-import { data, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useGetStoreTransactionsQuery } from '../../../store/apiSlices/querySlices/storeTransactionsApiSlice'
 import StoreTransactionsRow from './StoreTransactionsRow'
 import { makeExecutiveStoreSelectors } from '../../../store/apiSlices/querySlices/storeByExecutive'

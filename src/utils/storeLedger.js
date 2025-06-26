@@ -95,7 +95,7 @@ const handlePrint = (data, storeName) => {
         y += 8;
     });
 
-    doc.save("store_ledger.pdf");
+    doc.save(`${storeName}_ledger.pdf`);
 };
 
 export default handlePrint;
