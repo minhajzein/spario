@@ -1,9 +1,11 @@
-import { useSelector } from 'react-redux'
-import { useGetAllTransactionsByExecutiveQuery } from '../../../store/apiSlices/querySlices/transactionsByExecutive'
+import { useDispatch, useSelector } from 'react-redux'
+import executiveTransactionsSlice, {
+	useGetAllTransactionsByExecutiveQuery,
+} from '../../../store/apiSlices/querySlices/transactionsByExecutive'
 import Loading from '../../loading/Loading'
 import TransactionContent from './TransactionContent'
 import TransactionHeader from './TransactionHeader'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import handlePrint from '../../../utils/exportTransactions'
 
 function Transactions() {
@@ -35,15 +37,31 @@ function Transactions() {
 		limit: pageSize,
 	})
 
-	const handleExport = () => {
-		setPageSize(null)
-		setPage(null)
-		if (!isLoading && !isFetching) {
+	const dispatch = useDispatch()
+
+	const handleExport = async () => {
+		try {
+			const result = await dispatch(
+				executiveTransactionsSlice.endpoints.getAllTransactionsByExecutive.initiate(
+					{
+						executiveId,
+						store,
+						date,
+						fromDate,
+						toDate,
+						page: 1,
+						limit: 'export', // Or any sufficiently large number
+					}
+				)
+			)
+
+			if (result.data) {
+				const transactionList = Object.values(result.data.entities)
+				handlePrint(transactionList)
+			}
+		} catch (err) {
+			console.error('Failed to export transactions:', err)
 		}
-		const transactionList = Object.values(transactions.entities)
-		handlePrint(transactionList)
-		setPageSize(10) // Reset page size after export
-		setPage(1) // Reset page after export
 	}
 
 	let content

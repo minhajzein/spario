@@ -47,6 +47,8 @@ export const {
     useGetAllTransactionsByExecutiveQuery
 } = executiveTransactionsSlice
 
+export default executiveTransactionsSlice
+
 export const selectExecutiveTransactionResult = (params) => executiveTransactionsSlice.endpoints.getAllTransactionsByExecutive.select(params)
 
 
