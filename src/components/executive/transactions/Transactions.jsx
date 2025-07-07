@@ -36,9 +36,14 @@ function Transactions() {
 	})
 
 	const handleExport = () => {
+		setPageSize(null)
 		setPage(null)
+		if (!isLoading && !isFetching) {
+		}
 		const transactionList = Object.values(transactions.entities)
 		handlePrint(transactionList)
+		setPageSize(10) // Reset page size after export
+		setPage(1) // Reset page after export
 	}
 
 	let content

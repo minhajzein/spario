@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 
 const formatLedgerData = (entries) => {
     return entries.map((item) => ({
-        date: dayjs(item.date.$date).format("YYYY-MM-DD"),
+        date: dayjs(item.date).format("DD-MM-YYYY"),
         store: item.store.storeName,
         description: item.type,
         amount: item.amount,
