@@ -20,8 +20,8 @@ function DeleteInvoice({ invoiceId }) {
 
 	return (
 		<Popconfirm
-			title='Delete Store'
-			description='Are you sure to delete this store?'
+			title='Delete Invoice'
+			description='Are you sure to delete this invoice?'
 			onConfirm={handleDelete}
 			okText='Delete'
 			placement='left'

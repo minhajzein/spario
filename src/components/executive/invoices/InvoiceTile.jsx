@@ -4,11 +4,18 @@ import dayjs from 'dayjs'
 import { MdOutlineStorefront } from 'react-icons/md'
 import DeleteInvoice from './DeleteInvoice'
 import EditInvoice from './EditInvoice'
+import { useMemo } from 'react'
 
-function InvoiceTile({ invoiceId, executiveId }) {
-	const { selectById } = makeExecutiveInvoicesSelectors(executiveId)
+function InvoiceTile({ invoiceId, executiveId, queryParams }) {
+	// Use selector factory with current query params if provided
+	const selectors = useMemo(() => {
+		if (queryParams) {
+			return makeExecutiveInvoicesSelectors(queryParams)
+		}
+		return makeExecutiveInvoicesSelectors({ executiveId })
+	}, [queryParams, executiveId])
 
-	const invoice = useSelector(state => selectById(state, invoiceId))
+	const invoice = useSelector(state => selectors.selectById(state, invoiceId))
 
 	if (invoice) {
 		return (

@@ -1,13 +1,25 @@
 import { Link } from 'react-router-dom'
-import { selectExecutiveById } from '../../../store/apiSlices/executiveApiSlice'
+import { selectExecutiveById, makeExecutiveSelectors } from '../../../store/apiSlices/executiveApiSlice'
 import { useSelector } from 'react-redux'
+import { useMemo } from 'react'
 import { TbEyeSearch } from 'react-icons/tb'
 import ChangeStatus from './ChangeStatus'
 
-function ExecutiveRow({ executiveId }) {
-	const executive = useSelector(state =>
-		selectExecutiveById(state, executiveId)
-	)
+function ExecutiveRow({ executiveId, queryParams }) {
+	// Use selector factory with current query params if provided
+	const selectors = useMemo(() => {
+		if (queryParams) {
+			return makeExecutiveSelectors(queryParams)
+		}
+		return null
+	}, [queryParams])
+	
+	const executive = useSelector(state => {
+		if (selectors) {
+			return selectors.selectById(state, executiveId)
+		}
+		return selectExecutiveById(state, executiveId)
+	})
 
 	if (executive) {
 		return (

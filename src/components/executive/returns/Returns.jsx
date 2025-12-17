@@ -1,4 +1,5 @@
-import { Input } from 'antd'
+import { Input, Pagination } from 'antd'
+import { useState } from 'react'
 import AddReturn from './AddReturn'
 import { useGetReturnsByExecutiveQuery } from '../../../store/apiSlices/querySlices/returnsByExecutive'
 import { useSelector } from 'react-redux'
@@ -9,26 +10,46 @@ import Loading from '../../loading/Loading'
 
 function Returns() {
 	const executiveId = useSelector(state => state.user.user._id)
+	const [searchTerm, setSearchTerm] = useState('')
+	const [page, setPage] = useState(1)
+	const [pageSize, setPageSize] = useState(10)
+
 	const {
 		data: returns,
 		isSuccess,
 		isLoading,
-	} = useGetReturnsByExecutiveQuery(executiveId)
+	} = useGetReturnsByExecutiveQuery({
+		executiveId,
+		search: searchTerm,
+		page,
+		limit: pageSize,
+	})
 
 	let content
 	if (isSuccess) {
-		const { ids } = returns
+		const { ids, total } = returns
+		const queryParams = {
+			executiveId,
+			search: searchTerm,
+			page,
+			limit: pageSize,
+		}
 		const tableContent = ids?.length
-			? ids.map(returnId => <ReturnRow key={returnId} returnId={returnId} />)
+			? ids.map(returnId => <ReturnRow key={returnId} returnId={returnId} queryParams={queryParams} />)
 			: null
 		const tileContent = ids?.length
-			? ids.map(returnId => <ReturnTile key={returnId} returnId={returnId} />)
+			? ids.map(returnId => <ReturnTile key={returnId} returnId={returnId} queryParams={queryParams} />)
 			: null
 		content = (
 			<div className='w-full flex flex-col gap-3'>
 				<div className='flex gap-3 items-center'>
 					<Input
 						type='search'
+						value={searchTerm}
+						onChange={e => {
+							setSearchTerm(e.target.value)
+							setPage(1)
+						}}
 						allowClear
 						placeholder='Search for Returns'
 						size='large'
@@ -59,6 +80,25 @@ function Returns() {
 				</div>
 				<div className='flex flex-col bg-white rounded md:hidden'>
 					{tileContent}
+				</div>
+				<div className='flex w-full flex-col items-center bg-white py-2 rounded-lg'>
+					<Pagination
+						total={total}
+						showTotal={total => (
+							<h1 className='truncate'>Total {total} Returns</h1>
+						)}
+						showSizeChanger
+						pageSize={pageSize}
+						current={page}
+						onShowSizeChange={(current, size) => {
+							setPage(current)
+							setPageSize(size)
+						}}
+						onChange={(page, size) => {
+							setPage(page)
+							setPageSize(size)
+						}}
+					/>
 				</div>
 			</div>
 		)

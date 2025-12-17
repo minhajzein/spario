@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import DeleteTransaction from './DeleteTransaction'
 import EditTransaction from './EditTransaction'
 
-function TransactionRow({ transactionId, params }) {
+function TransactionRow({ transactionId, params, isAdmin }) {
 	const { selectById } = makeExecutiveTransactionsSelectors(params)
 
 	const transaction = useSelector(state => selectById(state, transactionId))
@@ -21,6 +21,11 @@ function TransactionRow({ transactionId, params }) {
 						{transaction.store.storeName}
 					</Link>
 				</td>
+				{isAdmin && (
+					<td className='p-3 border-r border-black capitalize text-center'>
+						{transaction.executive?.username || 'N/A'}
+					</td>
+				)}
 				<td className='p-3 border-r border-black text-center'>
 					{dayjs(transaction.date).format('DD/MM/YYYY')}
 				</td>

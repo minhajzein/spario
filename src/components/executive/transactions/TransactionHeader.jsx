@@ -22,11 +22,18 @@ function TransactionHeader({
 	setToDate,
 	fromDate,
 	setFromDate,
+	searchTerm,
+	setSearchTerm,
 	total,
 	handleExport,
 }) {
 	const { data: stores, isSuccess } =
-		useGetAllStoresByExecutiveQuery(executiveId)
+		useGetAllStoresByExecutiveQuery({
+			executiveId,
+			search: '',
+			page: 1,
+			limit: 1000, // Get all stores for dropdown
+		})
 
 	const [showRangeInput, setShowRangeInput] = useState(false)
 
@@ -95,6 +102,20 @@ function TransactionHeader({
 
 	return (
 		<div className='flex flex-col gap-2 bg-white rounded-lg p-2 items-end'>
+			<div className='w-full flex gap-2 items-center mb-2'>
+				<Input
+					type='search'
+					value={searchTerm}
+					onChange={e => setSearchTerm(e.target.value)}
+					allowClear
+					placeholder='Search transactions'
+					size='large'
+					className='flex-1'
+				/>
+				<div className='md:hidden'>
+					<AddTransaction />
+				</div>
+			</div>
 			<div className='w-full grid grid-cols-2 md:grid-cols-5 items-end gap-2 bg-white rounded-lg'>
 				<div className='text-center flex gap-2 h-full items-center'>
 					<Input value={`Total ${total} Entries`} disabled />
@@ -104,9 +125,6 @@ function TransactionHeader({
 							className='cursor-pointer text-primary'
 						/>
 					</div>
-				</div>
-				<div className='md:hidden'>
-					<AddTransaction />
 				</div>
 				<Select
 					value={store}
@@ -139,7 +157,7 @@ function TransactionHeader({
 							placeholder='Choose Start Date'
 							id='fromDate'
 							allowClear={false}
-							onChange={value => setFromDate(value.toString())}
+							onChange={value => setFromDate(value ? value.toString() : '')}
 							value={fromDate ? dayjs(fromDate) : null}
 						/>
 						<DatePicker
@@ -148,7 +166,7 @@ function TransactionHeader({
 							placeholder='Choose End Date'
 							id='toDate'
 							allowClear={false}
-							onChange={value => setToDate(value.toString())}
+							onChange={value => setToDate(value ? value.toString() : '')}
 							value={toDate ? dayjs(toDate) : null}
 						/>
 					</>

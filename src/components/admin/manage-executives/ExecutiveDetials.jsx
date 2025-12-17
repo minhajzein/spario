@@ -15,23 +15,49 @@ function ExecutiveDetials() {
 	const { data: executive, isLoading: fetchingExecutive } =
 		useGetExecutiveByIdQuery(id)
 
+	const [storePage, setStorePage] = useState(1)
+	const [storePageSize, setStorePageSize] = useState(10)
+	const [transactionPage, setTransactionPage] = useState(1)
+	const [transactionPageSize, setTransactionPageSize] = useState(10)
+	const [invoicePage, setInvoicePage] = useState(1)
+	const [invoicePageSize, setInvoicePageSize] = useState(10)
+
 	const {
 		data: stores,
 		isSuccess,
 		isLoading,
-	} = useGetAllStoresByExecutiveQuery(id)
+	} = useGetAllStoresByExecutiveQuery({
+		executiveId: id,
+		search: '',
+		page: storePage,
+		limit: storePageSize,
+	})
 
 	const {
 		data: transactions,
 		isSuccess: fetched,
 		isLoading: fetchingTransactions,
-	} = useGetAllTransactionsByExecutiveQuery(id)
+	} = useGetAllTransactionsByExecutiveQuery({
+		executiveId: id,
+		store: '',
+		date: '',
+		fromDate: '',
+		toDate: '',
+		type: '',
+		page: transactionPage,
+		limit: transactionPageSize,
+	})
 
 	const {
 		data: invoices,
 		isSuccess: invoicesFetched,
 		isLoading: fetchingInvoices,
-	} = useGetInvoicesByExecutiveQuery(id)
+	} = useGetInvoicesByExecutiveQuery({
+		executiveId: id,
+		search: '',
+		page: invoicePage,
+		limit: invoicePageSize,
+	})
 
 	const [listType, setListType] = useState('stores')
 
@@ -44,18 +70,68 @@ function ExecutiveDetials() {
 	let invoiceContent
 
 	if (isSuccess) {
-		const { ids } = stores
-		storeContent = <StoreContent ids={ids} executiveId={id} />
+		const { ids, total } = stores
+		storeContent = (
+			<StoreContent
+				ids={ids}
+				executiveId={id}
+				total={total}
+				page={storePage}
+				pageSize={storePageSize}
+				setPage={setStorePage}
+				setPageSize={setStorePageSize}
+				queryParams={{
+					executiveId: id,
+					search: '',
+					page: storePage,
+					limit: storePageSize,
+				}}
+			/>
+		)
 	}
 
 	if (fetched) {
-		const { ids } = transactions
-		transactionContent = <TransactionContent ids={ids} executiveId={id} />
+		const { ids, total } = transactions
+		transactionContent = (
+			<TransactionContent
+				ids={ids}
+				params={{
+					executiveId: id,
+					store: '',
+					date: '',
+					fromDate: '',
+					toDate: '',
+					type: '',
+					page: transactionPage,
+					limit: transactionPageSize,
+				}}
+				setPage={setTransactionPage}
+				setPageSize={setTransactionPageSize}
+				total={total}
+				isAdmin={false}
+			/>
+		)
 	}
 
 	if (invoicesFetched) {
-		const { ids } = invoices
-		invoiceContent = <InvoiceContent ids={ids} executiveId={id} />
+		const { ids, total } = invoices
+		invoiceContent = (
+			<InvoiceContent
+				ids={ids}
+				executiveId={id}
+				total={total}
+				page={invoicePage}
+				pageSize={invoicePageSize}
+				setPage={setInvoicePage}
+				setPageSize={setInvoicePageSize}
+				queryParams={{
+					executiveId: id,
+					search: '',
+					page: invoicePage,
+					limit: invoicePageSize,
+				}}
+			/>
+		)
 	}
 
 	return fetchingExecutive ||

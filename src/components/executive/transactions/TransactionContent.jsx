@@ -2,13 +2,14 @@ import { Pagination } from 'antd'
 import TransactionRow from './TransactionRow'
 import TransactionTile from './TransactionTile'
 
-function TransactionContent({ ids, params, setPage, setPageSize, total }) {
+function TransactionContent({ ids, params, setPage, setPageSize, total, isAdmin }) {
 	const tableContent = ids?.length
 		? ids.map(transactionId => (
 				<TransactionRow
 					key={transactionId}
 					params={params}
 					transactionId={transactionId}
+					isAdmin={isAdmin}
 				/>
 		  ))
 		: null
@@ -19,6 +20,7 @@ function TransactionContent({ ids, params, setPage, setPageSize, total }) {
 					key={transactionId}
 					params={params}
 					transactionId={transactionId}
+					isAdmin={isAdmin}
 				/>
 		  ))
 		: null
@@ -32,6 +34,11 @@ function TransactionContent({ ids, params, setPage, setPageSize, total }) {
 							<th className='p-2 border-r border-gray-300 text-gray-500'>
 								Store Name
 							</th>
+							{isAdmin && (
+								<th className='p-2 border-r border-gray-300 text-gray-500'>
+									Executive
+								</th>
+							)}
 							<th className='p-2 border-r border-gray-300 text-gray-500'>
 								Date
 							</th>

@@ -1,13 +1,15 @@
+import { Pagination } from 'antd'
 import InvoiceRow from './InvoiceRow'
 import InvoiceTile from './InvoiceTile'
 
-function InvoiceContent({ ids, executiveId }) {
+function InvoiceContent({ ids, executiveId, total, page, pageSize, setPage, setPageSize, queryParams }) {
 	const tableContent = ids?.length
 		? ids.map(invoiceId => (
 				<InvoiceRow
 					key={invoiceId}
 					executiveId={executiveId}
 					invoiceId={invoiceId}
+					queryParams={queryParams}
 				/>
 		  ))
 		: null
@@ -17,6 +19,7 @@ function InvoiceContent({ ids, executiveId }) {
 					key={invoiceId}
 					executiveId={executiveId}
 					invoiceId={invoiceId}
+					queryParams={queryParams}
 				/>
 		  ))
 		: null
@@ -49,6 +52,25 @@ function InvoiceContent({ ids, executiveId }) {
 				</table>
 			</div>
 			<div className='flex flex-col  md:hidden'>{tileContent}</div>
+			<div className='flex w-full flex-col items-center bg-white py-2 rounded-lg'>
+				<Pagination
+					total={total}
+					showTotal={total => (
+						<h1 className='truncate'>Total {total} Invoices</h1>
+					)}
+					showSizeChanger
+					pageSize={pageSize}
+					current={page}
+					onShowSizeChange={(current, size) => {
+						setPage(current)
+						setPageSize(size)
+					}}
+					onChange={(page, size) => {
+						setPage(page)
+						setPageSize(size)
+					}}
+				/>
+			</div>
 		</>
 	)
 }

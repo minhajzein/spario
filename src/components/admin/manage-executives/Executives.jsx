@@ -1,4 +1,4 @@
-import { Input } from 'antd'
+import { Input, Pagination } from 'antd'
 import { useState } from 'react'
 import ExecutiveForm from './ExecutiveForm'
 import { useGetAllExecutivesQuery } from '../../../store/apiSlices/executiveApiSlice'
@@ -6,7 +6,15 @@ import ExecutiveRow from './ExecutiveRow'
 import Loading from '../../loading/Loading'
 
 function Executives() {
-	const { data: executives, isLoading, isSuccess } = useGetAllExecutivesQuery()
+	const [searchTerm, setSearchTerm] = useState('')
+	const [page, setPage] = useState(1)
+	const [pageSize, setPageSize] = useState(10)
+
+	const { data: executives, isLoading, isSuccess } = useGetAllExecutivesQuery({
+		search: searchTerm,
+		page,
+		limit: pageSize,
+	})
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [currentExecutive, setCurrentExecutive] = useState(null)
 
@@ -15,11 +23,15 @@ function Executives() {
 		setIsModalOpen(true)
 	}
 	let content
-	if (isSuccess) {
-		const { ids } = executives
+	if (isSuccess && executives) {
+		const { ids, total } = executives
 		const tableContent = ids?.length
 			? ids.map(executiveId => (
-					<ExecutiveRow key={executiveId} executiveId={executiveId} />
+					<ExecutiveRow 
+						key={executiveId} 
+						executiveId={executiveId}
+						queryParams={{ search: searchTerm, page, limit: pageSize }}
+					/>
 			  ))
 			: null
 		content = (
@@ -27,6 +39,11 @@ function Executives() {
 				<div className='flex gap-3 items-center'>
 					<Input
 						type='search'
+						value={searchTerm}
+						onChange={e => {
+							setSearchTerm(e.target.value)
+							setPage(1)
+						}}
 						allowClear
 						placeholder='Search for executives'
 						size='large'
@@ -62,6 +79,25 @@ function Executives() {
 						</thead>
 						<tbody>{tableContent}</tbody>
 					</table>
+				</div>
+				<div className='flex w-full flex-col items-center bg-white py-2 rounded-lg'>
+					<Pagination
+						total={total}
+						showTotal={total => (
+							<h1 className='truncate'>Total {total} Executives</h1>
+						)}
+						showSizeChanger
+						pageSize={pageSize}
+						current={page}
+						onShowSizeChange={(current, size) => {
+							setPage(current)
+							setPageSize(size)
+						}}
+						onChange={(page, size) => {
+							setPage(page)
+							setPageSize(size)
+						}}
+					/>
 				</div>
 				<ExecutiveForm
 					isOpen={isModalOpen}

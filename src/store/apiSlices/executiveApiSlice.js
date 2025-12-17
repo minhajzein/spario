@@ -9,18 +9,34 @@ const executiveApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
 
         getAllExecutives: builder.query({
-            query: () => ({
-                url: '/admin/executives',
-                validateStatus: (response, result) => {
-                    return response.status === 200 && !result.isError
-                }
-            }),
+            query: ({ search = '', page = 1, limit = 10 } = {}) => {
+                const params = new URLSearchParams()
+                if (search) params.append('search', search)
+                if (page) params.append('page', page)
+                if (limit) params.append('limit', limit)
+
+                return ({
+                    url: `/admin/executives?${params.toString()}`,
+                    validateStatus: (response, result) => {
+                        return response.status === 200 && !result.isError
+                    }
+                })
+            },
             transformResponse: async (responseData, meta, args) => {
-                const loadedExecutives = await responseData.map(exec => {
+                if (!responseData || !responseData.executives) {
+                    return {
+                        ...executivesAdapter.setAll(initialState, []),
+                        total: 0
+                    }
+                }
+                const loadedExecutives = await responseData.executives.map(exec => {
                     exec.id = exec._id
                     return exec
                 })
-                return executivesAdapter.setAll(initialState, loadedExecutives)
+                return {
+                    ...executivesAdapter.setAll(initialState, loadedExecutives),
+                    total: responseData.total || 0
+                }
             },
             keepUnusedDataFor: 5,
             providesTags: (result, error, arg) => {
@@ -107,15 +123,54 @@ export const {
 } = executiveApiSlice
 
 
-export const selectExecutivesResult = executiveApiSlice.endpoints.getAllExecutives.select()
+export const selectExecutivesResult = (params) => executiveApiSlice.endpoints.getAllExecutives.select(params)
 
-const selectExecutivesData = createSelector(
-    selectExecutivesResult,
-    executivesResult => executivesResult.data
-)
+// Helper to get executives data from the current query or any cache entry
+const getExecutivesDataFromState = (state, currentParams = null) => {
+    const apiState = state?.apiService
+    if (!apiState?.queries) return initialState
+    
+    // If we have current params, try to find the exact match first
+    if (currentParams) {
+        const exactMatch = selectExecutivesResult(currentParams)(state)
+        if (exactMatch?.data) {
+            return exactMatch.data
+        }
+    }
+    
+    // Otherwise, find any query result that has executives data
+    const queryKeys = Object.keys(apiState.queries)
+    let latestData = null
+    let latestTimestamp = 0
+    
+    for (const key of queryKeys) {
+        if (key.includes('getAllExecutives')) {
+            const queryResult = apiState.queries[key]
+            if (queryResult?.data && queryResult?.fulfilledTimeStamp) {
+                if (queryResult.fulfilledTimeStamp > latestTimestamp) {
+                    latestTimestamp = queryResult.fulfilledTimeStamp
+                    latestData = queryResult.data
+                }
+            }
+        }
+    }
+    
+    return latestData || initialState
+}
 
+// Create a selector factory that accepts current query params
+export const makeExecutiveSelectors = (currentParams) => {
+    const selectExecutivesData = createSelector(
+        (state) => getExecutivesDataFromState(state, currentParams),
+        (data) => data
+    )
+    
+    return executivesAdapter.getSelectors(state => selectExecutivesData(state))
+}
+
+// Default selectors (for backward compatibility, uses most recent cache)
 export const {
     selectAll: selectAllExecutives,
     selectById: selectExecutiveById,
     selectIds: selectExecutivesIds
-} = executivesAdapter.getSelectors(state => selectExecutivesData(state) ?? initialState)
+} = executivesAdapter.getSelectors(state => getExecutivesDataFromState(state))

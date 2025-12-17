@@ -19,6 +19,7 @@ function Transactions() {
 	const [date, setDate] = useState(null)
 	const [fromDate, setFromDate] = useState('')
 	const [toDate, setToDate] = useState('')
+	const [searchTerm, setSearchTerm] = useState('')
 	const [page, setPage] = useState(1)
 	const [pageSize, setPageSize] = useState(10)
 
@@ -33,6 +34,7 @@ function Transactions() {
 		date,
 		fromDate,
 		toDate,
+		search: searchTerm,
 		page,
 		limit: pageSize,
 	})
@@ -76,6 +78,7 @@ function Transactions() {
 					date,
 					fromDate,
 					toDate,
+					search: searchTerm,
 					page,
 					limit: pageSize,
 				}}
@@ -83,6 +86,7 @@ function Transactions() {
 				setPageSize={setPageSize}
 				total={transactions?.total}
 				ids={ids}
+				isAdmin={user.role === 'admin'}
 			/>
 		)
 	}
@@ -91,14 +95,31 @@ function Transactions() {
 		<div className='flex flex-col w-full gap-3'>
 			<TransactionHeader
 				executiveId={executiveId}
-				setStore={setStore}
+				setStore={value => {
+					setStore(value)
+					setPage(1)
+				}}
 				store={store}
 				date={date}
-				setDate={setDate}
+				setDate={value => {
+					setDate(value)
+					setPage(1)
+				}}
 				fromDate={fromDate}
-				setFromDate={setFromDate}
+				setFromDate={value => {
+					setFromDate(value)
+					setPage(1)
+				}}
 				toDate={toDate}
-				setToDate={setToDate}
+				setToDate={value => {
+					setToDate(value)
+					setPage(1)
+				}}
+				searchTerm={searchTerm}
+				setSearchTerm={value => {
+					setSearchTerm(value)
+					setPage(1)
+				}}
 				total={transactions?.total}
 				handleExport={handleExport}
 			/>

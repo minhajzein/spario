@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import DeleteTransaction from './DeleteTransaction'
 import EditTransaction from './EditTransaction'
 
-function TransactionTile({ transactionId, params }) {
+function TransactionTile({ transactionId, params, isAdmin }) {
 	const { selectById } = makeExecutiveTransactionsSelectors(params)
 
 	const transaction = useSelector(state => selectById(state, transactionId))
@@ -20,6 +20,11 @@ function TransactionTile({ transactionId, params }) {
 					>
 						{transaction.store.storeName}
 					</Link>
+					{isAdmin && (
+						<h1 className='text-gray-500 text-xs'>
+							Executive: {transaction.executive?.username || 'N/A'}
+						</h1>
+					)}
 					<h1 className='text-gray-500 text-sm'>
 						{dayjs(transaction.date).format('DD/MM/YYYY')}
 					</h1>

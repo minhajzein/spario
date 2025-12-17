@@ -1,12 +1,26 @@
 import { useSelector } from 'react-redux'
-import { selectReturnById } from '../../../store/apiSlices/returnApiSlice'
+import { selectReturnById, makeReturnSelectors } from '../../../store/apiSlices/returnApiSlice'
 import { Link } from 'react-router-dom'
+import { useMemo } from 'react'
 import dayjs from 'dayjs'
 import UpdateReturn from '../../executive/returns/UpdateReturn'
 import DeleteReturn from '../../executive/returns/DeleteReturn'
 
-function ReturnTile({ returnId }) {
-	const rtn = useSelector(state => selectReturnById(state, returnId))
+function ReturnTile({ returnId, queryParams }) {
+	// Use selector factory with current query params if provided
+	const selectors = useMemo(() => {
+		if (queryParams) {
+			return makeReturnSelectors(queryParams)
+		}
+		return null
+	}, [queryParams])
+	
+	const rtn = useSelector(state => {
+		if (selectors) {
+			return selectors.selectById(state, returnId)
+		}
+		return selectReturnById(state, returnId)
+	})
 
 	if (rtn) {
 		return (

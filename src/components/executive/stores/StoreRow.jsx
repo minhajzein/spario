@@ -4,11 +4,18 @@ import { Link } from 'react-router-dom'
 import { TbEyeSearch } from 'react-icons/tb'
 import DeleteStore from './DeleteStore'
 import EditStore from '../../admin/stores/EditStore'
+import { useMemo } from 'react'
 
-function StoreRow({ storeId, executiveId }) {
-	const { selectById } = makeExecutiveStoreSelectors(executiveId)
+function StoreRow({ storeId, executiveId, queryParams }) {
+	// Use selector factory with current query params if provided
+	const selectors = useMemo(() => {
+		if (queryParams) {
+			return makeExecutiveStoreSelectors(queryParams)
+		}
+		return makeExecutiveStoreSelectors({ executiveId })
+	}, [queryParams, executiveId])
 
-	const store = useSelector(state => selectById(state, storeId))
+	const store = useSelector(state => selectors.selectById(state, storeId))
 
 	if (store) {
 		return (

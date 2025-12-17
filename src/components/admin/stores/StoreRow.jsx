@@ -1,12 +1,29 @@
 import { useSelector } from 'react-redux'
-import { selectStoreById } from '../../../store/apiSlices/storesApiSlice'
+import {
+	selectStoreById,
+	makeStoreSelectors,
+} from '../../../store/apiSlices/storesApiSlice'
 import { Link, useLocation } from 'react-router-dom'
+import { useMemo } from 'react'
 import { TbEyeSearch } from 'react-icons/tb'
 import EditStore from './EditStore'
 import DeleteStore from '../../executive/stores/DeleteStore'
 
-function StoreRow({ storeId }) {
-	const store = useSelector(state => selectStoreById(state, storeId))
+function StoreRow({ storeId, queryParams }) {
+	// Use selector factory with current query params if provided
+	const selectors = useMemo(() => {
+		if (queryParams) {
+			return makeStoreSelectors(queryParams)
+		}
+		return null
+	}, [queryParams])
+
+	const store = useSelector(state => {
+		if (selectors) {
+			return selectors.selectById(state, storeId)
+		}
+		return selectStoreById(state, storeId)
+	})
 	const { pathname } = useLocation()
 	const isExecutive = pathname.includes('executive')
 
@@ -41,7 +58,7 @@ function StoreRow({ storeId }) {
 				<td className='p-3 text-pr-red border-r border-black text-center'>
 					{store.balance}
 				</td>
-				<td className='p-3 text-center'>
+				<td className='p-3 text-center justify-center flex items-center gap-2'>
 					<Link className='text-xl' to={`/admin/stores/${storeId}`}>
 						<TbEyeSearch />
 					</Link>

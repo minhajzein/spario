@@ -16,7 +16,12 @@ function AddTransaction() {
 	const [createTransaction, { isLoading }] = useCreateTransactionMutation()
 
 	const user = useSelector(state => state.user.user)
-	const { data: stores, isSuccess } = useGetAllStoresByExecutiveQuery(user._id)
+	const { data: stores, isSuccess } = useGetAllStoresByExecutiveQuery({
+		executiveId: user._id,
+		search: '',
+		page: 1,
+		limit: 1000, // Get all stores for dropdown
+	})
 
 	const [balance, setBalance] = useState(0)
 

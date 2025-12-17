@@ -1,12 +1,26 @@
 import { TbEyeSearch } from 'react-icons/tb'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { selectStoreById } from '../../../store/apiSlices/storesApiSlice'
+import { selectStoreById, makeStoreSelectors } from '../../../store/apiSlices/storesApiSlice'
+import { useMemo } from 'react'
 import EditStore from './EditStore'
 import DeleteStore from '../../executive/stores/DeleteStore'
 
-function StoreTile({ storeId }) {
-	const store = useSelector(state => selectStoreById(state, storeId))
+function StoreTile({ storeId, queryParams }) {
+	// Use selector factory with current query params if provided
+	const selectors = useMemo(() => {
+		if (queryParams) {
+			return makeStoreSelectors(queryParams)
+		}
+		return null
+	}, [queryParams])
+	
+	const store = useSelector(state => {
+		if (selectors) {
+			return selectors.selectById(state, storeId)
+		}
+		return selectStoreById(state, storeId)
+	})
 
 	if (store) {
 		return (

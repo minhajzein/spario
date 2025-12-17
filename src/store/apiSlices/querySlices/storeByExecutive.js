@@ -10,18 +10,34 @@ const executiveStoresApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
 
         getAllStoresByExecutive: builder.query({
-            query: (executiveId) => ({
-                url: `/executive/stores/${executiveId}`,
-                validateStatus: (response, result) => {
-                    return response.status === 200 && !result.isError
+            query: ({ executiveId, search = '', page = 1, limit } = {}) => {
+                const params = new URLSearchParams()
+                params.append('search', search || '')
+                params.append('page', page)
+                if (limit) params.append('limit', limit)
+
+                return {
+                    url: `/executive/stores/${executiveId}?${params.toString()}`,
+                    validateStatus: (response, result) => {
+                        return response.status === 200 && !result.isError
+                    }
                 }
-            }),
+            },
             transformResponse: async (responseData, meta, args) => {
-                const loadedStores = await responseData.map(store => {
+                if (!responseData || !responseData.stores) {
+                    return {
+                        ...storesAdapter.setAll(initialState, []),
+                        total: 0
+                    }
+                }
+                const loadedStores = await responseData.stores.map(store => {
                     store.id = store._id
                     return store
                 })
-                return storesAdapter.setAll(initialState, loadedStores)
+                return {
+                    ...storesAdapter.setAll(initialState, loadedStores),
+                    total: responseData.total || 0
+                }
             },
             keepUnusedDataFor: 5,
             providesTags: (result, error, arg) => {
@@ -43,13 +59,45 @@ export const {
 } = executiveStoresApiSlice
 
 
-export const selectStoresResult = (executiveId) => executiveStoresApiSlice.endpoints.getAllStoresByExecutive.select(executiveId)
+export const selectStoresResult = (params) => executiveStoresApiSlice.endpoints.getAllStoresByExecutive.select(params)
 
+// Helper to get stores data from the current query or any cache entry
+const getStoresDataFromState = (state, currentParams = null) => {
+    const apiState = state?.apiService
+    if (!apiState?.queries) return initialState
+    
+    // If we have current params, try to find the exact match first
+    if (currentParams) {
+        const exactMatch = selectStoresResult(currentParams)(state)
+        if (exactMatch?.data) {
+            return exactMatch.data
+        }
+    }
+    
+    // Otherwise, find any query result that has stores data for this executive
+    const queryKeys = Object.keys(apiState.queries)
+    let latestData = null
+    let latestTimestamp = 0
+    
+    for (const key of queryKeys) {
+        if (key.includes('getAllStoresByExecutive')) {
+            const queryResult = apiState.queries[key]
+            if (queryResult?.data && queryResult?.fulfilledTimeStamp) {
+                if (queryResult.fulfilledTimeStamp > latestTimestamp) {
+                    latestTimestamp = queryResult.fulfilledTimeStamp
+                    latestData = queryResult.data
+                }
+            }
+        }
+    }
+    
+    return latestData || initialState
+}
 
-export const makeExecutiveStoreSelectors = executiveId => {
+export const makeExecutiveStoreSelectors = (params) => {
     const selectStoresData = createSelector(
-        selectStoresResult(executiveId),
-        storesResult => storesResult?.data ?? initialState
+        (state) => getStoresDataFromState(state, params),
+        (data) => data
     );
 
     return storesAdapter.getSelectors(state => selectStoresData(state));

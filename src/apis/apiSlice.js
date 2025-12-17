@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import baseUri from "../config/baseUri";
-import { setUser } from "../store/slices/userSlice";
+import { setUser, logout } from "../store/slices/userSlice";
 
 const baseQuery = fetchBaseQuery({
     baseUrl: baseUri,
@@ -10,7 +10,7 @@ const baseQuery = fetchBaseQuery({
         headers.set('Accept', 'application/json');
         headers.set('Cache-Control', 'no-cache');
         headers.set('Pragma', 'no-cache');
-        headers.set('Expires', '0');
+        headers.set('Expires', '0'); 
         const token = getState().user.token
         if (token) {
             headers.set("authorized", `Bearer ${token}`)
@@ -26,12 +26,14 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     if (result?.error?.status === 403) {
         const refreshResult = await baseQuery('/auth/refresh', api, extraOptions)
         if (refreshResult?.data) {
-            api.dispatch(setUser({ ...refreshResult.data }))
+            api.dispatch(setUser(refreshResult.data.user))
+            api.dispatch(setToken(refreshResult.data.token))
             result = await baseQuery(args, api, extraOptions)
         } else {
             if (refreshResult?.error?.status === 403) {
                 refreshResult.error.data.message = "Your login has expired"
             }
+            api.dispatch(logout())
             return refreshResult
         }
     }

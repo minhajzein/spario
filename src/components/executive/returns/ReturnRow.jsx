@@ -4,11 +4,19 @@ import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
 import DeleteReturn from './DeleteReturn'
 import UpdateReturn from './UpdateReturn'
+import { useMemo } from 'react'
 
-function ReturnRow({ returnId }) {
+function ReturnRow({ returnId, queryParams }) {
 	const executiveId = useSelector(state => state.user.user._id)
-	const { selectById } = makeExecutiveReturnsSelectors(executiveId)
-	const rtn = useSelector(state => selectById(state, returnId))
+	// Use selector factory with current query params if provided
+	const selectors = useMemo(() => {
+		if (queryParams) {
+			return makeExecutiveReturnsSelectors(queryParams)
+		}
+		return makeExecutiveReturnsSelectors({ executiveId })
+	}, [queryParams, executiveId])
+	
+	const rtn = useSelector(state => selectors.selectById(state, returnId))
 
 	if (rtn) {
 		return (
