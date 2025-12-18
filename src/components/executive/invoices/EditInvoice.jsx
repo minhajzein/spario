@@ -19,7 +19,7 @@ function EditInvoice({ invoice }) {
 		data: stores,
 		isLoading: fetchingStores,
 		isSuccess,
-	} = useGetAllStoresQuery()
+	} = useGetAllStoresQuery({ limit: null })
 
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const handleCancel = () => setIsModalOpen(false)

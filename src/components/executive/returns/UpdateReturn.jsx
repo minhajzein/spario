@@ -16,7 +16,7 @@ function UpdateReturn({ rtn }) {
 	const [editReturn, { isLoading }] = useUpdateReturnMutation()
 
 	const user = useSelector(state => state.user.user)
-	const { data: stores, isSuccess } = useGetAllStoresQuery()
+	const { data: stores, isSuccess } = useGetAllStoresQuery({ limit: null })
 
 	const [filteredStores, setFilteredStores] = useState([])
 	const [balance, setBalance] = useState(0)

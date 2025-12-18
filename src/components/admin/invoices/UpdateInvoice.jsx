@@ -18,7 +18,7 @@ function UpdateInvoice({ invoice }) {
 		data: stores,
 		isLoading: fetchingStores,
 		isSuccess,
-	} = useGetAllStoresQuery()
+	} = useGetAllStoresQuery({ limit: null })
 
 	const [filteredStores, setFilteredStores] = useState([])
 
