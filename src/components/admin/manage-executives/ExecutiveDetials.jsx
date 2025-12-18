@@ -142,7 +142,7 @@ function ExecutiveDetials() {
 	) : (
 		<div className='flex flex-col gap-3'>
 			<ExecutiveDashboard
-				dashboard={{ ...executive, totalStores: stores && stores.ids.length }}
+				dashboard={{ ...executive, totalStores: stores?.total || 0 }}
 			/>
 			<div className='flex-col flex'>
 				<div className='grid grid-cols-3 border-b w-full duration-200 bg-white'>
